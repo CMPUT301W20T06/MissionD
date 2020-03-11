@@ -256,18 +256,23 @@ public class MapActivity extends FragmentActivity implements
         loc1.setLongitude(userAddress1.getLongitude());
         loc2.setLatitude(userAddress2.getLatitude());
         loc2.setLongitude(userAddress2.getLongitude());
+
         float distance = loc1.distanceTo(loc2);
         money = (float) (0.004 * distance);
 //        showMoney.setText(String.valueOf(money));
 
+        Bundle extras = new Bundle();
+        extras.putString("RiderPickUp",startAddress);
+        extras.putString("RiderDest",destinationAddress);
+        extras.putFloat("EstimateFare",money);
+
+        extras.putFloat("startAddressLatitude", (float) userAddress1.getLatitude());
+        extras.putFloat("startAddressLongitude", (float) userAddress1.getLongitude());
+        extras.putFloat("destinationAddressLatitude", (float) userAddress2.getLatitude());
+        extras.putFloat("destinationAddressLongitude", (float) userAddress2.getLongitude());
         Intent i = new Intent(MapActivity.this,RiderMakeRequestActivity.class);
-        i.putExtra("RiderPickUp",startAddress);
-        i.putExtra("RiderDest",destinationAddress);
-        i.putExtra("EstimateFare",money);
-        i.putExtra("startAddressLatitude",userAddress1.getLatitude());
-        i.putExtra("startAddressLongitude",userAddress1.getLongitude());
-        i.putExtra("destinationAddressLatitude",userAddress2.getLatitude());
-        i.putExtra("destinationAddressLongitude",userAddress2.getLongitude());
+
+        i.putExtras(extras);
 
         startActivity(i);
 
