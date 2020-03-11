@@ -17,22 +17,34 @@ public class MainActivity extends AppCompatActivity {
 //    private initFragment initF;
 //    private mapFragment mapF;
 //    private String pickupLoc,DestLoc,tempLoc;
-    private Button login;
+    private Button button_rider;
+    private Button button_driver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        login = findViewById(R.id.login_rider);
+        button_rider = findViewById(R.id.login_rider);
+        button_driver = findViewById(R.id.login_driver);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        button_rider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, RiderActivity.class);
                 startActivity(i);
             }
         });
+
+        button_driver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DriverActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 //        initF = new initFragment();
 //        mapF = new mapFragment();

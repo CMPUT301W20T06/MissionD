@@ -8,17 +8,28 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/login_rider"
+    android:id="@+id/login_rider"
+    android:layout_width="200dp"
+    android:layout_height="60dp"
+    android:background="@android:color/darker_gray"
+    android:text="Login Rider"
+    android:textColor="@android:color/white"
+    android:layout_marginBottom="100dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/login_driver"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@android:color/darker_gray"
-        android:text="Login"
+        android:text="Login driver"
         android:textColor="@android:color/white"
         android:layout_marginBottom="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        app:layout_constraintStart_toStartOf="@+id/login_rider"
+        app:layout_constraintEnd_toEndOf="@+id/login_rider"
+        app:layout_constraintBottom_toBottomOf="@+id/login_rider"/>
 
 
 
