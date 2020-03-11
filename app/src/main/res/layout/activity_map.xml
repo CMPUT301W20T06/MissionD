@@ -1,0 +1,151 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/subLayoutRider_map"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:background="#262626">
+
+        <ImageButton
+            android:id="@+id/riderLocBack"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Book Ride"
+            android:textSize="30dp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subLayoutRide2_map"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/subLayoutRider_map"
+        android:layout_marginTop="-1dp">
+
+        <EditText
+            android:id="@+id/location_search1"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Pick Up Location"
+            android:textColorHint="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRide2_map"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRide2_map" />
+
+        <Button
+            android:id="@+id/search_address1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="8dp"
+            android:onClick="onClick"
+            android:text="search"
+            app:layout_constraintStart_toEndOf="@+id/location_search1"
+            app:layout_constraintTop_toTopOf="@+id/location_search1" />
+
+        <EditText
+            android:id="@+id/location_search2"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Destination"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@+id/location_search1"
+            app:layout_constraintTop_toBottomOf="@+id/location_search1" />
+
+
+        <Button
+            android:id="@+id/search_address2"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:onClick="onClick"
+            android:text="search"
+            app:layout_constraintStart_toStartOf="@+id/search_address1"
+            app:layout_constraintTop_toTopOf="@+id/location_search2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/subLayoutRide2_map"
+        android:layout_alignParentRight="true"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subLayoutRide3_map"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/map">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="estimate"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRide3_map"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRide3_map" />
+
+        <TextView
+            android:id="@+id/RiderEstimateFare_request"
+            android:text="CAD$"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRide3_map"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRide3_map"/>
+
+        <Button
+            android:id="@+id/addMoney_request"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rectangle_background"
+            android:text="Add Money"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/subLayoutRide3_map"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRide3_map"/>
+
+        <Button
+            android:id="@+id/requestRide_request"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Request Ride"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:background="#262626"
+            app:layout_constraintBottom_toBottomOf="@+id/subLayoutRide3_map"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</RelativeLayout>
