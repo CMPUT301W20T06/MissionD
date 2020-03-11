@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show();
             } else {
+//                pass (result) to DB
                 Toast.makeText(this, "Scan:" + result.getContents(), Toast.LENGTH_LONG).show();
             }
         } else {
