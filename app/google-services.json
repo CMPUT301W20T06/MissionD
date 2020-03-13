@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "106888026443",
+    "firebase_url": "https://missiond-53e68.firebaseio.com",
+    "project_id": "missiond-53e68",
+    "storage_bucket": "missiond-53e68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106888026443:android:25b1952ada55ee03f530ce",
+        "android_client_info": {
+          "package_name": "com.example.missiond"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106888026443-qgcvmj2osv9rtv2q3k7bbbja2eilt1po.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpb85Ri_VhZCcKADZkpl8x_NmQ4tiFm9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106888026443-qgcvmj2osv9rtv2q3k7bbbja2eilt1po.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
