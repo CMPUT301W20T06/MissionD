@@ -11,14 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-
-/**
- * Ask driver to confirm the money that will be paid on that trip
- * @author
- *  Weiting Chi
- * @version
- *  Mar.12 2020
- */
 public class DriverAfterRiderCancelFragment extends DialogFragment {
     private Button button_back;
 
@@ -29,12 +21,6 @@ public class DriverAfterRiderCancelFragment extends DialogFragment {
 
         button_back = v.findViewById(R.id.backtoRequest_button);
 
-
-        /**
-         * click the back button
-         * the dialog will dismiss
-         * go to back to the DriverSearchRequest
-         */
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

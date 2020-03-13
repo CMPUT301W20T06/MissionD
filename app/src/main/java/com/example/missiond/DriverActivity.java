@@ -23,15 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-
-/**
- * Display a map with driver current location
- * Driver can start to see trip requests by pressing see trip button
- * @author
- *  Weiting Chi, XinRong Zhou
- * @version
- *  Mar.11 2020
- */
 public class DriverActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Button seeTrip_button;
     private Button profile_button;
@@ -56,7 +47,6 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         profile_button = findViewById(R.id.profile_driver);
 
         Driver user2 = new Driver("Yifei","795509105","user2@email.com");
-
         DataBaseHelper DB = DataBaseHelper.getInstance();
         DB.AddDriver(user2);
 
@@ -71,11 +61,6 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
 
             driverMapFragment.getMapAsync((OnMapReadyCallback) this);
         }
-
-        /**
-         * When pressing the see trip button
-         * it will go to the DriverSearchRequestActivity
-         */
 
         seeTrip_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +80,6 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         });
     }
 
-    /**
-     * This method will set the driver current location on the map
-     *  @param googleMap
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         driverMap = googleMap;
@@ -107,10 +88,6 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         driverMap.setMyLocationEnabled(true);
 
     }
-
-    /**
-     * This function wil get the driver current location
-     */
     public void getDeviceLocation() {
         //Log.d(TAG, "getDeviceLocation: getting the devices current location");
 

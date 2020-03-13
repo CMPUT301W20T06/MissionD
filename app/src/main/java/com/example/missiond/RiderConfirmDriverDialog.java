@@ -10,25 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.journeyapps.barcodescanner.ViewfinderView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.fragment.app.DialogFragment;
 
-/**
- * Displays driver's information
- * if rider confirms drivers, the go to the next activity, else find another driver
- * @author
- *  Weiyi Wu
- * @version
- *  Mar.12 2020
- */
 public class RiderConfirmDriverDialog extends DialogFragment {
     private Button email,call,cancel,confirm;
     private RiderConfirmDriverListener listener;
-
     public interface RiderConfirmDriverListener{
         void onConfirmClick();
     }
@@ -43,11 +39,20 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         get driver's button: phone, email
          */
 
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        final Driver driver = DB.getDriver("Yifei");
+        String driver_name = driver.getUserName();
+        final float driver_rating = driver.getRating();
+        TextView name = v.findViewById(R.id.driver_name);
+        TextView rating = v.findViewById(R.id.driver_rating);
+        name.setText(driver_name);
+        rating.setText(String.valueOf(driver_rating));
+
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = "123456"; // phone = driver.getPhone
+                String phone = driver.getPhoneNumber(); // phone = driver.getPhone
                 String s = "tel:" + phone;
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(s));

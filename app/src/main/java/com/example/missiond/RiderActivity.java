@@ -23,15 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-/**
- * Display a map
- * Rider can start a request by clicking "START" button
- * @author
- *  Xinrong Zhou, Weiyi Wu
- * @version
- *  Mar.12 2020
- */
-
 public class RiderActivity extends AppCompatActivity implements initFragment.initFragmentListener, OnMapReadyCallback {
     private initFragment initF;
     private SupportMapFragment riderMapFragment;
@@ -86,9 +77,6 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
 
     }
 
-    /**
-     * Rider starts a trip request
-     */
     @Override
     public void onRiderStartTripClick() {
         Intent intent = new Intent(RiderActivity.this, MapActivity.class);
@@ -104,12 +92,6 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         return DestLoc;
     }
 
-
-    /**
-     * This method will set the driver current location on the map
-     *  @param googleMap
-     */
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         riderMap = googleMap;
@@ -119,10 +101,6 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
 
 
     }
-
-    /**
-     * This function wil get the driver current location
-     */
     public void getDeviceLocation() {
         //Log.d(TAG, "getDeviceLocation: getting the devices current location");
 

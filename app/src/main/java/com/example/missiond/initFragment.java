@@ -11,14 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-/**
- * Allow rider to start the trip
- * @author
- *  Weiyi Wu
- * @version
- *  Mar.12 2020
- */
-
 public class initFragment extends Fragment {
     private initFragmentListener listener;
     private Button startTrip;

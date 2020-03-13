@@ -12,16 +12,6 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-/**
- * Array adapter of trip list
- * set the location name
- * set the destination name
- * @author
- *  Weiting Chi
- * @version
- *  Mar.12 2020
- */
-
 public class TripList extends ArrayAdapter<Trip> {
     private ArrayList<Trip> trips;
     private Context context;

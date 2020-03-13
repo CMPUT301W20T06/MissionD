@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class DriverSearchRequestActivity extends AppCompatActivity {
+public class SearchRequestActivity extends AppCompatActivity {
 
     private ImageButton button_back;
     private ImageButton button_refresh;
@@ -26,7 +26,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.driver_search_request_activity);
+        setContentView(R.layout.search_request_activity);
 
         button_back = findViewById(R.id.DriverDestBack);
         button_refresh = findViewById(R.id.refresh);
@@ -50,11 +50,11 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Trip tripedit = tripDataList.get(position);
 
-                Intent intent = new Intent(DriverSearchRequestActivity.this, DriverMakeOfferActivity.class);
+                Intent intent = new Intent(SearchRequestActivity.this, MakeOfferActivity.class);
                 intent.putExtra("trip_location",tripedit.getLocationName());
                 intent.putExtra("trip_destination",tripedit.getDestination());
                 startActivity(intent);
-                //DriverSearchRequestActivity.this.finish();
+                SearchRequestActivity.this.finish();
 
             }
         });
@@ -62,7 +62,9 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(SearchRequestActivity.this, MainActivity.class);
+                startActivity(intent);
+                SearchRequestActivity.this.finish();
             }
         });
 

@@ -4,16 +4,16 @@ import android.location.Address;
 
 public class Driver extends User {
     private Boolean availability;
-    private Integer thumbUp;
-    private Integer thumbDown;
+    private int thumbUp = 1;
+    private int thumbDown = 0;
     public Driver(String userName, String phoneNumber, String emailAddress) {
         super(userName, phoneNumber, emailAddress);
         this.availability = true;
-        this.thumbDown = 0;
-        this.thumbUp = 0;
+    }
+    public Driver(){
     }
 
-    public void setAvailabilty(Boolean availability) {
+    public void setAvailability(Boolean availability) {
         this.availability = availability;
     }
 
@@ -29,7 +29,8 @@ public class Driver extends User {
         this.thumbDown += 1;
     }
 
-    public float getRatin() {
-        return this.thumbUp / (this.thumbDown + thumbUp) * 5;
+    public float getRating() {
+//        return (float) this.thumbUp;
+        return (float) this.thumbUp / (this.thumbDown + this.thumbUp) * 5;
     }
 }

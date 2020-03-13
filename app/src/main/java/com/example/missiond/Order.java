@@ -2,21 +2,17 @@ package com.example.missiond;
 
 import android.location.Address;
 
-
-/**
- * This is a class that keeps track of Order objects
- */
 public class Order {
-    private Address startLocation;
-    private Address endLocation;
+    private String startLocation;
+    private String endLocation;
     private Float distance;
     private Float cost;
     private Integer orderStatus;
-    private Rider rider;
-    private Driver driver;
+    private String rider;
+    private String driver;
 
 
-    public Order(Address startLocation, Address endLocation, Float distance, Float cost,Integer orderStatus,Rider rider,Driver driver) {
+    public Order(String startLocation, String endLocation, Float distance, Float cost,Integer orderStatus,String rider,String driver) {
 
         this.startLocation = startLocation;
         this.endLocation = endLocation;
@@ -26,28 +22,17 @@ public class Order {
         this.rider = rider;
         this.driver = driver;
     }
+    public Order(){
+    }
 
-    /**
-     * This get the name of Driver
-     * @return
-     *  Return the Driver name
-     */
-    public Driver getDriver() {
+    public String getDriver() {
         return driver;
     }
 
-    /**
-     * set the driver name
-     * @param driver
-     */
-    public void setDriver(Driver driver) {
+    public void setDriver(String driver) {
         this.driver = driver;
     }
 
-    /**
-     * return the cost
-     * @return cost
-     */
     public Float getCost() {
         return cost;
     }
@@ -65,19 +50,19 @@ public class Order {
         this.distance = distance;
     }
 
-    public Address getEndLocation() {
+    public String getEndLocation() {
         return endLocation;
     }
 
-    public void setEndLocation(Address endLocation) {
+    public void setEndLocation(String endLocation) {
         this.endLocation = endLocation;
     }
 
-    public Address getStartLocation() {
+    public String getStartLocation() {
         return startLocation;
     }
 
-    public void setStartLocation(Address startLocation) {
+    public void setStartLocation(String startLocation) {
         this.startLocation = startLocation;
     }
 
@@ -89,11 +74,11 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Rider getRider() {
+    public String getRider() {
         return rider;
     }
 
-    public void setRider(Rider rider) {
+    public void setRider(String rider) {
         this.rider = rider;
     }
 

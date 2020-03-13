@@ -1,5 +1,6 @@
 package com.example.missiond;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MakeOfferActivity extends AppCompatActivity implements OnMapReadyCallback {
     private ImageButton button_back;
     private Button button_confirm;
     private TextView LocationName;
@@ -43,7 +44,7 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.driver_make_offer);
+        setContentView(R.layout.make_offer);
 
 
         Location = getIntent().getExtras().getString("trip_location");
@@ -60,7 +61,9 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(MakeOfferActivity.this, SearchRequestActivity.class);
+                startActivity(intent);
+                MakeOfferActivity.this.finish();
             }
         });
 

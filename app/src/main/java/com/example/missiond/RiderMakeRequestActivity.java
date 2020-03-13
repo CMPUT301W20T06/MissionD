@@ -21,14 +21,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * Once there is a drive to accept the request, the information about that drive will be displayed
- * Rider can choose to ride with this diver or wait for another driver
- * @author
- *  Xinrong Zhou, Weiyi Wu
- * @version
- *  Mar.12 2020
- */
 public class RiderMakeRequestActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener, RiderConfirmDriverDialog.RiderConfirmDriverListener, RiderConfirmCancelDialog.RiderConfirmCancelDialogListener {
 
@@ -134,9 +126,6 @@ public class RiderMakeRequestActivity extends AppCompatActivity implements OnMap
 
     }
 
-    /**
-     * If rider confirm driver, rider waits for driver to pick up
-     */
     @Override
     public void onConfirmClick() {
         Bundle extras = new Bundle();
@@ -154,12 +143,12 @@ public class RiderMakeRequestActivity extends AppCompatActivity implements OnMap
         startActivity(i);
 
         finish();
-
+        /*
+        change request status
+         */
+//        Toast.makeText(this,"test",Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * If rider confirm cancel, go back to the previous activity
-     */
     @Override
     public void onCancelConfirmClick() {
         finish();

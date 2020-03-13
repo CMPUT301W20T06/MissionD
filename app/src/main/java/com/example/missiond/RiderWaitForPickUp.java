@@ -16,14 +16,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * Displays a map, driver's information, and pick up location and destination
- * Rider can call driver
- * @author
- *  Weiyi Wu, Xinrong Zhou
- * @version
- *  Mar.12 2020
- */
 public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, OnMapReadyCallback {
     private ImageButton back;
     private Button confirm;
@@ -101,19 +93,11 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
 
     }
 
-    /**
-     * Cancel request and go back to the rider activity
-     */
     @Override
     public void onCancelConfirmClick() {
         finish();
     }
 
-    /**
-     * Show pick up location and destination on the map
-     * @param googleMap
-     *  This is the map to be shown
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         newMap = googleMap;
@@ -127,5 +111,8 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
 
         newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,8));
         newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng2,8));
+
+
+
     }
 }

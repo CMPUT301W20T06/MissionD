@@ -5,13 +5,16 @@ import android.location.Address;
 public class User {
     private String userName;
     private String phoneNumber;
-    private final String emailAddress;
+    private String emailAddress;
     private Address location;
 
     public User(String userName, String phoneNumber,String emailAddress){
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
+    }
+    public User(){
+
     }
 
     public String getUserName(){

@@ -16,14 +16,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * Displays a map, driver's information, and pick up location and destination
- * Rider can click "ARRIVE" to end the trip and pay
- * @author
- *  Weiyi Wu
- * @version
- *  Mar.12 2020
- */
 public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, RiderConfirmPayDialog.RiderConfirmPayDialogListener,
         OnMapReadyCallback {
     private ImageButton back;
@@ -91,17 +83,11 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
 
     }
 
-    /**
-     * Cancel request and go back to the rider activity
-     */
     @Override
     public void onCancelConfirmClick() {
         finish();
     }
 
-    /**
-     * Finish request and go to the pay activity
-     */
     @Override
     public void onArriveConfirmClick() {
         Intent i = new Intent(RiderOnTripActivity.this, RiderEndPayActivity.class);
@@ -109,11 +95,6 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         finish();
     }
 
-    /**
-     * Show pick up location and destination on the map
-     * @param googleMap
-     *  This is the map to be shown
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         newMap = googleMap;

@@ -15,13 +15,6 @@ import androidx.fragment.app.DialogFragment;
 
 import static java.lang.Integer.valueOf;
 
-/**
- * Ask rider to confirm and if they would like to add extra amount of fare
- * @author
- *  Weiyi Wu
- * @version
- *  Mar.12 2020
- */
 public class RiderAddMoneyFragment extends DialogFragment {
 //    private static final String TAG = "AddMoneyFragment";
 

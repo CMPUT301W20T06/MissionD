@@ -11,13 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-/**
- * Confirm if rider wants to end trip and pay
- * @author
- *  Weiyi Wu
- * @version
- *  Mar.12 2020
- */
 public class RiderConfirmPayDialog extends DialogFragment {
 
     private Button close,confirm;
