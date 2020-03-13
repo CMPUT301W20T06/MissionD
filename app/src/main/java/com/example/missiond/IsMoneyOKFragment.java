@@ -34,7 +34,8 @@ public class IsMoneyOKFragment extends DialogFragment {
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getDialog().dismiss();
+                new DriverWaitRiderConfrimFragment().show(getFragmentManager(),"Waiting");
             }
         });
 

@@ -25,34 +25,53 @@
         app:layout_constraintTop_toBottomOf="@+id/closeAddMoney"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <EditText
-        android:id="@+id/enterAddMoneyAmount"
-        android:layout_width="340dp"
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="220dp"
         android:layout_height="60dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="80dp"
         android:textSize="20dp"
-        android:inputType="number"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/sign"
+        android:layout_width="20dp"
+        android:layout_height="60dp"
+        android:textSize="20dp"
+        android:text=" + "
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/amount"
+        app:layout_constraintStart_toEndOf="@+id/amount"/>
+
+    <EditText
+        android:id="@+id/enterAddMoneyAmount"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:textSize="20dp"
+        android:inputType="number"
+        android:layout_marginRight="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sign"
+        app:layout_constraintStart_toEndOf="@+id/sign"/>
 
     <Button
         android:id="@+id/saveAddMoney"
         android:layout_width="90dp"
         android:layout_height="40dp"
-        android:text="SAVE"
+        android:text="CONFIRM"
         android:textSize="20dp"
         android:textColor="@android:color/white"
         android:background="@drawable/rectangle_background"
         android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterAddMoneyAmount"
         app:layout_constraintStart_toStartOf="@id/closeAddMoney"/>
 
-    <TextView
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saveAddMoney"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

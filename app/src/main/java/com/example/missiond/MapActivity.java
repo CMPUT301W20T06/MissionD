@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,13 +49,12 @@ import java.util.Locale;
  */
 public class MapActivity extends FragmentActivity implements
         OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener
+        com.google.android.gms.location.LocationListener, RiderAddMoneyFragment.OnAddMoneyFragmentListener,
+        GoogleMap.OnMarkerDragListener
 {
 
     private static final String TAG = MapActivity.class.getSimpleName();
 
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
-    public static final float INITIAL_ZOOM = 12f;
     public GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -77,6 +77,10 @@ public class MapActivity extends FragmentActivity implements
 
     private Button request;
     private ImageButton back;
+    private Button addMoney;
+    private RiderAddMoneyFragment addMoneyFrag;
+    private float addAmount;
+    private TextView addAmountShow;
 
 
     @Override
@@ -102,6 +106,8 @@ public class MapActivity extends FragmentActivity implements
             mapFragment.getMapAsync(this);
         }
 
+//        addAmountShow = findViewById(R.id.RiderAddedAmount_request);
+
         request = findViewById(R.id.requestRide_request);
         request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +123,7 @@ public class MapActivity extends FragmentActivity implements
                 backButton();
             }
         });
+
 
     }
 
@@ -148,7 +155,6 @@ public class MapActivity extends FragmentActivity implements
                         if(addressList1 != null)
 
                         {
-//                            for(int i=0;i<addressList.size();i++){
                             userAddress1 = addressList1.get(0);
                             LatLng1 = new LatLng(userAddress1.getLatitude(),userAddress1.getLongitude());
 
@@ -156,13 +162,13 @@ public class MapActivity extends FragmentActivity implements
                             userMarkerOptions.position(LatLng1);
                             userMarkerOptions.title(startAddress);
                             userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                            userMarkerOptions.draggable(true);
 
                             mMap.addMarker(userMarkerOptions);
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng1));
 
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-//}
                         }
                         else{
                             Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
@@ -198,7 +204,6 @@ public class MapActivity extends FragmentActivity implements
 
                         {
 
-//                            for(int i=0;i<addressList.size();i++){
                             userAddress2 = addressList2.get(0);
                             LatLng2 = new LatLng(userAddress2.getLatitude(),userAddress2.getLongitude());
 
@@ -206,6 +211,7 @@ public class MapActivity extends FragmentActivity implements
                             userMarkerOptions2.position(LatLng2);
                             userMarkerOptions2.title(destinationAddress);
                             userMarkerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                            userMarkerOptions2.draggable(true);
 
                             mMap.addMarker(userMarkerOptions2);
 
@@ -213,7 +219,6 @@ public class MapActivity extends FragmentActivity implements
 
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
-//}
                         }
                         else{
                             Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
@@ -233,19 +238,38 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
-    public void getMoney(View v){
+
+
+    public void getMoney(View v) {
+        if ((userAddress1 == null) || (userAddress2 == null)) {
+            Toast.makeText(this, "Please input locations", Toast.LENGTH_SHORT).show();
+        } else {
 //        TextView showMoney = findViewById(R.id.Money);
-        Location loc1 = new Location("");
-        Location loc2 = new Location("");
-        loc1.setLatitude(userAddress1.getLatitude());
-        loc1.setLongitude(userAddress1.getLongitude());
-        loc2.setLatitude(userAddress2.getLatitude());
-        loc2.setLongitude(userAddress2.getLongitude());
+            Location loc1 = new Location("");
+            Location loc2 = new Location("");
+            loc1.setLatitude(userAddress1.getLatitude());
+            loc1.setLongitude(userAddress1.getLongitude());
+            loc2.setLatitude(userAddress2.getLatitude());
+            loc2.setLongitude(userAddress2.getLongitude());
 
-        float distance = loc1.distanceTo(loc2);
-        money = (float) (0.004 * distance);
+            float distance = loc1.distanceTo(loc2);
+            money = (float) (0.004 * distance);
 //        showMoney.setText(String.valueOf(money));
+            Toast.makeText(this, String.valueOf(money), Toast.LENGTH_SHORT).show();
+            Bundle bundle = new Bundle();
+            bundle.putString("moneyAmount", String.valueOf(money));
+            addMoneyFrag = new RiderAddMoneyFragment();
+            addMoneyFrag.setArguments(bundle);
+            addMoneyFrag.show(getSupportFragmentManager(), "addMoneyFragment");
 
+        }
+    }
+    @Override
+    public void onAddSaveClick(int amount){
+
+
+        addAmount = ((float)amount) + money;  // Should be saved to database
+        //save startAddress & destinationAddress to database
         Bundle extras = new Bundle();
         extras.putString("RiderPickUp",startAddress);
         extras.putString("RiderDest",destinationAddress);
@@ -255,14 +279,28 @@ public class MapActivity extends FragmentActivity implements
         extras.putFloat("startAddressLongitude", (float) userAddress1.getLongitude());
         extras.putFloat("destinationAddressLatitude", (float) userAddress2.getLatitude());
         extras.putFloat("destinationAddressLongitude", (float) userAddress2.getLongitude());
-        Intent i = new Intent(MapActivity.this,RiderMakeRequestActivity.class);
+        Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);
 
         i.putExtras(extras);
 
+        Location loc1 = new Location("");
+        Location loc2 = new Location("");
+        loc1.setLatitude(userAddress1.getLatitude());
+        loc1.setLongitude(userAddress1.getLongitude());
+        loc2.setLatitude(userAddress2.getLatitude());
+        loc2.setLongitude(userAddress2.getLongitude());
+        float distance = loc1.distanceTo(loc2);
+
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        Rider rider = DB.getRider("Isaac");
+        Driver driver = DB.getDriver("Yifei");
+        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,"Isaac","Yifei");
+        DB.addOrder(order,"Isaac");
+
         startActivity(i);
 
+        finish();
     }
-
 
     /**
      * Triggered when the map is ready to be used.
@@ -283,14 +321,8 @@ public class MapActivity extends FragmentActivity implements
         }
         buildGoogleApiClient();
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerDragListener(this);
 
-
-        setMapLongClick(mMap); // Set a long click listener for the map;
-        setPoiClick(mMap); // Set a click listener for points of interest
-        //enableMyLocation(mMap); // Enable location tracking.
-        // Enable going into StreetView by clicking on an InfoWindow from a
-        // point of interest.
-        setInfoWindowClickToPanorama(mMap);
     }
     //}
 
@@ -309,7 +341,6 @@ public class MapActivity extends FragmentActivity implements
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
-
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 11));
 
@@ -337,89 +368,6 @@ public class MapActivity extends FragmentActivity implements
     }
 
 
-
-    /**
-     * Adds a blue marker to the map when the user long clicks on it.
-     *
-     * @param map The GoogleMap to attach the listener to.
-     */
-    private void setMapLongClick(final GoogleMap map) {
-
-        // Add a blue marker to the map when the user performs a long click.
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                String snippet = String.format(Locale.getDefault(),
-                        getString(R.string.lat_long_snippet),
-                        latLng.latitude,
-                        latLng.longitude);
-                Toast.makeText(MapActivity.this,snippet,Toast.LENGTH_SHORT).show();
-
-                map.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title(getString(R.string.dropped_pin))
-                        .snippet(snippet)
-                        .icon(BitmapDescriptorFactory.defaultMarker
-                                (BitmapDescriptorFactory.HUE_BLUE)));
-            }
-        });
-    }
-
-    /**
-     * Adds a marker when a place of interest (POI) is clicked with the name of
-     * the POI and immediately shows the info window.
-     *
-     * @param map The GoogleMap to attach the listener to.
-     */
-    private void setPoiClick(final GoogleMap map) {
-        map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
-            @Override
-            public void onPoiClick(PointOfInterest poi) {
-                Marker poiMarker = map.addMarker(new MarkerOptions()
-                        .position(poi.latLng)
-                        .title(poi.name));
-                poiMarker.showInfoWindow();
-                poiMarker.setTag(getString(R.string.poi));
-
-                Toast.makeText(MapActivity.this,poi.name,Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-
-    /**
-     * Starts a Street View panorama when an info window containing the poi tag
-     * is clicked.
-     *
-     * @param map The GoogleMap to set the listener to.
-     */
-    private void setInfoWindowClickToPanorama(GoogleMap map) {
-        map.setOnInfoWindowClickListener(
-                new GoogleMap.OnInfoWindowClickListener() {
-                    @Override
-                    public void onInfoWindowClick(Marker marker) {
-                        // Check the tag
-                        if (marker.getTag() == "poi") {
-
-                            // Set the position to the position of the marker
-                            StreetViewPanoramaOptions options =
-                                    new StreetViewPanoramaOptions().position(
-                                            marker.getPosition());
-
-                            SupportStreetViewPanoramaFragment streetViewFragment
-                                    = SupportStreetViewPanoramaFragment
-                                    .newInstance(options);
-
-                            // Replace the fragment and add it to the backstack
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.map,
-                                            streetViewFragment)
-                                    .addToBackStack(null).commit();
-                        }
-                    }
-                });
-    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -491,5 +439,21 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        Toast.makeText(this, String.valueOf(marker.getPosition()), Toast.LENGTH_LONG).show();
+
+
+    }
 }
 

@@ -1,18 +1,20 @@
 package com.example.missiond;
 
-import android.location.Location;
+import android.location.Address;
 
 public class User {
     private String userName;
     private String phoneNumber;
-    private final String emailAddress;
-    private Location location;
+    private String emailAddress;
+    private Address location;
 
-    public User(String userName, String phoneNumber,String emailAddress,Location location){
+    public User(String userName, String phoneNumber,String emailAddress){
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-        this.location = location;
+    }
+    public User(){
+
     }
 
     public String getUserName(){
@@ -37,13 +39,13 @@ public class User {
         return emailAddress;
     }
 
-    public Location getLocation(){
-        return location;
-    }
+//    public Address getLocation(){
+//        return location;
+//    }
 
-    public void setLocation(Location location) {
-        this.location = location;
-
-    }
+//    public void setLocation(Address location) {
+//        this.location = location;
+//
+//    }
 
     }

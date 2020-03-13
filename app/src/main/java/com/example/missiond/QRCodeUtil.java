@@ -48,7 +48,7 @@ public class QRCodeUtil {
             }
 
             if(!TextUtils.isEmpty(margin)){
-                hints.put(EncodeHintType.MARGIN, margin); // 空白边距设置
+                hints.put(EncodeHintType.MARGIN, margin);
             }
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
 

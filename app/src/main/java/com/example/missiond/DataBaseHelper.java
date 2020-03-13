@@ -15,31 +15,43 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-
+/**
+ * This is a helper class that make use of firestore to manage data
+ */
 public class DataBaseHelper {
     private static DataBaseHelper instance = null;
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db;
     private static final String TAG = "DataBaseHelper";
-    private User tempUser;
+    private Driver tempDriver;
+    private Rider tempRider;
     private List<Order> list = new ArrayList<>();
-    private List<User> list_driver = new ArrayList<>();
+    private List<Driver> list_driver = new ArrayList<>();
 
+    /**
+     * This is the constructor method that fulfills singleton class design
+     */
     private DataBaseHelper() {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
+        db = FirebaseFirestore.getInstance();
         db.setFirestoreSettings(settings);
         db.collection("Rider");
         db.collection("Orders");
         db.collection("Driver");
     }
 
+    /**
+     * This get the instance of DatabaseHelper class
+     * @return
+     *  Return DatabaseHelper instance
+     */
     public static DataBaseHelper getInstance() {
         if (instance == null) {
             instance = new DataBaseHelper();
@@ -48,18 +60,31 @@ public class DataBaseHelper {
         return instance;
     }
 
+    /**
+     * This stores rider class to firestore database
+     * @return
+     *  Return DocumentReference instance of that rider
+     */
     public DocumentReference AddRider(Rider rider) {
         DocumentReference userReference = db.collection("Rider").document(rider.getUserName());
         userReference.set(rider);
         return userReference;
     }
 
+    /**
+     * This stores Driver class to firestore database
+     * @return
+     *  Return DocumentReference instance of that driver
+     */
     public DocumentReference AddDriver(Driver driver) {
         DocumentReference userReference = db.collection("Driver").document(driver.getUserName());
         userReference.set(driver);
         return userReference;
     }
 
+    /**
+     * This update user class to firestore database
+     */
     public void UpdateUserData(User user, Boolean isRider) {
         String collection = "Driver";
         if (isRider) {
@@ -81,6 +106,9 @@ public class DataBaseHelper {
                 });
     }
 
+    /**
+     * This delete class that is stored in firestore database
+     */
     public void DeleteUser(String userName, Boolean isRider) {
         String collection = "Driver";
         if (isRider) {
@@ -102,25 +130,51 @@ public class DataBaseHelper {
                 });
     }
 
-    public User getUser(String userName, Boolean isRider) {
+    /**
+     * This method get the rider class by its username
+     * @return
+     *  Return rider object
+     */
+    public Rider getRider(String userName) {
+        DocumentReference docRef = db.collection("Rider").document(userName);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                tempRider = documentSnapshot.toObject(Rider.class);
+            }
+        });
+        return tempRider;
+    }
+
+    /**
+     * This method get the driver class by its username
+     * @return
+     *  Return Driver object
+     */
+    public Driver getDriver(String userName) {
         String collection = "Driver";
-        if (isRider) {
-            collection = "Rider";
-        }
         DocumentReference docRef = db.collection(collection).document(userName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tempUser = documentSnapshot.toObject(User.class);
+                tempDriver = documentSnapshot.toObject(Driver.class);
             }
         });
-        return tempUser;
+        return tempDriver;
     }
 
+    /**
+     * This method checks if a user exist in database
+     * @return
+     *  Return Boolean
+     */
     public Boolean userExist(String userName, Boolean isRider) {
         return true;
     }
 
+    /**
+     * This method add order in database
+     */
     public void addOrder(Order order, String userName) {
         Map<String, Object> orderData = new HashMap<>();
         orderData.put("userName", userName);
@@ -128,6 +182,11 @@ public class DataBaseHelper {
         db.collection("Orders").add(orderData);
     }
 
+    /**
+     * This method get the all orders of a specific order
+     * @return
+     *  Return a list of orders
+     */
     public List<Order> GetUserOrders(String userName) {
         db.collection("Orders")
                 .whereEqualTo("userName", userName)
@@ -136,7 +195,7 @@ public class DataBaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }
@@ -149,14 +208,19 @@ public class DataBaseHelper {
         return list;
     }
 
-    public List<User> getDrivers() {
+    /**
+     * This method get all drivers in database
+     * @return
+     *  Return a list of drivers
+     */
+    public List<Driver> getDrivers() {
         db.collection("Drivers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list_driver.add(document.toObject(Driver.class));
                             }
@@ -168,6 +232,11 @@ public class DataBaseHelper {
         return list_driver;
     }
 
+    /**
+     * This method get all orders in database
+     * @return
+     *  Return a list of orders
+     */
     public List<Order> getAllOrders() {
         db.collection("Orders")
                 .get()
@@ -175,7 +244,7 @@ public class DataBaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }

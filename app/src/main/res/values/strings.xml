@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MissionD</string>
+    <string name="app_name">Mar05</string>
     <string name="lat_long_snippet">Lat: %1$.5f, Long: %2$.5f</string>
     <string name="dropped_pin">Dropped Pin</string>
     <string name="poi">poi</string>

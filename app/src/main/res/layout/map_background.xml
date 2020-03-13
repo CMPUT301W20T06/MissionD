@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:layout_marginTop="57dp"
-        tools:context="com.example.mar05.MapActivity"
+        tools:context="com.example.missionD.MapActivity"
         tools:ignore="MissingConstraints,NotSibling" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

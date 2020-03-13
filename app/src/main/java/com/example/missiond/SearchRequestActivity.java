@@ -32,8 +32,8 @@ public class SearchRequestActivity extends AppCompatActivity {
         button_refresh = findViewById(R.id.refresh);
         tripList = findViewById(R.id.trip_list);
 
-        String []location ={"Univeristy of Alberta", "Univeristy of Alberta", "Nait", "Univeristy of Alberta","Airport","City Center"};
-        String []destination={"Southgate","Joillbee","Southgate","Mayfair","Virking Arms","Hendrix"};
+        String []location ={"University of Alberta", "University of Alberta", "NAIT", "University of Alberta","Edmonton International Airport","Mayfair South"};
+        String []destination={"Southgate Centre","Edmonton International Airport","Southgate Centre","Mayfair South","Corona Station","Churchill Station"};
 
         tripDataList = new ArrayList<>();
 
