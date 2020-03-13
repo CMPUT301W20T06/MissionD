@@ -1,0 +1,190 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity"/>
+
+    <LinearLayout
+        android:id="@+id/subLayoutRider_map"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:background="#262626">
+
+        <ImageButton
+            android:id="@+id/riderLocBack"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Book Ride"
+            android:textSize="30dp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subLayoutRide2_map"
+        android:layout_width="380dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/subLayoutRider_map">
+
+        <ImageView
+            android:id="@+id/pickupLocation_map"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/dian"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRide2_map"
+            app:layout_constraintTop_toTopOf="@+id/location_search1" />
+
+        <EditText
+            android:id="@+id/location_search1"
+            android:background="#00000000"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/black"
+            android:hint="Pick Up Location"
+            android:textColorHint="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/pickupLocation_map"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRide2_map" />
+
+        <ImageButton
+            android:id="@+id/search_address1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/gou_ico"
+            android:onClick="onClick"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toEndOf="@+id/location_search1"
+            app:layout_constraintTop_toTopOf="@+id/location_search1" />
+
+        <ImageView
+            android:id="@+id/Destination_map"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/dingweimian"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRide2_map"
+            app:layout_constraintTop_toBottomOf="@+id/pickupLocation_map" />
+
+
+        <EditText
+            android:id="@+id/location_search2"
+            android:background="#00000000"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@android:color/black"
+            android:hint="Destination"
+            app:layout_constraintStart_toStartOf="@+id/location_search1"
+            app:layout_constraintTop_toBottomOf="@+id/location_search1" />
+
+
+        <ImageButton
+            android:id="@+id/search_address2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onClick"
+            android:background="@drawable/gou_ico"
+            app:layout_constraintStart_toStartOf="@+id/search_address1"
+            app:layout_constraintTop_toTopOf="@+id/location_search2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/subLayoutRide3_map"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="#FFFFFF">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="6dp"-->
+<!--            android:text="estimate"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/subLayoutRide3_map"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/subLayoutRide3_map" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/RiderEstimateFare_request"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="28dp"-->
+<!--            android:text="CAD$"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/subLayoutRide3_map"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/subLayoutRide3_map" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/RiderAddedAmount_request"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/RiderEstimateFare_request"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/RiderEstimateFare_request"/>-->
+
+
+<!--        <Button-->
+<!--            android:id="@+id/addMoney_request"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:background="@drawable/rectangle_background"-->
+<!--            android:text="Add Money"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="15dp"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/subLayoutRide3_map"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/subLayoutRide3_map" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/requestRide_request"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="#262626"-->
+<!--            android:text="Request Ride"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/subLayoutRide3_map" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <Button
+        android:id="@+id/requestRide_request"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#262626"
+        android:text="Request Ride"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

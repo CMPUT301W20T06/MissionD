@@ -1,0 +1,29 @@
+[debug] [2020-03-13T02:54:47.106Z] ----------------------------------------------------------------------
+[debug] [2020-03-13T02:54:47.109Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\70793\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only firestore
+[debug] [2020-03-13T02:54:47.109Z] CLI Version:   7.15.0
+[debug] [2020-03-13T02:54:47.109Z] Platform:      win32
+[debug] [2020-03-13T02:54:47.109Z] Node Version:  v10.15.1
+[debug] [2020-03-13T02:54:47.110Z] Time:          Thu Mar 12 2020 20:54:47 GMT-0600 (Mountain Daylight Time)
+[debug] [2020-03-13T02:54:47.111Z] ----------------------------------------------------------------------
+[debug] [2020-03-13T02:54:47.111Z] 
+[warn] !  Please use firebase emulators:start to start the Realtime Database or Cloud Firestore emulators.
+[info] i  firestore: Serving ALL traffic (including WebChannel) on http://localhost:8080
+[warn] !  firestore: Support for WebChannel on a separate port (8081) is DEPRECATED and will go away soon. Please use port above instead.
+[debug] [2020-03-13T02:54:49.179Z] Starting firestore emulator with command {"binary":"java","args":["-Duser.language=en","-jar","C:\\Users\\70793\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.11.1.jar","--webchannel_port",8081,"--port",8080],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false}
+[info] i  firestore: firestore emulator logging to firestore-debug.log
+[debug] [2020-03-13T02:54:51.839Z] API endpoint: http://localhost:
+[debug] [2020-03-13T02:54:51.840Z] 8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+
+[info] +  firestore: firestore emulator started at http://localhost:8080
+[debug] [2020-03-13T07:18:13.411Z] Mar. 13, 2020 1:18:13 A.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2020-03-13T07:18:13.760Z] Mar. 13, 2020 1:18:13 A.M. io.gapi.emulators.netty.NotFoundHandler handleRequest
+INFO: Unknown request URI: /favicon.ico
+

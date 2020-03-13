@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/subTripDetail_request"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:background="#FFFFFF"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:text="estimate"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="6dp"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/subTripDetail_request"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/subTripDetail_request" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/RiderEstimateFare_request"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="28dp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/subTripDetail_request"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/subTripDetail_request"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/addMoney_request"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:background="@drawable/rectangle_background"-->
+<!--            android:text="Add Money"-->
+<!--            android:textSize="15dp"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:layout_marginTop="18dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/subTripDetail_request"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/subTripDetail_request"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/requestRide_request"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:text="Request Ride"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:background="#262626"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/subTripDetail_request"/>-->
+
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
