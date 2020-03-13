@@ -10,6 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+
+/**
+ * Ask driver to confirm the money that will be paid on that trip
+ * @author
+ *  Weiting Chi
+ * @version
+ *  Mar.12 2020
+ */
 public class DriverWaitRiderConfrimFragment extends DialogFragment {
     private Button tesing_button;
     private Button testing_cancel;

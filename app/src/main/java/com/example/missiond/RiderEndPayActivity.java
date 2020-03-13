@@ -10,6 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
+
+/**
+ * Generate a QR code which driver can use to scan
+ * @author
+ *  Isaac Zhang, Weiyi Wu
+ * @version
+ *  Mar.12 2020
+ */
 public class RiderEndPayActivity extends AppCompatActivity {
     private Button finish;
 
@@ -31,6 +39,9 @@ public class RiderEndPayActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Generate a QR for pay
+     */
     public void GenerateQR() {
 //            EditText text = findViewById(R.id.editText);
 //            String message = text.getText().toString();

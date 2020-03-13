@@ -21,6 +21,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Display a map with driver current location
+ * Driver can start to see trip requests by pressing see trip button
+ * @author
+ *  Weiting Chi, XinRong Zhou
+ * @version
+ *  Mar.12 2020
+ */
 public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapReadyCallback {
     private ImageButton button_back;
     private Button button_confirm;
@@ -57,6 +65,10 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
         LocationName.setText(Location);
         DestinationName.setText(Destination);
 
+        /**
+         * when click on the back button
+         * it will get to the last activity
+         */
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +76,10 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
             }
         });
 
+        /**
+         * when click on the confirm button
+         * it will let driver to confirm if the money is ok or not
+         */
         button_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +97,10 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
 
     }
 
+    /**
+     * This method will set the driver current location on the map
+     *  @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         makeOfferMap = googleMap;

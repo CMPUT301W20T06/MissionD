@@ -46,6 +46,14 @@ import java.util.Locale;
 
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
+ * Rider can search locations by inputting locations or moving pin as an option
+ * Estimate fare is calculated and rider can add extra fee
+ * @author
+ *  Xinrong Zhou, Weiyi Wu
+ * @version
+ *  Mar.13 2020
+ *  @Reference
+ *      //https://github.com/google-developer-training/android-advanced
  */
 public class MapActivity extends FragmentActivity implements
         OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
@@ -82,6 +90,12 @@ public class MapActivity extends FragmentActivity implements
     private float addAmount;
     private TextView addAmountShow;
 
+    /**
+     *
+     * @param savedInstanceState
+     * @Reference
+     * /https://github.com/SimCoderYoutube/UberClone
+     */
 
     @Override
 
@@ -97,7 +111,9 @@ public class MapActivity extends FragmentActivity implements
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-
+        /**
+         * check permissions
+         */
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MapActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
 
@@ -127,6 +143,9 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * this will go back to the previous page
+     */
     public void backButton(){
         finish();
 //        Intent intent = new Intent(MapActivity.this, MainActivity.class);
@@ -136,6 +155,14 @@ public class MapActivity extends FragmentActivity implements
 
     public void onClick(View v){
 
+        /**
+         * users input location and google map will find that address
+         * @param v
+         * @Reference
+         *  //https://github.com/mitchtabian/Google-Maps-Google-Places/tree/e8ad8f165c7df3f25b6a9128c70f4c0e3ed84f94
+         * @Reference
+         *  //https://www.youtube.com/watch?v=NxQY0-QRM1c
+         */
         switch (v.getId())
         {
             case R.id.search_address1:
@@ -238,7 +265,10 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
-
+    /**
+     * Calculate the estimate fare and show a fragment ask rider to confirm the request
+     * @param v
+     */
 
     public void getMoney(View v) {
         if ((userAddress1 == null) || (userAddress2 == null)) {
@@ -264,6 +294,13 @@ public class MapActivity extends FragmentActivity implements
 
         }
     }
+
+    /**
+     * Ask if rider would like to add an extra fee and calculate the total amount
+     * After rider confirms, start the request and wait for driver to accepts
+     * @param amount
+     *  This is the estimate fare
+     */
     @Override
     public void onAddSaveClick(int amount){
 
@@ -326,6 +363,12 @@ public class MapActivity extends FragmentActivity implements
     }
     //}
 
+    /**
+     * Ask permission and get device current location
+     * @Reference
+     *  //https://github.com/mitchtabian/Google-Maps-Google-Places/tree/e8ad8f165c7df3f25b6a9128c70f4c0e3ed84f94
+     */
+
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
@@ -367,6 +410,12 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * monitor location
+     * @param location
+     * @Reference
+     *  //https://www.youtube.com/watch?v=4kk-dYWVNsc
+     */
 
 
     @Override
@@ -389,6 +438,13 @@ public class MapActivity extends FragmentActivity implements
     }
 
 
+    /**
+     * monitor location
+     * @param bundle
+     * @Reference
+     *  //https://www.youtube.com/watch?v=4kk-dYWVNsc
+     */
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -406,17 +462,37 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * monitor location
+     * @param i
+     * @Reference
+     *  //https://www.youtube.com/watch?v=4kk-dYWVNsc
+     */
     @Override
     public void onConnectionSuspended(int i) {
         mGoogleApiClient.connect();
 
     }
 
+    /**
+     * monitor location
+     * @param connectionResult
+     * @Reference
+     *  //https://www.youtube.com/watch?v=4kk-dYWVNsc
+     */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = ");
     }
 
+    /**
+     * check the result of permission
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     * @Reference
+     *  //https://github.com/SimCoderYoutube/UberClone
+     */
     final int LOCATION_REQUEST_CODE = 1;
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -439,16 +515,32 @@ public class MapActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * Drag listener
+     * @param marker
+     * //https://github.com/googlemaps/android-samples
+     */
     @Override
     public void onMarkerDragStart(Marker marker) {
 
     }
+
+    /**
+     * Drag listener
+     * @param marker
+     * //https://github.com/googlemaps/android-samples
+     */
 
     @Override
     public void onMarkerDrag(Marker marker) {
 
     }
 
+    /**
+     * Drag listener
+     * @param marker
+     * //https://github.com/googlemaps/android-samples
+     */
     @Override
     public void onMarkerDragEnd(Marker marker) {
         Toast.makeText(this, String.valueOf(marker.getPosition()), Toast.LENGTH_LONG).show();

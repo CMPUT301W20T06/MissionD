@@ -12,6 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * Display a list view of rider's requests to Driver
+ * Driver click the list that he/she wants to start.
+ * @author
+ *  Weiting Chi
+ * @version
+ *  Mar.12 2020
+ */
+
 public class DriverSearchRequestActivity extends AppCompatActivity {
 
     private ImageButton button_back;
@@ -45,6 +54,11 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         tripList.setAdapter(tripAdapter);
 
 
+        /**
+         * When click on the list
+         * it will get the trip location and trip destination
+         * it will go to the DriverMakeOfferActivity
+         */
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,6 +72,11 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
             }
         });
+
+        /**
+         * when click on the back button
+         * it will get to the last activity
+         */
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override

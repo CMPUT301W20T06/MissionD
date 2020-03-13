@@ -16,6 +16,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Displays driver's information
+ * Can call driver by clicking on the call button
+ * @author
+ *  Weiyi Wu
+ * @version
+ *  Mar.12 2020
+ */
 public class DriverInfoDialog extends DialogFragment {
 
     private Button close,call,email;
@@ -38,6 +46,11 @@ public class DriverInfoDialog extends DialogFragment {
                 String s = "tel:" + phone;
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(s));
+                /**
+                 * https://stackoverflow.com/questions/40125931/how-to-ask-permission-to-make-phone-call-from-android-from-android-version-marsh
+                 * @author
+                 *  Fabian Tamp
+                 */
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},1);
                 }

@@ -7,6 +7,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Display a map with driver current location
+ * Driver can start to see trip requests by pressing see trip button
+ * @author
+ *  Weiting Chi
+ * @version
+ *  Mar.12 2020
+ */
 public class DriverCompleteTripActivity extends AppCompatActivity {
     private Button completet_button;
 
@@ -18,6 +26,10 @@ public class DriverCompleteTripActivity extends AppCompatActivity {
 
         completet_button = findViewById(R.id.complete_button);
 
+        /**
+         * press the complete button
+         * will go to the ScanQRcode activity
+         */
         completet_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

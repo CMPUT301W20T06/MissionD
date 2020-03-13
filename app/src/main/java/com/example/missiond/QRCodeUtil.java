@@ -15,7 +15,14 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.Hashtable;
 
-
+/**
+ * Display a map with driver current location
+ * Driver can start to see trip requests by pressing see trip button
+ * @author
+ *  Isaac Zhang
+ * @version
+ *  Mar.12 2020
+ */
 public class QRCodeUtil {
 
     @Nullable

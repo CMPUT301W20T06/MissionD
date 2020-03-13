@@ -22,6 +22,14 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Displays driver's information
+ * if rider confirms drivers, the go to the next activity, else find another driver
+ * @author
+ *  Weiyi Wu
+ * @version
+ *  Mar.12 2020
+ */
 public class RiderConfirmDriverDialog extends DialogFragment {
     private Button email,call,cancel,confirm;
     private RiderConfirmDriverListener listener;

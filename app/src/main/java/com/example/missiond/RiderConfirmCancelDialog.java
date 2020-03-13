@@ -11,6 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Confirm if rider wants to cancel the request
+ * @author
+ *  Weiyi Wu
+ * @version
+ *  Mar.12 2020
+ */
 public class RiderConfirmCancelDialog extends DialogFragment {
     private Button close, confirm;
     private RiderConfirmCancelDialogListener listener;

@@ -11,6 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+/**
+ * Display a map with driver current location
+ * Driver can start to see trip requests by pressing see trip button
+ * @author
+ *  Isaac Zhang
+ * @version
+ *  Mar.12 2020
+ */
 
 public class ScanQRcode extends AppCompatActivity {
 
@@ -23,6 +31,11 @@ public class ScanQRcode extends AppCompatActivity {
 
         scan = findViewById(R.id.scan_button);
 
+        /**
+         * press the scan button
+         * it will open the camera
+         */
+
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +46,13 @@ public class ScanQRcode extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * This method will set the driver current location on the map
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -8,6 +8,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Display a map with driver current location
+ * Driver can start to see trip requests by pressing see trip button
+ * @author
+ *  Weiting Chi
+ * @version
+ *  Mar.12 2020
+ */
 public class DriverPickeupRiderActivity extends AppCompatActivity {
 
     private Button pick_up_button;
