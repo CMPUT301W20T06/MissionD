@@ -18,6 +18,8 @@ WE have done following User stories.
         halfway done: riders can cancel requests before pickup and rider can cancels before a driver accepted
         (hardcoding,not connected with driver server).
 
+    US 01.05.01
+        halfway done: can call driver though call button, have not done email yet.
     US 01.06.01
         all done
 
