@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RiderWaitForAcceptActivity">
+
+    <LinearLayout
+        android:id="@+id/subLayoutRiderWait"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#262626"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/riderBackWait"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Book Ride"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subLayoutRiderWait2"
+        android:layout_width="380dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subLayoutRiderWait">
+
+        <ImageView
+            android:id="@+id/pickupLocationWait"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/dian"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRiderWait2"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRiderWait2" />
+
+        <TextView
+            android:id="@+id/pickUpTitleWait"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="Pick Up Location"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/pickupLocationWait"
+            app:layout_constraintTop_toTopOf="@+id/subLayoutRiderWait2" />
+
+        <TextView
+            android:id="@+id/Location1Wait"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="@+id/pickUpTitleWait"
+            app:layout_constraintTop_toBottomOf="@+id/pickUpTitleWait" />
+
+        <ImageView
+            android:id="@+id/DestinationWait"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="55dp"
+            android:src="@drawable/dingweimian"
+            app:layout_constraintStart_toStartOf="@+id/subLayoutRiderWait2"
+            app:layout_constraintTop_toBottomOf="@+id/pickupLocationWait" />
+
+        <TextView
+            android:id="@+id/DestTitleWait"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="Pick Up Location"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/pickupLocationWait"
+            app:layout_constraintTop_toBottomOf="@+id/Location1Wait" />
+
+        <TextView
+            android:id="@+id/Location2Wait"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="@+id/DestTitleWait"
+            app:layout_constraintTop_toBottomOf="@+id/DestTitleWait" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="                   Looking for driver"
+        android:textSize="25dp"
+        android:textColor="@android:color/white"
+        android:background="#262626"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

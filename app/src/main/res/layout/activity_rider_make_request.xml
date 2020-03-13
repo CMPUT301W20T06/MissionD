@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RiderMakeRequestActivity">
+
+    <fragment
+        android:id="@+id/newMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity"/>
+
+    <LinearLayout
+        android:id="@+id/subBar_makeRequest"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:background="#262626">
+
+        <ImageButton
+            android:id="@+id/riderBack_makeRequest"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Book Ride"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/subBar_makeRequest2"
+        android:layout_width="380dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/subBar_makeRequest">
+
+        <ImageView
+            android:id="@+id/pickupLocation_makeRequest"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/dian"
+            app:layout_constraintStart_toStartOf="@+id/subBar_makeRequest2"
+            app:layout_constraintTop_toTopOf="@+id/subBar_makeRequest2" />
+
+        <TextView
+            android:id="@+id/pickUpTitle_makeRequest"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="Pick Up Location"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/pickupLocation_makeRequest"
+            app:layout_constraintTop_toTopOf="@+id/subBar_makeRequest2" />
+
+        <TextView
+            android:id="@+id/Location1_makeRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="@+id/pickUpTitle_makeRequest"
+            app:layout_constraintTop_toBottomOf="@+id/pickUpTitle_makeRequest" />
+
+        <ImageView
+            android:id="@+id/Destination_makeRequest"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="55dp"
+            android:src="@drawable/dingweimian"
+            app:layout_constraintStart_toStartOf="@+id/subBar_makeRequest2"
+            app:layout_constraintTop_toBottomOf="@+id/pickupLocation_makeRequest" />
+
+        <TextView
+            android:id="@+id/DestTitle_makeRequest"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="Pick Up Location"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/pickupLocation_makeRequest"
+            app:layout_constraintTop_toBottomOf="@+id/Location1_makeRequest" />
+
+        <TextView
+            android:id="@+id/Location2_makeRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="@+id/DestTitle_makeRequest"
+            app:layout_constraintTop_toBottomOf="@+id/DestTitle_makeRequest"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/next_makeRequest"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:textSize="30dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rectangle_background"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Looking for driver"/>
+
+
+
+</RelativeLayout>
