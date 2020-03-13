@@ -38,6 +38,11 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        Driver driver = DB.getDriver("Brian");
+        String driver_name = driver.getUserName();
+        TextView name = findViewById(R.id.driverName);
+        name.setText(driver_name);
         setContentView(R.layout.activity_rider_on_trip);
 
         Intent intent = getIntent();
