@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +41,10 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_wait_for_pick_up);
 
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        final Driver driver = DB.getDriver("Yifei");
+        String driver_name = driver.getUserName();
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         final String pickUp = extras.getString("pickUp");
@@ -68,6 +73,7 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         });
 
         driverName = findViewById(R.id.driverName);
+        driverName.setText(driver_name);
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

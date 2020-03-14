@@ -40,6 +40,10 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_on_trip);
 
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        final Driver driver = DB.getDriver("Yifei");
+        String driver_name = driver.getUserName();
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         final String pickUp = extras.getString("pickUp");
@@ -72,6 +76,7 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         });
 
         driverName = findViewById(R.id.driverName);
+        driverName.setText(driver_name);
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

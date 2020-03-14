@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,13 +38,20 @@ public class DriverInfoDialog extends DialogFragment {
         All info should be loaded from database
         set driver name, plate number, rating
          */
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        final Driver driver = DB.getDriver("Yifei");
+        String driver_name = driver.getUserName();
+        final float driver_rating = driver.getRating();
+        TextView name = v.findViewById(R.id.driver_name);
+        TextView rating = v.findViewById(R.id.driver_rating);
+        name.setText(driver_name);
+        rating.setText(String.valueOf(driver_rating));
 
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = "123456"; // phone = driver.getPhone
-                String s = "tel:" + phone;
+                String s = "tel:" + driver.getPhoneNumber();
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(s));
                 /**
