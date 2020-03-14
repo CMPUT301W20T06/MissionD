@@ -23,6 +23,7 @@ import java.util.Hashtable;
  * @version
  *  Mar.12 2020
  */
+
 public class QRCodeUtil {
 
     @Nullable
