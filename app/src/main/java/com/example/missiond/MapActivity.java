@@ -178,9 +178,8 @@ public class MapActivity extends FragmentActivity implements
                     try
                     {
                         addressList1 = geocoder.getFromLocationName(startAddress,1);
-
-                        if(addressList1 != null)
-
+//                        if(addressList1 != null)
+                       try
                         {
                             userAddress1 = addressList1.get(0);
                             LatLng1 = new LatLng(userAddress1.getLatitude(),userAddress1.getLongitude());
@@ -197,7 +196,8 @@ public class MapActivity extends FragmentActivity implements
 
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
                         }
-                        else{
+                        catch(Exception e){
+                            e.printStackTrace();
                             Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -227,9 +227,8 @@ public class MapActivity extends FragmentActivity implements
                     {
                         addressList2 = geocoder.getFromLocationName(destinationAddress,1);
 
-                        if(addressList2 != null)
-
-                        {
+//                        if(addressList2 != null)
+                    try {
 
                             userAddress2 = addressList2.get(0);
                             LatLng2 = new LatLng(userAddress2.getLatitude(),userAddress2.getLongitude());
@@ -247,7 +246,8 @@ public class MapActivity extends FragmentActivity implements
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
                         }
-                        else{
+                        catch(Exception e){
+                            e.printStackTrace();
                             Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
                         }
                     }
