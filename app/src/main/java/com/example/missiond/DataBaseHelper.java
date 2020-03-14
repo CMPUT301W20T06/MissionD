@@ -85,12 +85,27 @@ public class DataBaseHelper {
     /**
      * This update user class to firestore database
      */
-    public void UpdateUserData(User user, Boolean isRider) {
+    public void UpdateDriverData(Driver driver) {
         String collection = "Driver";
-        if (isRider) {
-            collection = "Rider";
-        }
-        db.collection(collection).document(user.getUserName())
+        db.collection(collection).document(driver.getUserName())
+                .update("capital", true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+
+    public void UpdateRiderData(Rider rider) {
+        String collection = "Rider";
+        db.collection(collection).document(rider.getUserName())
                 .update("capital", true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
