@@ -14,12 +14,13 @@ public class MainActivity extends AppCompatActivity {
 //    private String pickupLoc,DestLoc,tempLoc;
     private Button button_rider;
     private Button button_driver;
+    private Button button_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        button_register = findViewById(R.id.register);
         button_rider = findViewById(R.id.login_rider);
         button_driver = findViewById(R.id.login_driver);
 
@@ -39,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        button_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Register.class);
+                startActivity(i);
+            }
+        });
 
 
 //        initF = new initFragment();
