@@ -52,12 +52,6 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         setContentView(R.layout.activity_rider);
 
         initF = new initFragment();
-        //mapF = new mapFragment();
-
-        Rider user1 = new Rider("Isaac","7807098105","user@email.com");
-
-        DataBaseHelper DB = DataBaseHelper.getInstance();
-        DB.AddRider(user1);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.initFrag, initF)

@@ -55,10 +55,6 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         seeTrip_button = findViewById(R.id.driverSeeTrip);
         profile_button = findViewById(R.id.profile_driver);
 
-        Driver user2 = new Driver("Yifei","795509105","user2@email.com");
-        DataBaseHelper DB = DataBaseHelper.getInstance();
-        DB.AddDriver(user2);
-
         driverMapFragment= (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFrag);
 
