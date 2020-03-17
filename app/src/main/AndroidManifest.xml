@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Register"></activity>
+        <activity android:name=".rider_login"></activity>
+        <activity android:name=".Register" />
         <activity android:name=".ScanQRcode" />
         <activity android:name=".RiderEndPayActivity" />
         <activity android:name=".RiderOnTripActivity" />
@@ -22,6 +23,7 @@
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".DriverActivity" />
         <activity android:name=".RiderActivity" />
+        <activity android:name=".driver_login" />
         <activity android:name=".RiderMakeRequestActivity" />
         <activity android:name=".DriverPickeupRiderActivity" />
         <activity android:name=".DriverCompleteTripActivity" />
