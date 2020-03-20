@@ -331,7 +331,7 @@ public class MapActivity extends FragmentActivity implements
         DataBaseHelper DB = DataBaseHelper.getInstance();
         Rider rider = DB.getRider("Isaac");
         Driver driver = DB.getDriver("Yifei");
-        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,"Isaac","Yifei");
+        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,"Isaac","Yifei", loc1, loc2);
         DB.addOrder(order,"Isaac");
 
         startActivity(i);

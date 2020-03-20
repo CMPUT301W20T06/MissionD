@@ -32,6 +32,7 @@ public class DataBaseHelper {
     private Rider tempRider;
     private List<Order> list = new ArrayList<>();
     private List<Driver> list_driver = new ArrayList<>();
+    private Boolean isEmpty;
 
     /**
      * This is the constructor method that fulfills singleton class design
@@ -184,7 +185,31 @@ public class DataBaseHelper {
      *  Return Boolean
      */
     public Boolean userExist(String userName, Boolean isRider) {
-        return true;
+        String collection = "Driver";
+        if (isRider) {
+            collection = "Rider";
+        }
+
+        DocumentReference docIdRef = db.collection(collection).document(userName);
+        docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "Document exists!");
+                        isEmpty = true;
+                    } else {
+                        Log.d(TAG, "Document does not exist!");
+                        isEmpty = false;
+                    }
+                } else {
+                    Log.d(TAG, "Failed with: ", task.getException());
+                }
+            }
+        });
+
+        return isEmpty;
     }
 
     /**
