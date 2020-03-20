@@ -30,21 +30,14 @@ public class rider_login extends AppCompatActivity {
                 str_phone = phone.getText().toString();
                 str_user_email = user_email.getText().toString();
                 str_user_name = user_name.getText().toString();
-                try {
-                    Rider driver = DB.getRider(str_user_name);
-//                    if (driver.getUserName() == str_user_name){
-                    Intent i = new Intent(rider_login.this, RiderActivity.class);
+
+                if(DB.userExist(str_user_name,true)) {
+                    Intent i = new Intent(rider_login.this, DriverActivity.class);
                     startActivity(i);
-//                    }else {
-//                        Toast.makeText(driver_login.this,"Driver is not find in database",Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(rider_login.this,"Driver is not find in database",Toast.LENGTH_LONG).show();
+                } else{
+                    Toast.makeText(rider_login.this,"Rider is not find in database",Toast.LENGTH_LONG).show();
                     return;
                 }
-
             }
         });
 
