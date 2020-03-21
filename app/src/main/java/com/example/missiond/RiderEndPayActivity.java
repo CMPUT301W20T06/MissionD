@@ -23,12 +23,13 @@ import java.util.List;
  */
 public class RiderEndPayActivity extends AppCompatActivity {
     private Button finish;
+    private DataBaseHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataBaseHelper DB = DataBaseHelper.getInstance();
-        Driver driver = DB.getDriver("Brian");
+        DB = DataBaseHelper.getInstance();
+        Driver driver = DB.getDriver("Yifei");
         String driver_name = driver.getUserName();
         TextView name = findViewById(R.id.driverName);
         name.setText(driver_name);
