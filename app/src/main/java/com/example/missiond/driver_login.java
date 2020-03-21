@@ -30,12 +30,12 @@ public class driver_login extends AppCompatActivity {
                 str_phone = phone.getText().toString();
                 str_user_email = user_email.getText().toString();
                 str_user_name = user_name.getText().toString();
-
-                if(DB.userExist(str_user_name,false)) {
+                if (str_user_name.length()==0) return;
+                else if(DB.userExist(str_user_name,false)) {
                     Intent i = new Intent(driver_login.this, DriverActivity.class);
                     startActivity(i);
-                } else{
-                    Toast.makeText(driver_login.this,"Driver is not find in database",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(driver_login.this,"Driver is not find in database",Toast.LENGTH_SHORT).show();
                     return;
                 }
 

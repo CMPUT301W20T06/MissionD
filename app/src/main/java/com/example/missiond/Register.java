@@ -48,13 +48,13 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Please complete missing blanks",Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    if (type_confirm =="Rider" && DB.userExist(str_user_name,true)){
+                    if (type_confirm =="Rider" && !DB.userExist(str_user_name,true)){
                         Rider user = new Rider(str_user_name,str_phone,str_user_email);
                         DataBaseHelper DB = DataBaseHelper.getInstance();
                         DB.AddRider(user);
                         Toast.makeText(Register.this,"Congratulations! Registered as Rider!",Toast.LENGTH_LONG).show();
                         finish();
-                    }else if(type_confirm =="Driver" && DB.userExist(str_user_name,false)) {
+                    }else if(type_confirm =="Driver" && !DB.userExist(str_user_name,false)) {
                         Driver user = new Driver(str_user_name,str_phone,str_user_email);
                         DataBaseHelper DB = DataBaseHelper.getInstance();
                         DB.AddDriver(user);

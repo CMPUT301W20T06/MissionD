@@ -32,7 +32,7 @@ public class DataBaseHelper {
     private Rider tempRider;
     private List<Order> list = new ArrayList<>();
     private List<Driver> list_driver = new ArrayList<>();
-    private Boolean isEmpty;
+    private boolean isEmpty;
 
     /**
      * This is the constructor method that fulfills singleton class design
@@ -125,7 +125,7 @@ public class DataBaseHelper {
     /**
      * This delete class that is stored in firestore database
      */
-    public void DeleteUser(String userName, Boolean isRider) {
+    public void DeleteUser(String userName, boolean isRider) {
         String collection = "Driver";
         if (isRider) {
             collection = "Rider";
@@ -182,9 +182,9 @@ public class DataBaseHelper {
     /**
      * This method checks if a user exist in database
      * @return
-     *  Return Boolean
+     *  Return boolean
      */
-    public Boolean userExist(String userName, Boolean isRider) {
+    public boolean userExist(String userName, boolean isRider) {
         String collection = "Driver";
         if (isRider) {
             collection = "Rider";
