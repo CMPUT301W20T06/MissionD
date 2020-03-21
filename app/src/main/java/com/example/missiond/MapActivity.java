@@ -334,6 +334,7 @@ public class MapActivity extends FragmentActivity implements
         Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,"Isaac","Yifei", loc1, loc2);
         DB.addOrder(order,"Isaac");
 
+
         startActivity(i);
 
         finish();

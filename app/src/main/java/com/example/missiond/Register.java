@@ -1,6 +1,8 @@
 package com.example.missiond;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
+
 import android.widget.Toast;
 import android.os.Bundle;
 import android.view.View;
@@ -48,22 +50,31 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Please complete missing blanks",Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    if (type_confirm =="Rider" && !DB.userExist(str_user_name,true)){
-                        Rider user = new Rider(str_user_name,str_phone,str_user_email);
-                        DataBaseHelper DB = DataBaseHelper.getInstance();
-                        DB.AddRider(user);
-                        Toast.makeText(Register.this,"Congratulations! Registered as Rider!",Toast.LENGTH_LONG).show();
-                        finish();
-                    }else if(type_confirm =="Driver" && !DB.userExist(str_user_name,false)) {
-                        Driver user = new Driver(str_user_name,str_phone,str_user_email);
-                        DataBaseHelper DB = DataBaseHelper.getInstance();
-                        DB.AddDriver(user);
-                        Toast.makeText(Register.this,"Congratulations! Registered as Driver!",Toast.LENGTH_LONG).show();
-                        finish();
-                    }else {
-                        Toast.makeText(Register.this,"User is already exist！",Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                    final boolean isRider = type_confirm == "Rider";
+
+                    DB.userExist(str_user_name, isRider, new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean isExist) {
+                            if (!isExist){
+                                if (isRider){
+                                    Rider user = new Rider(str_user_name,str_phone,str_user_email);
+                                    DataBaseHelper DB = DataBaseHelper.getInstance();
+                                    DB.AddRider(user);
+                                    Toast.makeText(Register.this,"Congratulations! Registered as Rider!",Toast.LENGTH_LONG).show();
+                                    finish();
+                                } else {
+                                    Driver user = new Driver(str_user_name,str_phone,str_user_email);
+                                    DataBaseHelper DB = DataBaseHelper.getInstance();
+                                    DB.AddDriver(user);
+                                    Toast.makeText(Register.this,"Congratulations! Registered as Driver!",Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            } else {
+                                Toast.makeText(Register.this,"User is already exist！",Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+                    });
                 }
             }
         });

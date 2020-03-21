@@ -52,6 +52,10 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
 
+        Intent i = getIntent();
+        String driver_name = i.getStringExtra("driver_name");
+
+
         seeTrip_button = findViewById(R.id.driverSeeTrip);
         profile_button = findViewById(R.id.profile_driver);
 
