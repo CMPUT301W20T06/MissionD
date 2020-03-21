@@ -9,11 +9,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class UserProfileActivity extends AppCompatActivity {
-    private Button close;
+    private Button close,confirm;
     private DataBaseHelper db;
     private TextView nameBig;
     private EditText mName,mPhone,mEmail;
-    private String name,phone,email;
+    private String name,phone,email,newName,newPhone,newEmail;
     private Driver currentDriver;
     private Rider currentRider;
 
@@ -28,6 +28,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mPhone = findViewById(R.id.editPhone_profile);
         mEmail = findViewById(R.id.editEmail_profile);
         close = findViewById(R.id.profileBack);
+        confirm = findViewById(R.id.confirm_profile_edit);
         currentDriver = db.getDriver("Yifei");
         name = currentDriver.getUserName();
         phone = currentDriver.getPhoneNumber();
@@ -38,10 +39,24 @@ public class UserProfileActivity extends AppCompatActivity {
         mEmail.setText(email);
 
 
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newName = mName.getText().toString();
+                newPhone = mPhone.getText().toString();
+                newEmail = mEmail.getText().toString();
+                currentDriver.setUserName(newName);
+                currentDriver.setPhoneNumber(newPhone);
+                currentDriver.setEmailAddress(newEmail);
 
+            }
+        });
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 finish();
             }
         });

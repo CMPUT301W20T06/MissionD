@@ -130,6 +130,11 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/confirm_profile_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm" />
 
 
 </LinearLayout>

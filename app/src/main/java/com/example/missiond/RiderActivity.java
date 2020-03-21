@@ -72,7 +72,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RiderActivity.this,UserProfileActivity.class);
+                Intent i = new Intent(RiderActivity.this, UserProfileActivity.class);
                 startActivity(i);
             }
         });
