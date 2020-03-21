@@ -32,6 +32,7 @@ public class DataBaseHelper {
     private Rider tempRider;
     private List<Order> list = new ArrayList<>();
     private List<Driver> list_driver = new ArrayList<>();
+    private boolean isEmpty;
 
     /**
      * This is the constructor method that fulfills singleton class design
@@ -124,7 +125,7 @@ public class DataBaseHelper {
     /**
      * This delete class that is stored in firestore database
      */
-    public void DeleteUser(String userName, Boolean isRider) {
+    public void DeleteUser(String userName, boolean isRider) {
         String collection = "Driver";
         if (isRider) {
             collection = "Rider";
@@ -181,10 +182,34 @@ public class DataBaseHelper {
     /**
      * This method checks if a user exist in database
      * @return
-     *  Return Boolean
+     *  Return boolean
      */
-    public Boolean userExist(String userName, Boolean isRider) {
-        return true;
+    public boolean userExist(String userName, boolean isRider) {
+        String collection = "Driver";
+        if (isRider) {
+            collection = "Rider";
+        }
+
+        DocumentReference docIdRef = db.collection(collection).document(userName);
+        docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "Document exists!");
+                        isEmpty = true;
+                    } else {
+                        Log.d(TAG, "Document does not exist!");
+                        isEmpty = false;
+                    }
+                } else {
+                    Log.d(TAG, "Failed with: ", task.getException());
+                }
+            }
+        });
+
+        return isEmpty;
     }
 
     /**
