@@ -1,7 +1,6 @@
 package com.example.missiond;
 
 import android.location.Address;
-import android.location.Location;
 
 /**
  * This is Order class that stores Order information
@@ -14,11 +13,9 @@ public class Order {
     private Integer orderStatus;
     private String rider;
     private String driver;
-    private Location startLoc;
-    private Location endLoc;
 
 
-    public Order(String startLocation, String endLocation, Float distance, Float cost,Integer orderStatus,String rider,String driver, Location startLoc, Location endLoc) {
+    public Order(String startLocation, String endLocation, Float distance, Float cost,Integer orderStatus,String rider,String driver) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.distance = distance;
@@ -26,8 +23,6 @@ public class Order {
         this.orderStatus = orderStatus;
         this.rider = rider;
         this.driver = driver;
-        this.startLoc = startLoc;
-        this.endLoc = endLoc;
     }
 
     /**
@@ -128,12 +123,6 @@ public class Order {
 
     /**
      * This set order status
-     * //0:cancel
-     * //1:send request
-     * //2:driver accept
-     * //3:driver and rider accept(have not picked up yet)
-     * //4:pick up but not finish
-     * //5:request is over(history)
      */
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
@@ -141,16 +130,9 @@ public class Order {
 
     /**
      * This get the rider
-     * //0:cancel
-     * //1:send request
-     * //2:driver accept
-     * //3:driver and rider accept(have not picked up yet)
-     * //4:pick up but not finish
-     * //5:request is over(history)
      * @return
      *  Return String of Rider's username
      */
-
     public String getRider() {
         return rider;
     }
@@ -160,22 +142,6 @@ public class Order {
      */
     public void setRider(String rider) {
         this.rider = rider;
-    }
-
-    public Location getStartLoc() {
-        return this.startLoc;
-    }
-
-    public void setStartLoc(Location startloc){
-        this.startLoc = startloc;
-    }
-
-    public Location getEndLoc() {
-        return this.endLoc;
-    }
-
-    public void setEndLoc(Location endLoc) {
-        this.endLoc = endLoc;
     }
 
 }

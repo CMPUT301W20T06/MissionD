@@ -25,7 +25,7 @@ public class Register extends AppCompatActivity {
         user_name = findViewById(R.id.user_name);
         user_email = findViewById(R.id.email);
         phone = findViewById(R.id.phone);
-        final DataBaseHelper DB = DataBaseHelper.getInstance();
+        DataBaseHelper DB = DataBaseHelper.getInstance();
 
         user_type = findViewById(R.id.switch1);
         user_type.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -48,21 +48,18 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Please complete missing blanks",Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    if (type_confirm =="Rider" && !DB.userExist(str_user_name,true)){
+                    if (type_confirm =="Rider"){
                         Rider user = new Rider(str_user_name,str_phone,str_user_email);
                         DataBaseHelper DB = DataBaseHelper.getInstance();
                         DB.AddRider(user);
                         Toast.makeText(Register.this,"Congratulations! Registered as Rider!",Toast.LENGTH_LONG).show();
                         finish();
-                    }else if(type_confirm =="Driver" && !DB.userExist(str_user_name,false)) {
+                    }else {
                         Driver user = new Driver(str_user_name,str_phone,str_user_email);
                         DataBaseHelper DB = DataBaseHelper.getInstance();
                         DB.AddDriver(user);
                         Toast.makeText(Register.this,"Congratulations! Registered as Driver!",Toast.LENGTH_LONG).show();
                         finish();
-                    }else {
-                        Toast.makeText(Register.this,"User is already exist！",Toast.LENGTH_LONG).show();
-                        return;
                     }
                 }
             }
