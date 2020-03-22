@@ -89,7 +89,8 @@ public class MapActivity extends FragmentActivity implements
     private RiderAddMoneyFragment addMoneyFrag;
     private float addAmount;
     private TextView addAmountShow;
-
+    Intent i = getIntent();
+    String rider_name = i.getStringExtra("rider_name");
     /**
      *
      * @param savedInstanceState
@@ -329,10 +330,9 @@ public class MapActivity extends FragmentActivity implements
         float distance = loc1.distanceTo(loc2);
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        Rider rider = DB.getRider("Isaac");
-        Driver driver = DB.getDriver("Yifei");
-        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,"Isaac","Yifei", loc1, loc2);
-        DB.addOrder(order,"Isaac");
+        Rider rider = DB.getRider(rider_name);
+        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, loc1, loc2);
+        DB.addOrder(order,rider_name);
 
 
         startActivity(i);

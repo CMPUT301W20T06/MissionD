@@ -53,7 +53,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
 
 
         Intent i = getIntent();
-        String driver_name = i.getStringExtra("rider_name");
+        String rider_name = i.getStringExtra("rider_name");
 
         initF = new initFragment();
 
@@ -89,6 +89,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
     @Override
     public void onRiderStartTripClick() {
         Intent intent = new Intent(RiderActivity.this, MapActivity.class);
+        intent.putExtra("rider_name",rider_name);
         startActivity(intent);
 
     }
