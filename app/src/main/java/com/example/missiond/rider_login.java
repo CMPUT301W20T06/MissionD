@@ -27,7 +27,7 @@ public class rider_login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str_user_name,str_user_email,str_phone;
+                final String str_user_name,str_user_email,str_phone;
                 str_phone = phone.getText().toString();
                 str_user_email = user_email.getText().toString();
                 str_user_name = user_name.getText().toString();
@@ -38,6 +38,7 @@ public class rider_login extends AppCompatActivity {
                     public void accept(Boolean aBoolean) {
                         if (aBoolean){
                             Intent i = new Intent(rider_login.this, RiderActivity.class);
+                            i.putExtra("rider_name",str_user_name);
                             startActivity(i);
                         } else {
                             Toast.makeText(rider_login.this,"Rider is not find in database",Toast.LENGTH_SHORT).show();

@@ -51,6 +51,10 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider);
 
+
+        Intent i = getIntent();
+        String driver_name = i.getStringExtra("rider_name");
+
         initF = new initFragment();
 
         getSupportFragmentManager().beginTransaction()
