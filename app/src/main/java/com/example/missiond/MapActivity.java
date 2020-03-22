@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
  * Rider can search locations by inputting locations or moving pin as an option
@@ -89,8 +90,8 @@ public class MapActivity extends FragmentActivity implements
     private RiderAddMoneyFragment addMoneyFrag;
     private float addAmount;
     private TextView addAmountShow;
-    Intent i = getIntent();
-    String rider_name = i.getStringExtra("rider_name");
+    private String rider_name;
+
     /**
      *
      * @param savedInstanceState
@@ -107,7 +108,8 @@ public class MapActivity extends FragmentActivity implements
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
 
-
+        Intent i = getIntent();
+        rider_name = i.getStringExtra("rider_name");
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

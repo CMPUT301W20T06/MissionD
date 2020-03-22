@@ -44,7 +44,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private static final String TAG = RiderActivity.class.getSimpleName();
-
+    private String rider_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
 
 
         Intent i = getIntent();
-        String rider_name = i.getStringExtra("rider_name");
+        rider_name = i.getStringExtra("rider_name");
 
         initF = new initFragment();
 
