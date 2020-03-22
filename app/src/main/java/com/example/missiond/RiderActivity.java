@@ -44,12 +44,16 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private static final String TAG = RiderActivity.class.getSimpleName();
-
+    private String rider_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider);
+
+
+        Intent i = getIntent();
+        rider_name = i.getStringExtra("rider_name");
 
         initF = new initFragment();
 
@@ -72,7 +76,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RiderActivity.this,UserProfileActivity.class);
+                Intent i = new Intent(RiderActivity.this, UserProfileActivity.class);
                 startActivity(i);
             }
         });
@@ -85,6 +89,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
     @Override
     public void onRiderStartTripClick() {
         Intent intent = new Intent(RiderActivity.this, MapActivity.class);
+        intent.putExtra("rider_name",rider_name);
         startActivity(intent);
 
     }

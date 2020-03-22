@@ -31,8 +31,12 @@ public class User {
     }
 
 
-    public void setPhoneNumber(){
+    public void setPhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmailAddress(String emailAddress){
+        this.emailAddress = emailAddress;
     }
 
     public String getEmailAddress(){

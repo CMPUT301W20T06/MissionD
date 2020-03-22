@@ -3,6 +3,7 @@ package com.example.missiond;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Consumer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,6 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 /**
  * This is a helper class that make use of firestore to manage data
@@ -184,13 +189,14 @@ public class DataBaseHelper {
      * @return
      *  Return boolean
      */
-    public boolean userExist(String userName, boolean isRider) {
+    public void userExist(String userName, boolean isRider, final Consumer<Boolean> callback) {
         String collection = "Driver";
         if (isRider) {
             collection = "Rider";
         }
 
         DocumentReference docIdRef = db.collection(collection).document(userName);
+
         docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -206,10 +212,9 @@ public class DataBaseHelper {
                 } else {
                     Log.d(TAG, "Failed with: ", task.getException());
                 }
+                callback.accept(isEmpty);
             }
         });
-
-        return isEmpty;
     }
 
     /**

@@ -46,11 +46,15 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private static final String TAG = DriverActivity.class.getSimpleName();
-
+    private String driver_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
+
+        Intent i = getIntent();
+        driver_name = i.getStringExtra("driver_name");
+
 
         seeTrip_button = findViewById(R.id.driverSeeTrip);
         profile_button = findViewById(R.id.profile_driver);
