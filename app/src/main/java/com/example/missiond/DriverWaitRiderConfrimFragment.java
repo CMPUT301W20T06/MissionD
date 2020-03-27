@@ -16,17 +16,30 @@ import androidx.fragment.app.DialogFragment;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.12 2020
+ *  Mar.26 2020
  */
 public class DriverWaitRiderConfrimFragment extends DialogFragment {
+
+    /////////////////////////////////////
     private Button tesing_button;
     private Button testing_cancel;
+    //////////////////////////////////////
+
+    public String Location;
+    public String Destination;
 
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.wait_rider_confirm_fragment, container, false);
 
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            Location = bundle.getString("trip_location");
+            Destination = bundle.getString("trip_destination");
+        }
+
+        //////////////////////////////////////////////////////////////////
         tesing_button = v.findViewById(R.id.just_for_testing);
         testing_cancel = v.findViewById(R.id.cancel_for_testing);
 
@@ -34,7 +47,12 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 getDialog().dismiss();
-                new DriverAfterRiderConfrimFragment().show(getFragmentManager(),"test1");
+                Bundle bundle = new Bundle();
+                bundle.putString("trip_location",Location);
+                bundle.putString("trip_destination",Destination);
+                DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
+                fragment.setArguments(bundle);
+                fragment.show(getFragmentManager(),"test1");
             }
         });
 

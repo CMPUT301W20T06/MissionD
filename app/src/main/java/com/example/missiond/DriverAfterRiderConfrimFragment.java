@@ -16,15 +16,24 @@ import androidx.fragment.app.DialogFragment;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.12 2020
+ *  Mar.26 2020
  */
 public class DriverAfterRiderConfrimFragment extends DialogFragment {
     private Button tesing_button;
+
+    public String Location;
+    public String Destination;
 
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.after_rider_confirm_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            Location = bundle.getString("trip_location");
+            Destination = bundle.getString("trip_destination");
+        }
 
         tesing_button = v.findViewById(R.id.just_for_testing);
 
@@ -33,6 +42,8 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
             public void onClick(View v) {
                 getDialog().dismiss();
                 Intent intent = new Intent(getActivity(), DriverPickeupRiderActivity.class);
+                intent.putExtra("location",Location);
+                intent.putExtra("destination",Destination);
                 startActivity(intent);
             }
         });

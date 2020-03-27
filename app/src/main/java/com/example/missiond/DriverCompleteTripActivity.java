@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,16 +14,35 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.12 2020
+ *  Mar.26 2020
  */
 public class DriverCompleteTripActivity extends AppCompatActivity {
     private Button completet_button;
+    private TextView start_location;
+    private TextView destination;
+    private TextView rider_name;
+    private TextView rider_phone;
+
+
+    private String Location;
+    private String Destination;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_complete_trip);
+
+        Location = getIntent().getExtras().getString("location");
+        Destination = getIntent().getExtras().getString("destination");
+
+        start_location = findViewById(R.id.start_location);
+        destination = findViewById(R.id.Destination_text);
+        //rider_name = findViewById(R.id.rider_name);
+        //rider_phone = findViewById(R.id.rider_phone);
+
+        start_location.setText(Location);
+        destination.setText(Destination);
 
         completet_button = findViewById(R.id.complete_button);
 

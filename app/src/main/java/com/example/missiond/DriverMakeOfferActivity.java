@@ -83,7 +83,12 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
         button_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new IsMoneyOKFragment().show(getSupportFragmentManager(),"Confirm");
+                IsMoneyOKFragment fragment = new IsMoneyOKFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("trip_location",Location);
+                bundle.putString("trip_destination",Destination);
+                fragment.setArguments(bundle);
+                fragment.show(getSupportFragmentManager(),"Confirm");
             }
         });
 

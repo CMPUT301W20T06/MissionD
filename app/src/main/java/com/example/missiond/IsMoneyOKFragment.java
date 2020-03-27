@@ -22,14 +22,23 @@ public class IsMoneyOKFragment extends DialogFragment {
 
     private Button close_button;
     private Button confirm_button;
+    public String Location;
+    public String Destination;
 
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.is_money_ok_fragment, container, false);
 
+        Bundle bundle = getArguments();
+        if (bundle!=null){
+            Location = bundle.getString("trip_location");
+            Destination = bundle.getString("trip_destination");
+        }
+
         close_button = v.findViewById(R.id.close_button);
         confirm_button = v.findViewById(R.id.ConfirmMoney_button);
+
 
         /**
          * click the close button
@@ -52,7 +61,12 @@ public class IsMoneyOKFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 getDialog().dismiss();
-                new DriverWaitRiderConfrimFragment().show(getFragmentManager(),"Waiting");
+                Bundle bundle = new Bundle();
+                bundle.putString("trip_location",Location);
+                bundle.putString("trip_destination",Destination);
+                DriverWaitRiderConfrimFragment fragment = new DriverWaitRiderConfrimFragment();
+                fragment.setArguments(bundle);
+                fragment.show(getFragmentManager(),"Waiting");
             }
         });
 

@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.12 2020
+ *  Mar.26 2020
  */
 public class DriverPickeupRiderActivity extends AppCompatActivity {
 
@@ -24,21 +24,32 @@ public class DriverPickeupRiderActivity extends AppCompatActivity {
     private TextView rider_name;
     private TextView rider_phone;
 
+    String Location;
+    String Destination;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_pickup_rider);
 
+        Location = getIntent().getExtras().getString("location");
+        Destination = getIntent().getExtras().getString("destination");
+
         pick_up_button = findViewById(R.id.pickup_button);
-        //start_location = findViewById(R.id.start_location);
-        //destination = findViewById(R.id.destination_text);
+        start_location = findViewById(R.id.start_location);
+        destination = findViewById(R.id.Destination_text);
         //rider_name = findViewById(R.id.rider_name);
         //rider_phone = findViewById(R.id.rider_phone);
+
+        start_location.setText(Location);
+        destination.setText(Destination);
 
         pick_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DriverPickeupRiderActivity.this, DriverCompleteTripActivity.class);
+                intent.putExtra("location",Location);
+                intent.putExtra("destination",Destination);
                 startActivity(intent);
             }
         });
