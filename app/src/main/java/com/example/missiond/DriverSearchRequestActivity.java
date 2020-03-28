@@ -7,10 +7,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Display a list view of rider's requests to Driver
@@ -25,6 +27,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
     private ImageButton button_back;
     private ImageButton button_refresh;
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
 
     ListView tripList;
 
@@ -41,13 +44,30 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         button_refresh = findViewById(R.id.refresh);
         tripList = findViewById(R.id.trip_list);
 
-        String []location ={"University of Alberta", "University of Alberta", "NAIT", "University of Alberta","Edmonton International Airport","Mayfair South"};
-        String []destination={"Southgate Centre","Edmonton International Airport","Southgate Centre","Mayfair South","Corona Station","Churchill Station"};
+
+        List<Order> orders = DB.getAllOrders();
+        List<Order> current_orders = new ArrayList<>();
+
+        Toast.makeText(this,String.valueOf(orders.size()),Toast.LENGTH_SHORT).show();
+
+        for (int i = 0; i< orders.size(); i++) {
+            Order order = orders.get(i);
+            if (order != null) {
+                if (order.getOrderStatus() != null) {
+                    int status = order.getOrderStatus();
+                    if (status == 1) {
+                        current_orders.add(order);
+                    }
+                }
+            }
+        }
+
 
         tripDataList = new ArrayList<>();
 
-        for (int i=0;i<location.length;i++){
-            tripDataList.add((new Trip(location[i], destination[i])));
+        for (int i=0;i<current_orders.size();i++){
+            Order order = current_orders.get(i);
+            tripDataList.add((new Trip(order.getStartLocation(), order.getEndLocation())));
         }
 
         tripAdapter = new TripList(this, tripDataList);
@@ -63,6 +83,8 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Trip tripedit = tripDataList.get(position);
+
+                // 这里要order object 的话直接 Order order = current_orders.get(position);
 
                 Intent intent = new Intent(DriverSearchRequestActivity.this, DriverMakeOfferActivity.class);
                 intent.putExtra("trip_location",tripedit.getLocationName());

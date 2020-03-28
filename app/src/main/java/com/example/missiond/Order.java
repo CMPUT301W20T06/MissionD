@@ -14,11 +14,12 @@ public class Order {
     private Integer orderStatus;
     private String rider;
     private String driver;
-    private Location startLoc;
-    private Location endLoc;
+    private Coordinate startLoc;
+    private Coordinate endLoc;
+    private String userName;
 
 
-    public Order(String startLocation, String endLocation, Float distance, Float cost,Integer orderStatus,String rider,String driver, Location startLoc, Location endLoc) {
+    public Order(String startLocation, String endLocation, Float distance, Float cost,Integer orderStatus,String rider,String driver, Coordinate startLoc, Coordinate endLoc, String userName) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.distance = distance;
@@ -28,6 +29,7 @@ public class Order {
         this.driver = driver;
         this.startLoc = startLoc;
         this.endLoc = endLoc;
+        this.userName = userName;
     }
 
     /**
@@ -162,20 +164,28 @@ public class Order {
         this.rider = rider;
     }
 
-    public Location getStartLoc() {
+    public Coordinate getStartLoc() {
         return this.startLoc;
     }
 
-    public void setStartLoc(Location startloc){
-        this.startLoc = startloc;
+    public void setStartLoc(Coordinate startLoc){
+        this.startLoc = startLoc;
     }
 
-    public Location getEndLoc() {
+    public Coordinate getEndLoc() {
         return this.endLoc;
     }
 
-    public void setEndLoc(Location endLoc) {
+    public void setEndLoc(Coordinate endLoc) {
         this.endLoc = endLoc;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 }
