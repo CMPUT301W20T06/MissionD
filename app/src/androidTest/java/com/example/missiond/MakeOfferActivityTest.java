@@ -19,11 +19,11 @@ import static org.junit.Assert.assertNotNull;
 public class MakeOfferActivityTest {
 
     @Rule
-    public ActivityTestRule<MakeOfferActivity> mActivityTestRule = new ActivityTestRule<MakeOfferActivity>(MakeOfferActivity.class);
+    public ActivityTestRule<DriverMakeOfferActivity> mActivityTestRule = new ActivityTestRule<DriverMakeOfferActivity>(DriverMakeOfferActivity.class);
 
-    private MakeOfferActivity mActivity=null;
+    private DriverMakeOfferActivity mActivity=null;
 
-    Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(SearchRequestActivity.class.getName(),null,false);
+    Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(DriverSearchRequestActivity.class.getName(),null,false);
 
     @Before
     public void setUp() throws Exception {

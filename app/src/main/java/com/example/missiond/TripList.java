@@ -35,8 +35,13 @@ public class TripList extends ArrayAdapter<Trip> {
         TextView locationName = view.findViewById(R.id.location_text);
         TextView destinationName = view.findViewById(R.id.destination_text);
 
+        //之后把distance show出来
+        //TextView distance = view.findViewById(R.id.distance_text);
+
         locationName.setText(trip.getLocationName());
         destinationName.setText(trip.getDestination());
+
+        //distance.setText(trip.getDistance());
 
         return view;
     }

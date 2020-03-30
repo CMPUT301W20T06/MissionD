@@ -25,6 +25,7 @@
         <activity android:name=".RiderActivity" />
         <activity android:name=".driver_login" />
         <activity android:name=".RiderMakeRequestActivity" />
+        <activity android:name=".DriverPickupActivity"/>
         <activity android:name=".DriverPickeupRiderActivity" />
         <activity android:name=".DriverCompleteTripActivity" />
         <activity android:name=".DriverMakeOfferActivity" />

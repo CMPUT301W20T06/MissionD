@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,12 +28,16 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
     private ImageButton button_back;
 
+    private TextView pickup_location;
     final DataBaseHelper DB = DataBaseHelper.getInstance();
 
     ListView tripList;
 
     ArrayAdapter<Trip> tripAdapter;
     ArrayList<Trip> tripDataList;
+
+
+    String pickup_Name;
 
 
     @Override
@@ -42,7 +47,11 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
         button_back = findViewById(R.id.DriverDestBack);
         tripList = findViewById(R.id.trip_list);
+        pickup_location = findViewById(R.id.pickupLocation);
 
+        //拿地址的name
+        //pickup_Name = getIntent().getExtras().getString("...");
+        //pickup_location.setText(pickup_Name);
 
         List<Order> orders = DB.getAllOrders();
         List<Order> current_orders = new ArrayList<>();

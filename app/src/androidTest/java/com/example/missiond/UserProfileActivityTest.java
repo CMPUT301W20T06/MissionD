@@ -23,7 +23,7 @@ public class UserProfileActivityTest {
 
     private Activity mActivity=null;
 
-    Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(SearchRequestActivity.class.getName(),null,false);
+    Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(DriverSearchRequestActivity.class.getName(),null,false);
 
     @Before
     public void setUp() throws Exception {
