@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +95,7 @@ public class DataBaseHelper {
     public void UpdateDriverData(Driver driver) {
         String collection = "Driver";
         db.collection(collection).document(driver.getUserName())
-                .update("capital", true)
+                .set(driver, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -112,7 +113,7 @@ public class DataBaseHelper {
     public void UpdateRiderData(Rider rider) {
         String collection = "Rider";
         db.collection(collection).document(rider.getUserName())
-                .update("capital", true)
+                .set(rider, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -17,6 +17,7 @@ public class Order {
     private Coordinate startLoc;
     private Coordinate endLoc;
     private String userName;
+    private String id = null;
 
 
     public Order(String startLocation, String endLocation, Float distance, Float cost,Integer orderStatus,String rider,String driver, Coordinate startLoc, Coordinate endLoc, String userName) {
@@ -188,4 +189,11 @@ public class Order {
         this.userName = userName;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
