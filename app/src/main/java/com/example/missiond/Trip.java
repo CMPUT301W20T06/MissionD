@@ -8,11 +8,10 @@ public class Trip implements Serializable {
     //或者是其他什么type的 周总自己看着改
     private Integer distance;
 
-    Trip(String location, String destination){
+    Trip(String location, String destination,Integer distance){
         this.location = location;
         this.destination = destination;
-
-        //this.distance = distance;
+        this.distance = distance;
     }
 
     String getLocationName(){return this.location;}

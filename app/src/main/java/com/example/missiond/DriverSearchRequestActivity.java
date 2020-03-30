@@ -1,6 +1,7 @@
 package com.example.missiond;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,8 +37,13 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
     ArrayAdapter<Trip> tripAdapter;
     ArrayList<Trip> tripDataList;
 
+    Float pickupLat;
+    Float pickupLng;
 
     String pickup_Name;
+
+    Location loc1 = new Location("");
+    Location loc2 = new Location("");
 
 
     @Override
@@ -50,8 +56,14 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         pickup_location = findViewById(R.id.pickupLocation);
 
         //拿地址的name
-        //pickup_Name = getIntent().getExtras().getString("...");
-        //pickup_location.setText(pickup_Name);
+        pickup_Name = getIntent().getExtras().getString("pickup_location");
+        pickup_location.setText(pickup_Name);
+        pickupLat = getIntent().getExtras().getFloat("pickupLat");
+        pickupLng = getIntent().getExtras().getFloat("pickupLng");
+        loc1.setLatitude(pickupLat);
+        loc1.setLongitude(pickupLng);
+        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
 
         List<Order> orders = DB.getAllOrders();
         List<Order> current_orders = new ArrayList<>();
@@ -75,7 +87,12 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
         for (int i=0;i<current_orders.size();i++){
             Order order = current_orders.get(i);
-            tripDataList.add((new Trip(order.getStartLocation(), order.getEndLocation())));
+            loc2.setLatitude((float)order.getStartLoc().getLatitude());
+            loc2.setLongitude((float)order.getStartLoc().getLongitude());
+            Integer distance = (int)(loc1.distanceTo(loc2)/1000);
+            Toast.makeText(this,String.valueOf((float)order.getStartLoc().getLatitude()),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,String.valueOf((float)order.getStartLoc().getLongitude()),Toast.LENGTH_SHORT).show();
+            tripDataList.add((new Trip(order.getStartLocation(), order.getEndLocation(),distance)));
         }
 
         tripAdapter = new TripList(this, tripDataList);

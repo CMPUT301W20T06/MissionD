@@ -2,13 +2,28 @@ package com.example.missiond;
 
 import android.content.Intent;
 import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Let Driver to choose his/her pick up location.
@@ -17,18 +32,28 @@ import androidx.appcompat.app.AppCompatActivity;
  * @version
  *  Mar.29 2020
  */
-public class DriverPickupActivity extends AppCompatActivity {
+public class DriverPickupActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleMap.OnMarkerDragListener {
     private ImageButton back_button;
     private ImageButton confrim_buton;
     private Button search_button;
 
+    private SupportMapFragment mapFragment;
+
     private EditText pickUpLocation;
+
+    MarkerOptions userMarkerOptions = new MarkerOptions();
+
+    Marker Marker1;
+
+    GoogleMap mMap;
 
     //我先给周总弄出来了 貌似你需要用到
     //但具体怎么拿到string和address我不太知道
     //辛苦了
     String pickupName;
     Address pickupAddress;
+
+    LatLng LatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +63,13 @@ public class DriverPickupActivity extends AppCompatActivity {
         back_button = findViewById(R.id.driverLocBack);
         //这个是后面那个绿色对勾按钮 不知道周总要不要用
         confrim_buton = findViewById(R.id.search_address1);
+        confrim_buton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               searchPickupLocation();
+
+            }
+        });
         search_button = findViewById(R.id.searchOrder);
 
         //这个是那个输入地址但那个输入框 也不知道周总要不要用到
@@ -53,25 +85,110 @@ public class DriverPickupActivity extends AppCompatActivity {
             }
         });
 
+
+
         /**
          * Go to the new request list activity
          */
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Marker1 != null){
                 Intent intent = new Intent(DriverPickupActivity.this, DriverSearchRequestActivity.class);
-                // 要传的东西
-                //intent.putExtra("pickup_location",...);
+                intent.putExtra("pickup_location",pickupName);
+                intent.putExtra("pickupLat",(float)Marker1.getPosition().latitude);
+                intent.putExtra("pickupLng",(float)Marker1.getPosition().longitude);
                 startActivity(intent);
 
+            }
+                else {
+                }
             }
         });
 
 
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
 
+        mapFragment.getMapAsync(this);
+
+
+
+    }
+    public void searchPickupLocation(){
+        EditText addressField1 =  findViewById(R.id.pickup_Location);
+        pickupName = addressField1.getText().toString();
+
+        List<Address> addressList1 = null;
+
+        if(!TextUtils.isEmpty(pickupName)){
+            Geocoder geocoder = new Geocoder(this);
+            try
+            {
+                addressList1 = geocoder.getFromLocationName(pickupName,1);
+//                        if(addressList1 != null)
+                try
+                {
+                    pickupAddress = addressList1.get(0);
+                    LatLng = new LatLng(pickupAddress.getLatitude(),pickupAddress.getLongitude());
+
+
+                    userMarkerOptions.position(LatLng);
+                    userMarkerOptions.title(pickupName);
+                    userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+
+                    if (Marker1 != null){
+                        Marker1.remove();
+                    }
+
+                    Marker1 = mMap.addMarker(userMarkerOptions);
+                    Marker1.setDraggable(true);
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng));
+
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }else {
+            Toast.makeText(this,"please write any location name",Toast.LENGTH_SHORT).show();
+        }
 
 
     }
 
 
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+        mMap.setOnMarkerDragListener(this);
+
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        Toast.makeText(this, String.valueOf(marker.getPosition()), Toast.LENGTH_LONG).show();
+
+    }
 }
