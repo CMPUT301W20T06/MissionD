@@ -331,10 +331,13 @@ public class MapActivity extends FragmentActivity implements
         loc2.setLongitude(userAddress2.getLongitude());
         float distance = loc1.distanceTo(loc2);
 
+        Coordinate startCoordinate = new Coordinate(userAddress1.getLongitude(), userAddress1.getLatitude());
+        Coordinate endCoordinate = new Coordinate(userAddress2.getLongitude(), userAddress2.getLatitude());
+
         DataBaseHelper DB = DataBaseHelper.getInstance();
         Rider rider = DB.getRider(rider_name);
-        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, loc1, loc2);
-        DB.addOrder(order,rider_name);
+        Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, startCoordinate, endCoordinate, rider_name);
+        DB.addOrder(order);
 
 
         startActivity(i);

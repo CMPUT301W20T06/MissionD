@@ -220,11 +220,11 @@ public class DataBaseHelper {
     /**
      * This method add order in database
      */
-    public void addOrder(Order order, String userName) {
-        Map<String, Object> orderData = new HashMap<>();
-        orderData.put("userName", userName);
-        orderData.put("order", order);
-        db.collection("Orders").add(orderData);
+    public void addOrder(Order order) {
+//        Map<String, Object> orderData = new HashMap<>();
+//        orderData.put("userName", userName);
+//        orderData.put("order", order);
+        db.collection("Orders").add(order);
     }
 
     /**
