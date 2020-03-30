@@ -2,6 +2,7 @@ package com.example.missiond;
 
 import android.util.Log;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
@@ -15,6 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,6 +74,7 @@ public class DataBaseHelper {
      * @return
      *  Return DocumentReference instance of that rider
      */
+
     public DocumentReference AddRider(Rider rider) {
         DocumentReference userReference = db.collection("Rider").document(rider.getUserName());
         userReference.set(rider);
@@ -94,7 +98,7 @@ public class DataBaseHelper {
     public void UpdateDriverData(Driver driver) {
         String collection = "Driver";
         db.collection(collection).document(driver.getUserName())
-                .update("capital", true)
+                .set(driver, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -112,7 +116,7 @@ public class DataBaseHelper {
     public void UpdateRiderData(Rider rider) {
         String collection = "Rider";
         db.collection(collection).document(rider.getUserName())
-                .update("capital", true)
+                .set(rider, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -156,9 +160,11 @@ public class DataBaseHelper {
      * @return
      *  Return rider object
      */
+    @Keep
     public Rider getRider(String userName) {
+        Source source = Source.SERVER;
         DocumentReference docRef = db.collection("Rider").document(userName);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        docRef.get(source).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 tempRider = documentSnapshot.toObject(Rider.class);
@@ -172,10 +178,11 @@ public class DataBaseHelper {
      * @return
      *  Return Driver object
      */
+    @Keep
     public Driver getDriver(String userName) {
-        String collection = "Driver";
-        DocumentReference docRef = db.collection(collection).document(userName);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        Source source = Source.SERVER;
+        DocumentReference docRef = db.collection("Driver").document(userName);
+        docRef.get(source).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 tempDriver = documentSnapshot.toObject(Driver.class);
@@ -183,6 +190,7 @@ public class DataBaseHelper {
         });
         return tempDriver;
     }
+
 
     /**
      * This method checks if a user exist in database
@@ -232,6 +240,7 @@ public class DataBaseHelper {
      * @return
      *  Return a list of orders
      */
+    @Keep
     public List<Order> GetUserOrders(String userName) {
         db.collection("Orders")
                 .whereEqualTo("userName", userName)
@@ -258,6 +267,7 @@ public class DataBaseHelper {
      * @return
      *  Return a list of drivers
      */
+    @Keep
     public List<Driver> getDrivers() {
         db.collection("Drivers")
                 .get()
@@ -282,6 +292,7 @@ public class DataBaseHelper {
      * @return
      *  Return a list of orders
      */
+    @Keep
     public List<Order> getAllOrders() {
         db.collection("Orders")
                 .get()

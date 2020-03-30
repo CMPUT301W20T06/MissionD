@@ -322,7 +322,7 @@ public class MapActivity extends FragmentActivity implements
         Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);
 
         i.putExtras(extras);
-
+        i.putExtra("rider_name",rider_name);
         Location loc1 = new Location("");
         Location loc2 = new Location("");
         loc1.setLatitude(userAddress1.getLatitude());

@@ -5,10 +5,13 @@ import androidx.core.util.Consumer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Arrays;
 
 public class driver_login extends AppCompatActivity {
 
@@ -31,14 +34,16 @@ public class driver_login extends AppCompatActivity {
                 str_phone = phone.getText().toString();
                 str_user_email = user_email.getText().toString();
                 str_user_name = user_name.getText().toString();
-                if (str_user_name.length()==0) return;
-
-                DB.userExist(str_user_name, false, new Consumer<Boolean>() {
+                //avoid user input whitespace after their names
+                String[] NameArray = str_user_name.split(" ");
+                final String Name = NameArray[0];
+                if (Name.length()==0) return;
+                DB.userExist(Name, false, new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean isExist) {
                         if (isExist){
                             Intent i = new Intent(driver_login.this, DriverActivity.class);
-                            i.putExtra("driver_name",str_user_name);
+                            i.putExtra("driver_name",Name);
                             startActivity(i);
                         } else {
                             Toast.makeText(driver_login.this,"Driver is not find in database",Toast.LENGTH_SHORT).show();

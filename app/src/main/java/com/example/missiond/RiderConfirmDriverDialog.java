@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.List;
+
 /**
  * Displays driver's information
  * if rider confirms drivers, the go to the next activity, else find another driver
@@ -33,6 +35,8 @@ import androidx.fragment.app.DialogFragment;
 public class RiderConfirmDriverDialog extends DialogFragment {
     private Button email,call,cancel,confirm;
     private RiderConfirmDriverListener listener;
+    private String rider_name;
+
     public interface RiderConfirmDriverListener{
         void onConfirmClick();
     }
@@ -46,10 +50,19 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         set driver's TextView: rating, plate num, name
         get driver's button: phone, email
          */
-
+        Order active_order = null;
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        final Driver driver = DB.getDriver("Yifei");
-        String driver_name = driver.getUserName();
+        rider_name = getArguments().getString(rider_name);
+        List<Order> orders = DB.GetUserOrders(rider_name);
+        for (int i=0; i < orders.size();i++){
+            if (orders.get(i).orderStatus == 1);
+                active_order = orders.get(i);
+                break;
+        }
+
+        String driver_name = active_order.getDriver();
+        final Driver driver = DB.getDriver(driver_name);
+
         final float driver_rating = driver.getRating();
         TextView name = v.findViewById(R.id.driver_name);
         TextView rating = v.findViewById(R.id.driver_rating);

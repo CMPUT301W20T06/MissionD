@@ -44,13 +44,16 @@ public class RiderMakeRequestActivity extends AppCompatActivity implements OnMap
     private RiderConfirmDriverDialog confirmDriverDialog;
     private ImageButton close;
     private TextView pickupText,destText,next;
-
+    private String rider_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_make_request);
 
+
+        Intent i = getIntent();
+        rider_name = i.getStringExtra("rider_name");
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         pickUp = extras.getString("RiderPickUp");
@@ -94,7 +97,10 @@ public class RiderMakeRequestActivity extends AppCompatActivity implements OnMap
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("rider_name",rider_name);
                 RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
+                confirmDriverDialog.setArguments(bundle);
                 confirmDriverDialog.show(getSupportFragmentManager(),"confirmDriverFragment");
             }
         });

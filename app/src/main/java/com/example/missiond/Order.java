@@ -11,7 +11,7 @@ public class Order {
     private String endLocation;
     private Float distance;
     private Float cost;
-    private Integer orderStatus;
+    public Integer orderStatus;
     private String rider;
     private String driver;
     private Coordinate startLoc;
