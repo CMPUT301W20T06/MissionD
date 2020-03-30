@@ -39,6 +39,7 @@ public class DataBaseHelper {
     private List<Order> list = new ArrayList<>();
     private List<Driver> list_driver = new ArrayList<>();
     private boolean isEmpty;
+    private Order tempOrder;
 
     /**
      * This is the constructor method that fulfills singleton class design
@@ -236,6 +237,17 @@ public class DataBaseHelper {
     public void updateOrder(Order order) {
         String id = order.getId();
         db.collection("Orders").document(id).set(order);
+    }
+
+    public Order getOrderById(String id) {
+        DocumentReference docRef = db.collection("Orders").document(id);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                tempOrder = documentSnapshot.toObject(Order.class);
+            }
+        });
+        return tempOrder;
     }
 
     /**
