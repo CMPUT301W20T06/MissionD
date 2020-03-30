@@ -24,6 +24,7 @@ public class IsMoneyOKFragment extends DialogFragment {
     private Button confirm_button;
     public String Location;
     public String Destination;
+    private float startLat,startLng,endLat,endLng;
 
     @NonNull
     @Override
@@ -34,6 +35,10 @@ public class IsMoneyOKFragment extends DialogFragment {
         if (bundle!=null){
             Location = bundle.getString("trip_location");
             Destination = bundle.getString("trip_destination");
+            startLat = bundle.getFloat("startLocationLat");
+            startLng = bundle.getFloat("startLocationLng");
+            endLat =bundle.getFloat("endLocationLat");
+            endLng = bundle.getFloat("endLocationLng");
         }
 
         close_button = v.findViewById(R.id.close_button);
@@ -64,6 +69,10 @@ public class IsMoneyOKFragment extends DialogFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("trip_location",Location);
                 bundle.putString("trip_destination",Destination);
+                bundle.putFloat("startLocationLat",startLat);
+                bundle.putFloat("startLocationLng",startLng);
+                bundle.putFloat("endLocationLat",endLat);
+                bundle.putFloat("endLocationLng",endLng);
                 DriverWaitRiderConfrimFragment fragment = new DriverWaitRiderConfrimFragment();
                 fragment.setArguments(bundle);
                 fragment.show(getFragmentManager(),"Waiting");

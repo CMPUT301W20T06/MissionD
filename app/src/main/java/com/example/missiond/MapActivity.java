@@ -37,6 +37,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -59,7 +61,7 @@ import java.util.Locale;
 public class MapActivity extends FragmentActivity implements
         OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener, RiderAddMoneyFragment.OnAddMoneyFragmentListener,
-        GoogleMap.OnMarkerDragListener
+        GoogleMap.OnMarkerDragListener,TaskLoadedCallback
 {
 
     private static final String TAG = MapActivity.class.getSimpleName();
@@ -69,6 +71,8 @@ public class MapActivity extends FragmentActivity implements
     Location mLastLocation;
     LocationRequest mLocationRequest;
     private SupportMapFragment mapFragment;
+    Polyline currentPolyline;
+    Location currentLocation;
 
     private Boolean mLocationPermissionsGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -91,6 +95,12 @@ public class MapActivity extends FragmentActivity implements
     private float addAmount;
     private TextView addAmountShow;
     private String rider_name;
+
+    MarkerOptions userMarkerOptions = new MarkerOptions();
+    MarkerOptions userMarkerOptions2 = new MarkerOptions();
+
+    Marker Marker1 ;
+    Marker Marker2 ;
 
     /**
      *
@@ -173,8 +183,6 @@ public class MapActivity extends FragmentActivity implements
                 startAddress = addressField1.getText().toString();
 
                 List<Address> addressList1 = null;
-                MarkerOptions userMarkerOptions = new MarkerOptions();
-
 
                 if(!TextUtils.isEmpty(startAddress)){
                     Geocoder geocoder = new Geocoder(this);
@@ -189,11 +197,15 @@ public class MapActivity extends FragmentActivity implements
 
 
                             userMarkerOptions.position(LatLng1);
-                            userMarkerOptions.title(startAddress);
+                            userMarkerOptions.title(destinationAddress);
                             userMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                            userMarkerOptions.draggable(true);
 
-                            mMap.addMarker(userMarkerOptions);
+                            if (Marker1 != null){
+                                Marker1.remove();
+                            }
+
+                            Marker1 = mMap.addMarker(userMarkerOptions);
+                            Marker1.setDraggable(true);
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng1));
 
@@ -221,7 +233,7 @@ public class MapActivity extends FragmentActivity implements
                 destinationAddress = addressField2.getText().toString();
 
                 List<Address> addressList2 = null;
-                MarkerOptions userMarkerOptions2 = new MarkerOptions();
+
 
 
                 if(!TextUtils.isEmpty(destinationAddress)){
@@ -233,21 +245,24 @@ public class MapActivity extends FragmentActivity implements
 //                        if(addressList2 != null)
                     try {
 
-                            userAddress2 = addressList2.get(0);
-                            LatLng2 = new LatLng(userAddress2.getLatitude(),userAddress2.getLongitude());
+                        userAddress2 = addressList2.get(0);
+                        LatLng2 = new LatLng(userAddress2.getLatitude(),userAddress2.getLongitude());
+
+                        userMarkerOptions2.position(LatLng2);
+                        userMarkerOptions2.title(destinationAddress);
+                        userMarkerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+
+                        if (Marker2 != null){
+                            Marker2.remove();
+                        }
+
+                        Marker2 = mMap.addMarker(userMarkerOptions2);
+                        Marker2.setDraggable(true);
 
 
-                            userMarkerOptions2.position(LatLng2);
-                            userMarkerOptions2.title(destinationAddress);
-                            userMarkerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                            userMarkerOptions2.draggable(true);
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng2));
 
-                            mMap.addMarker(userMarkerOptions2);
-
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng2));
-
-                            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
                         }
                         catch(Exception e){
                             e.printStackTrace();
@@ -265,6 +280,21 @@ public class MapActivity extends FragmentActivity implements
 
 //
         }
+        if ((userAddress1 != null) && (userAddress2 != null)) {
+            String url = getUrl(Marker1.getPosition(), Marker2.getPosition(), "driving");
+            new FetchURL(MapActivity.this).execute(url, "driving");
+        }
+
+        }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if(currentPolyline != null) {
+            currentPolyline.remove();
+        }
+        currentPolyline = mMap.addPolyline((PolylineOptions)values[0]);
+
+
 
     }
 
@@ -280,11 +310,14 @@ public class MapActivity extends FragmentActivity implements
 //        TextView showMoney = findViewById(R.id.Money);
             Location loc1 = new Location("");
             Location loc2 = new Location("");
-            loc1.setLatitude(userAddress1.getLatitude());
-            loc1.setLongitude(userAddress1.getLongitude());
-            loc2.setLatitude(userAddress2.getLatitude());
-            loc2.setLongitude(userAddress2.getLongitude());
-
+//            loc1.setLatitude(userAddress1.getLatitude());
+//            loc1.setLongitude(userAddress1.getLongitude());
+//            loc2.setLatitude(userAddress2.getLatitude());
+//            loc2.setLongitude(userAddress2.getLongitude());
+            loc1.setLatitude(Marker1.getPosition().latitude);
+            loc1.setLongitude( Marker1.getPosition().longitude);
+            loc2.setLatitude(Marker2.getPosition().latitude);
+            loc2.setLongitude(Marker2.getPosition().longitude);
             float distance = loc1.distanceTo(loc2);
             money = (float) (0.004 * distance);
 //        showMoney.setText(String.valueOf(money));
@@ -315,24 +348,24 @@ public class MapActivity extends FragmentActivity implements
         extras.putString("RiderDest",destinationAddress);
         extras.putFloat("EstimateFare",money);
 
-        extras.putFloat("startAddressLatitude", (float) userAddress1.getLatitude());
-        extras.putFloat("startAddressLongitude", (float) userAddress1.getLongitude());
-        extras.putFloat("destinationAddressLatitude", (float) userAddress2.getLatitude());
-        extras.putFloat("destinationAddressLongitude", (float) userAddress2.getLongitude());
+        extras.putFloat("startAddressLatitude", (float) Marker1.getPosition().latitude);
+        extras.putFloat("startAddressLongitude", (float) Marker1.getPosition().longitude);
+        extras.putFloat("destinationAddressLatitude", (float) Marker2.getPosition().latitude);
+        extras.putFloat("destinationAddressLongitude", (float) Marker2.getPosition().longitude);
         Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);
 
         i.putExtras(extras);
 
         Location loc1 = new Location("");
         Location loc2 = new Location("");
-        loc1.setLatitude(userAddress1.getLatitude());
-        loc1.setLongitude(userAddress1.getLongitude());
-        loc2.setLatitude(userAddress2.getLatitude());
-        loc2.setLongitude(userAddress2.getLongitude());
+        loc1.setLatitude(Marker1.getPosition().latitude);
+        loc1.setLongitude( Marker1.getPosition().longitude);
+        loc2.setLatitude(Marker2.getPosition().latitude);
+        loc2.setLongitude(Marker2.getPosition().longitude);
         float distance = loc1.distanceTo(loc2);
 
-        Coordinate startCoordinate = new Coordinate(userAddress1.getLongitude(), userAddress1.getLatitude());
-        Coordinate endCoordinate = new Coordinate(userAddress2.getLongitude(), userAddress2.getLatitude());
+        Coordinate startCoordinate = new Coordinate( Marker1.getPosition().longitude, Marker1.getPosition().latitude);
+        Coordinate endCoordinate = new Coordinate(Marker2.getPosition().longitude, Marker2.getPosition().latitude);
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
         Rider rider = DB.getRider(rider_name);
@@ -550,8 +583,23 @@ public class MapActivity extends FragmentActivity implements
     @Override
     public void onMarkerDragEnd(Marker marker) {
         Toast.makeText(this, String.valueOf(marker.getPosition()), Toast.LENGTH_LONG).show();
-
+        if ((Marker1 != null)&&(Marker2 != null)) {
+            String url = getUrl(Marker1.getPosition(), Marker2.getPosition(), "driving");
+            new FetchURL(MapActivity.this).execute(url, "driving");
+        }
 
     }
+    private String getUrl (LatLng origin, LatLng dest, String directionMode) {
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        String mode = "mode=" + directionMode;
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +
+                getString(R.string.google_maps_key);
+        return url;
+    }
+
+
 }
 
