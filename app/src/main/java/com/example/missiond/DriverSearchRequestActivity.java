@@ -20,13 +20,13 @@ import java.util.List;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.12 2020
+ *  Mar.29 2020
  */
 
 public class DriverSearchRequestActivity extends AppCompatActivity {
 
     private ImageButton button_back;
-    private ImageButton button_refresh;
+
     final DataBaseHelper DB = DataBaseHelper.getInstance();
 
     ListView tripList;
@@ -41,7 +41,6 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         setContentView(R.layout.driver_search_request_activity);
 
         button_back = findViewById(R.id.DriverDestBack);
-        button_refresh = findViewById(R.id.refresh);
         tripList = findViewById(R.id.trip_list);
 
 

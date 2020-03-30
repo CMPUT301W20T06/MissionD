@@ -81,6 +81,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
             }
         });
 
+        profile.setText(rider_name);
     }
 
     /**

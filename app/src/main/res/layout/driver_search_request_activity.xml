@@ -34,43 +34,31 @@
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal"
-        android:background="#262626">
+        android:layout_height="75dp"
+        android:background="#262626"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
-            android:text="Within"
+            android:text="Your chosen pickup location:"
             android:textColor="@android:color/white"
             android:textSize="20dp" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:text="10"
-            android:textColor="@android:color/white"
-            android:textSize="19dp" />
 
         <TextView
+            android:id="@+id/pickupLocation"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
-            android:text="km"
+            android:text="pick up location"
             android:textColor="@android:color/white"
             android:textSize="20dp" />
-
-        <ImageButton
-            android:id="@+id/refresh"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/refresh"/>
 
     </LinearLayout>
+
 
     <ListView
         android:id="@+id/trip_list"

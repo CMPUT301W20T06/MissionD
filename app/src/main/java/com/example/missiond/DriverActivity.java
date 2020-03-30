@@ -29,7 +29,7 @@ import com.google.android.gms.tasks.Task;
  * @author
  *  Weiting Chi, XinRong Zhou
  * @version
- *  Mar.11 2020
+ *  Mar.29 2020
  */
 
 public class DriverActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -53,11 +53,16 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_driver);
 
         Intent i = getIntent();
+        /**
+         * get driver name
+         * and set the driver name
+         */
         driver_name = i.getStringExtra("driver_name");
-
 
         seeTrip_button = findViewById(R.id.driverSeeTrip);
         profile_button = findViewById(R.id.profile_driver);
+
+        profile_button.setText(driver_name);
 
         driverMapFragment= (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFrag);
@@ -79,7 +84,7 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
         seeTrip_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DriverActivity.this, DriverSearchRequestActivity.class);
+                Intent intent = new Intent(DriverActivity.this, DriverPickupActivity.class);
                 startActivity(intent);
 
             }

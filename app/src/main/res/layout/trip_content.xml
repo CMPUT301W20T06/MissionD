@@ -6,10 +6,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="match_parent">
 
         <TextView
             android:id="@+id/location_text"
@@ -24,23 +23,33 @@
             android:id="@+id/distance_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="95dp"
+            android:layout_weight="1"
+            android:focusable="false"
             android:padding="10dp"
             android:text="10"
-            android:textSize="25dp">
+            android:textSize="15dp">
 
         </TextView>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:focusable="false"
             android:padding="10dp"
-            android:text="km"
-            android:textSize="25dp">
-            ß
+            android:paddingRight="7pt"
+            android:text="km from you"
+            android:textSize="15dp">
+
         </TextView>
 
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
