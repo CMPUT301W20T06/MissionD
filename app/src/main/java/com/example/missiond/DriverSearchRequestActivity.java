@@ -87,16 +87,25 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
          * it will get the trip location and trip destination
          * it will go to the DriverMakeOfferActivity
          */
+        final List<Order> newList = current_orders;
+
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Trip tripedit = tripDataList.get(position);
+
+                Order order = newList.get(position);
 
                 // 这里要order object 的话直接 Order order = current_orders.get(position);
 
                 Intent intent = new Intent(DriverSearchRequestActivity.this, DriverMakeOfferActivity.class);
                 intent.putExtra("trip_location",tripedit.getLocationName());
                 intent.putExtra("trip_destination",tripedit.getDestination());
+                intent.putExtra("startLocationLat",(float)order.getStartLoc().getLatitude());
+                intent.putExtra("startLocationLng",(float)order.getStartLoc().getLongitude());
+                intent.putExtra("endLocationLat",(float)order.getEndLoc().getLatitude());
+                intent.putExtra("endLocationLng",(float)order.getEndLoc().getLongitude());
+
                 startActivity(intent);
                 //DriverSearchRequestActivity.this.finish();
 

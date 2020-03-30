@@ -13,8 +13,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 /**
  * Displays a map, driver's information, and pick up location and destination
  * Rider can click "ARRIVE" to end the trip and pay
@@ -25,7 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 
 public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, RiderConfirmPayDialog.RiderConfirmPayDialogListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback,TaskLoadedCallback {
     private ImageButton back;
     private Button confirm;
     private TextView driverName,pickUpText,destText;
@@ -34,6 +38,10 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
     LatLng LatLng1,LatLng2;
 
     Float address1Lat,address1Lng,address2Lat,address2Lng;
+
+    MarkerOptions MarkerOptions1 = new MarkerOptions();
+    MarkerOptions MarkerOptions2 = new MarkerOptions();
+    private Polyline currentPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,14 +132,45 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         newMap = googleMap;
 //
         LatLng1 = new LatLng(address1Lat,address1Lng);
+        MarkerOptions1.position(LatLng1);
+        MarkerOptions1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        MarkerOptions1.title("start address");
+
+        newMap.addMarker(MarkerOptions1);
+
         LatLng2 = new LatLng(address2Lat,address2Lng);
+        MarkerOptions2.position(LatLng2);
+        MarkerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        MarkerOptions2.title("destination address");
+
+        newMap.addMarker(MarkerOptions2);
+
+        String url = getUrl(MarkerOptions1.getPosition(),MarkerOptions2.getPosition(),"driving");
+        new FetchURL(RiderOnTripActivity.this).execute(url,"driving");
 
 
-        newMap.addMarker(new MarkerOptions().position(LatLng1).title("start address"));
-        newMap.addMarker(new MarkerOptions().position(LatLng2).title("destination address"));
+        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,11));
+        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng2,11));
 
-        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,8));
-        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng2,8));
+    }
+    private String getUrl (LatLng origin, LatLng dest, String directionMode) {
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        String mode = "mode=" + directionMode;
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +
+                getString(R.string.google_maps_key);
+        return url;
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if(currentPolyline != null) {
+            currentPolyline.remove();
+        }
+        currentPolyline = newMap.addPolyline((PolylineOptions)values[0]);
+
 
 
     }

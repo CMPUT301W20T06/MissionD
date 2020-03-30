@@ -15,7 +15,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * Displays a map, driver's information, and pick up location and destination
@@ -25,7 +28,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * @version
  *  Mar.12 2020
  */
-public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, OnMapReadyCallback {
+public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, OnMapReadyCallback
+,TaskLoadedCallback{
     private ImageButton back;
     private Button confirm;
     private TextView driverName,pickUpText,destText;
@@ -34,6 +38,11 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
     LatLng LatLng1,LatLng2;
 
     Float address1Lat,address1Lng,address2Lat,address2Lng;
+
+    Marker Marker1;
+    Marker Marker2;
+
+    Polyline currentPolyline;
 
 
     @Override
@@ -128,13 +137,37 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         LatLng2 = new LatLng(address2Lat,address2Lng);
 
 
-        newMap.addMarker(new MarkerOptions().position(LatLng1).title("start address"));
-        newMap.addMarker(new MarkerOptions().position(LatLng2).title("destination address"));
+        Marker1  = newMap.addMarker(new MarkerOptions().position(LatLng1).title("start address"));
+        Marker2 = newMap.addMarker(new MarkerOptions().position(LatLng2).title("destination address"));
 
-        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,8));
-        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng2,8));
+        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,11));
+        newMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng2,11));
 
+        String url = getUrl(Marker1.getPosition(),Marker2.getPosition(),"driving");
+        new FetchURL(RiderWaitForPickUp.this).execute(url,"driving");
+
+    }
+
+    private String getUrl (LatLng origin, LatLng dest, String directionMode) {
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        String mode = "mode=" + directionMode;
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +
+                getString(R.string.google_maps_key);
+        return url;
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if(currentPolyline != null) {
+            currentPolyline.remove();
+        }
+        currentPolyline = newMap.addPolyline((PolylineOptions)values[0]);
 
 
     }
 }
+
+

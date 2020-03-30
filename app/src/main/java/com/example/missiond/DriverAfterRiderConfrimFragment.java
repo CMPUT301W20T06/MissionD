@@ -24,6 +24,8 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
     public String Location;
     public String Destination;
 
+    private float startLat,startLng,endLat,endLng;
+
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +35,10 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
         if (bundle!=null){
             Location = bundle.getString("trip_location");
             Destination = bundle.getString("trip_destination");
+            startLat = bundle.getFloat("startLocationLat");
+            startLng = bundle.getFloat("startLocationLng");
+            endLat =bundle.getFloat("endLocationLat");
+            endLng = bundle.getFloat("endLocationLng");
         }
 
         tesing_button = v.findViewById(R.id.just_for_testing);
@@ -44,6 +50,10 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
                 Intent intent = new Intent(getActivity(), DriverPickeupRiderActivity.class);
                 intent.putExtra("location",Location);
                 intent.putExtra("destination",Destination);
+                intent.putExtra("startLocationLat",startLat);
+                intent.putExtra("startLocationLng",startLng);
+                intent.putExtra("endLocationLat",endLat);
+                intent.putExtra("endLocationLng",endLng);
                 startActivity(intent);
             }
         });

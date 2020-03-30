@@ -15,8 +15,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +32,7 @@ import java.util.List;
  * @version
  *  Mar.12 2020
  */
-public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapReadyCallback,TaskLoadedCallback {
     private ImageButton button_back;
     private Button button_confirm;
     private TextView LocationName;
@@ -39,6 +42,8 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
     private LatLng LatLng1;
     private LatLng LatLng2;
 
+    MarkerOptions MarkerOptions1 = new MarkerOptions();
+    MarkerOptions MarkerOptions2 = new MarkerOptions();
 
     private String Location;
     private String Destination;
@@ -48,6 +53,13 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
 
     private SupportMapFragment newMapFragment;
 
+    private float startLat;
+    private float startLng;
+    private float endLat;
+    private float endLng;
+
+    private Polyline currentPolyline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +68,10 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
 
         Location = getIntent().getExtras().getString("trip_location");
         Destination = getIntent().getExtras().getString("trip_destination");
+        startLat = getIntent().getExtras().getFloat("startLocationLat");
+        startLng = getIntent().getExtras().getFloat("startLocationLng");
+        endLat = getIntent().getExtras().getFloat("endLocationLat");
+        endLng = getIntent().getExtras().getFloat("endLocationLng");
 
         LocationName = findViewById(R.id.start_location);
         DestinationName = findViewById(R.id.Destination_text);
@@ -87,6 +103,11 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
                 Bundle bundle = new Bundle();
                 bundle.putString("trip_location",Location);
                 bundle.putString("trip_destination",Destination);
+                bundle.putFloat("startLocationLat",startLat);
+                bundle.putFloat("startLocationLng",startLng);
+                bundle.putFloat("endLocationLat",endLat);
+                bundle.putFloat("endLocationLng",endLng);
+
                 fragment.setArguments(bundle);
                 fragment.show(getSupportFragmentManager(),"Confirm");
             }
@@ -110,51 +131,47 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
     public void onMapReady(GoogleMap googleMap) {
         makeOfferMap = googleMap;
 
-        List<Address> addressList1 = null;
-        List<Address> addressList2 = null;
+        LatLng1 = new LatLng(startLat,startLng);
+        MarkerOptions1.position(LatLng1);
+        MarkerOptions1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        MarkerOptions1.title("start address");
+
+        makeOfferMap.addMarker(MarkerOptions1);
+
+        LatLng2 = new LatLng(endLat,endLng);
+        MarkerOptions2.position(LatLng2);
+        MarkerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        MarkerOptions2.title("destination address");
+
+        makeOfferMap.addMarker(MarkerOptions2);
+
+        String url = getUrl(MarkerOptions1.getPosition(),MarkerOptions2.getPosition(),"driving");
+        new FetchURL(DriverMakeOfferActivity.this).execute(url,"driving");
 
 
+        makeOfferMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,11));
+        makeOfferMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng2,11));
 
-        Geocoder geocoder = new Geocoder(this);
-//
-        try {
-            addressList1 = geocoder.getFromLocationName(Location, 1);
 
-            if (addressList1 != null) {
-//                            for(int i=0;i<addressList.size();i++){
-                userAddress1 = addressList1.get(0);
-                LatLng1 = new LatLng(userAddress1.getLatitude(), userAddress1.getLongitude());
+    }
 
-                makeOfferMap.addMarker(new MarkerOptions().position(LatLng1).title("start address"));
+    private String getUrl (LatLng origin, LatLng dest, String directionMode) {
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        String mode = "mode=" + directionMode;
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +
+                getString(R.string.google_maps_key);
+        return url;
+    }
 
-                makeOfferMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng1,11));
-//}
-            } else {
-                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
-            }
+    @Override
+    public void onTaskDone(Object... values) {
+        if(currentPolyline != null) {
+            currentPolyline.remove();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            addressList2 = geocoder.getFromLocationName(Destination, 1);
-
-            if (addressList2 != null) {
-//                            for(int i=0;i<addressList.size();i++){
-                userAddress2 = addressList2.get(0);
-                LatLng2 = new LatLng(userAddress2.getLatitude(), userAddress2.getLongitude());
-
-                makeOfferMap.addMarker(new MarkerOptions().position(LatLng2).title("start address"));
-//}
-            } else {
-                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        currentPolyline = makeOfferMap.addPolyline((PolylineOptions)values[0]);
 
 
     }

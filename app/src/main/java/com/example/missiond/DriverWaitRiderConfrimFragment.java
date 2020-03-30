@@ -27,6 +27,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
 
     public String Location;
     public String Destination;
+    private float startLat,startLng,endLat,endLng;
 
     @NonNull
     @Override
@@ -37,6 +38,10 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         if (bundle!=null){
             Location = bundle.getString("trip_location");
             Destination = bundle.getString("trip_destination");
+            startLat = bundle.getFloat("startLocationLat");
+            startLng = bundle.getFloat("startLocationLng");
+            endLat =bundle.getFloat("endLocationLat");
+            endLng = bundle.getFloat("endLocationLng");
         }
 
         //////////////////////////////////////////////////////////////////
@@ -50,6 +55,11 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("trip_location",Location);
                 bundle.putString("trip_destination",Destination);
+                bundle.putFloat("startLocationLat",startLat);
+                bundle.putFloat("startLocationLng",startLng);
+                bundle.putFloat("endLocationLat",endLat);
+                bundle.putFloat("endLocationLng",endLng);
+
                 DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
                 fragment.setArguments(bundle);
                 fragment.show(getFragmentManager(),"test1");
