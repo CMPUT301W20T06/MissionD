@@ -95,7 +95,7 @@ public class DataBaseHelper {
     public void UpdateDriverData(Driver driver) {
         String collection = "Driver";
         db.collection(collection).document(driver.getUserName())
-                .set(driver, SetOptions.merge())
+                .set(driver)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -113,7 +113,7 @@ public class DataBaseHelper {
     public void UpdateRiderData(Rider rider) {
         String collection = "Rider";
         db.collection(collection).document(rider.getUserName())
-                .set(rider, SetOptions.merge())
+                .set(rider)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -221,11 +221,21 @@ public class DataBaseHelper {
     /**
      * This method add order in database
      */
-    public void addOrder(Order order) {
+    public String addOrder(Order order) {
 //        Map<String, Object> orderData = new HashMap<>();
 //        orderData.put("userName", userName);
 //        orderData.put("order", order);
-        db.collection("Orders").add(order);
+//        db.collection("Orders").add(order);
+        DocumentReference documentReference = db.collection("Orders").document();
+        String id = documentReference.getId();
+        order.setId(id);
+        documentReference.set(order);
+        return id;
+    }
+
+    public void updateOrder(Order order) {
+        String id = order.getId();
+        db.collection("Orders").document(id).set(order);
     }
 
     /**
