@@ -2,6 +2,7 @@ package com.example.missiond;
 
 import android.util.Log;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
@@ -73,6 +74,7 @@ public class DataBaseHelper {
      * @return
      *  Return DocumentReference instance of that rider
      */
+
     public DocumentReference AddRider(Rider rider) {
         DocumentReference userReference = db.collection("Rider").document(rider.getUserName());
         userReference.set(rider);
@@ -158,15 +160,15 @@ public class DataBaseHelper {
      * @return
      *  Return rider object
      */
-    public Rider getRider(String userName) {
+    public void getRider(String userName, final Consumer<Rider> consumer) {
         DocumentReference docRef = db.collection("Rider").document(userName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 tempRider = documentSnapshot.toObject(Rider.class);
+                consumer.accept(tempRider);
             }
         });
-        return tempRider;
     }
 
     /**
@@ -174,17 +176,17 @@ public class DataBaseHelper {
      * @return
      *  Return Driver object
      */
-    public Driver getDriver(String userName) {
-        String collection = "Driver";
-        DocumentReference docRef = db.collection(collection).document(userName);
+    public void getDriver(String userName, final Consumer<Driver> consumer) {
+        DocumentReference docRef = db.collection("Driver").document(userName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 tempDriver = documentSnapshot.toObject(Driver.class);
+                consumer.accept(tempDriver);
             }
         });
-        return tempDriver;
     }
+
 
     /**
      * This method checks if a user exist in database
@@ -255,7 +257,8 @@ public class DataBaseHelper {
      * @return
      *  Return a list of orders
      */
-    public List<Order> GetUserOrders(String userName) {
+    @Keep
+    public void GetUserOrders(String userName, final Consumer<List<Order>> consumer) {
         db.collection("Orders")
                 .whereEqualTo("userName", userName)
                 .get()
@@ -267,13 +270,12 @@ public class DataBaseHelper {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }
+                            consumer.accept(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-        return list;
     }
 
     /**
@@ -281,7 +283,8 @@ public class DataBaseHelper {
      * @return
      *  Return a list of drivers
      */
-    public List<Driver> getDrivers() {
+
+    public void getDrivers(final Consumer<List<Driver>> consumer) {
         db.collection("Drivers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -292,12 +295,13 @@ public class DataBaseHelper {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list_driver.add(document.toObject(Driver.class));
                             }
+                            consumer.accept(list_driver);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-        return list_driver;
+
     }
 
     /**
@@ -305,7 +309,8 @@ public class DataBaseHelper {
      * @return
      *  Return a list of orders
      */
-    public List<Order> getAllOrders() {
+    @Keep
+    public void getAllOrders(final Consumer<List<Order>> consumer) {
         db.collection("Orders")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -316,12 +321,11 @@ public class DataBaseHelper {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }
+                        consumer.accept(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-        return list;
     }
 }

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 import java.util.List;
 
@@ -29,8 +30,16 @@ public class RiderEndPayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rider_end_pay);
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        final Driver driver = DB.getDriver("Yifei");
-        String driver_name = driver.getUserName();
+        driverName = findViewById(R.id.driverName);
+
+        DB.getDriver("Yifei", new Consumer<Driver>() {
+            @Override
+            public void accept(Driver driver) {
+            String driver_name = driver.getUserName();
+                driverName.setText(driver_name);
+            }
+        });
+
 
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(new View.OnClickListener() {
@@ -40,8 +49,7 @@ public class RiderEndPayActivity extends AppCompatActivity {
             }
         });
 
-        driverName = findViewById(R.id.driverName);
-        driverName.setText(driver_name);
+
 
         GenerateQR();
 
@@ -56,21 +64,26 @@ public class RiderEndPayActivity extends AppCompatActivity {
 //            String message = text.getText().toString();
         DataBaseHelper DB = DataBaseHelper.getInstance();
 //        Rider rider = DB.getRider("Isaac");
-        List<Order> orders = DB.GetUserOrders("Isaac");
-        Float cost;
-        String stringcost;
-        stringcost = "No current active orders";
-        for (int i=0; i<orders.size();i++ ){
-            if (orders.get(i).getOrderStatus() ==1) {
-                cost = orders.get(i).getCost();
-                stringcost = String.valueOf(cost);}
-        }
+        DB.GetUserOrders("Isaac", new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                Float cost;
+                String stringcost;
+                stringcost = "No current active orders";
+                for (int i=0; i<orders.size();i++ ){
+                    if (orders.get(i).getOrderStatus() ==1) {
+                        cost = orders.get(i).getCost();
+                        stringcost = String.valueOf(cost);}
+                }
 
 
-        String InputDate = stringcost;
-        ImageView mImageView = findViewById(R.id.iv);
-        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(InputDate, 500, 500);
-        mImageView.setImageBitmap(mBitmap);
+                String InputDate = stringcost;
+                ImageView mImageView = findViewById(R.id.iv);
+                Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(InputDate, 500, 500);
+                mImageView.setImageBitmap(mBitmap);
+            }
+        });
+
 //        submit.setText("AWESOME!");
     }
 }

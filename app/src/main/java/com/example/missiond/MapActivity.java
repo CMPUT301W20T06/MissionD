@@ -355,7 +355,7 @@ public class MapActivity extends FragmentActivity implements
         Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);
 
         i.putExtras(extras);
-
+        i.putExtra("rider_name",rider_name);
         Location loc1 = new Location("");
         Location loc2 = new Location("");
         loc1.setLatitude(Marker1.getPosition().latitude);
@@ -368,7 +368,6 @@ public class MapActivity extends FragmentActivity implements
         Coordinate endCoordinate = new Coordinate(Marker2.getPosition().longitude, Marker2.getPosition().latitude);
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        Rider rider = DB.getRider(rider_name);
         Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, startCoordinate, endCoordinate, rider_name);
         DB.addOrder(order);
 

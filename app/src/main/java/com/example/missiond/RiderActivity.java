@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -73,10 +74,13 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         }
 
         profile = findViewById(R.id.profile_rider);
+        profile.setText(rider_name);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RiderActivity.this, UserProfileActivity.class);
+                i.putExtra("user_name",rider_name);
+                i.putExtra("user_type","rider");
                 startActivity(i);
             }
         });

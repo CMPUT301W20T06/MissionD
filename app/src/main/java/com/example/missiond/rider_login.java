@@ -5,10 +5,13 @@ import androidx.core.util.Consumer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Arrays;
 
 public class rider_login extends AppCompatActivity {
 
@@ -31,14 +34,19 @@ public class rider_login extends AppCompatActivity {
                 str_phone = phone.getText().toString();
                 str_user_email = user_email.getText().toString();
                 str_user_name = user_name.getText().toString();
-                if (str_user_name.length()==0) return;
+                /**
+                 * avoid user input whitespace after their names
+                 */
+                String[] NameArray = str_user_name.split(" ");
+                final String Name = NameArray[0];
+                if (Name.length()==0) return;
 
-                DB.userExist(str_user_name, true, new Consumer<Boolean>() {
+                DB.userExist(Name, true, new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) {
                         if (aBoolean){
                             Intent i = new Intent(rider_login.this, RiderActivity.class);
-                            i.putExtra("rider_name",str_user_name);
+                            i.putExtra("rider_name",Name);
                             startActivity(i);
                         } else {
                             Toast.makeText(rider_login.this,"Rider is not find in database",Toast.LENGTH_SHORT).show();

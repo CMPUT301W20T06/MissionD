@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.DialogFragment;
 
 /**
@@ -28,6 +29,7 @@ import androidx.fragment.app.DialogFragment;
 public class DriverInfoDialog extends DialogFragment {
 
     private Button close,call,email;
+    private String phone = null;
 
     @Nullable
     @Override
@@ -38,20 +40,30 @@ public class DriverInfoDialog extends DialogFragment {
         All info should be loaded from database
         set driver name, plate number, rating
          */
+        final TextView name = v.findViewById(R.id.driver_name);
+        final TextView rating = v.findViewById(R.id.driver_rating);
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        final Driver driver = DB.getDriver("Yifei");
-        String driver_name = driver.getUserName();
-        final float driver_rating = driver.getRating();
-        TextView name = v.findViewById(R.id.driver_name);
-        TextView rating = v.findViewById(R.id.driver_rating);
-        name.setText(driver_name);
-        rating.setText(String.valueOf(driver_rating));
+        DB.getDriver("Yifei", new Consumer<Driver>() {
+            @Override
+            public void accept(Driver driver) {
+                String driver_name = driver.getUserName();
+                final float driver_rating = driver.getRating();
+                name.setText(driver_name);
+                rating.setText(String.valueOf(driver_rating));
+                phone = driver.getPhoneNumber();
+            }
+        });
+
+
 
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = "tel:" + driver.getPhoneNumber();
+                if (phone == null) {
+                    return;
+                }
+                String s = "tel:" + phone;
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(s));
                 /**
