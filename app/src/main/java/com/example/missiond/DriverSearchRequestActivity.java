@@ -47,6 +47,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
     Location loc2 = new Location("");
 
     List<Order> current_orders = new ArrayList<>();
+    int count = 0;
 
 
     @Override
@@ -65,22 +66,25 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         pickupLng = getIntent().getExtras().getFloat("pickupLng");
         loc1.setLatitude(pickupLat);
         loc1.setLongitude(pickupLng);
-        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
+
 
         DB.getAllOrders(new Consumer<List<Order>>() {
             @Override
             public void accept(List<Order> orders) {
                 for (int i = 0; i< orders.size(); i++) {
+                    count++;
                     Order order = orders.get(i);
                     int status = order.getOrderStatus();
                     if (status == 1) {
-                            current_orders.add(order);
+                        current_orders.add(order);
                     }
                 }
             }
         });
 
+        Toast.makeText(this,String.valueOf(count),Toast.LENGTH_SHORT).show();
 
 
         tripDataList = new ArrayList<>();

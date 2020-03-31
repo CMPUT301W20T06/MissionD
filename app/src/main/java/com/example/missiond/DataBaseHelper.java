@@ -271,12 +271,13 @@ public class DataBaseHelper {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }
-                            consumer.accept(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+        consumer.accept(list);
+        list.clear();
     }
 
     /**
@@ -302,7 +303,7 @@ public class DataBaseHelper {
                         }
                     }
                 });
-
+        list_driver.clear();
     }
 
     /**
@@ -321,12 +322,14 @@ public class DataBaseHelper {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
+                                Log.d(TAG, String.valueOf(list.size()));
                             }
-                        consumer.accept(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+        consumer.accept(list);
+        list.clear();
     }
 }
