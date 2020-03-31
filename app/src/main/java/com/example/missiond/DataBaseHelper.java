@@ -271,12 +271,12 @@ public class DataBaseHelper {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }
-                            consumer.accept(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+        consumer.accept(list);
         list.clear();
     }
 
