@@ -291,7 +291,7 @@ public class DataBaseHelper {
      *  Return a list of orders
      */
     @Keep
-    public List<Order> getAllOrders() {
+    public void getAllOrders(final Consumer<List<Order>> consumer) {
         db.collection("Orders")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -302,12 +302,11 @@ public class DataBaseHelper {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 list.add(document.toObject(Order.class));
                             }
+                        consumer.accept(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-        return list;
     }
 }
