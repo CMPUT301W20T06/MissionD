@@ -241,15 +241,16 @@ public class DataBaseHelper {
         db.collection("Orders").document(id).set(order);
     }
 
-    public Order getOrderById(String id) {
+    @Keep
+    public void getOrderById(String id, final Consumer<Order> consumer) {
         DocumentReference docRef = db.collection("Orders").document(id);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 tempOrder = documentSnapshot.toObject(Order.class);
+                consumer.accept(tempOrder);
             }
         });
-        return tempOrder;
     }
 
     /**
