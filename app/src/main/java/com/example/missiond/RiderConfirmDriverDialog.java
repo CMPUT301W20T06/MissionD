@@ -37,8 +37,8 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     private Button email,call,cancel,confirm;
     private RiderConfirmDriverListener listener;
     private String rider_name;
-    private String phone;
-    private String emailAddr;
+    private String phone,emailAddr,id;
+    Order order1;
 
     public interface RiderConfirmDriverListener{
         void onConfirmClick();
@@ -54,26 +54,40 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         get driver's button: phone, email
          */
         final DataBaseHelper DB = DataBaseHelper.getInstance();
-        rider_name = getArguments().getString(rider_name);
-        DB.GetUserOrders(rider_name, new Consumer<List<Order>>() {
+        id = getArguments().getString("orderID");
+//        DB.GetUserOrders(rider_name, new Consumer<List<Order>>() {
+//            @Override
+//            public void accept(List<Order> orders) {
+//                Order active_order;
+//                for (int i=0; i < orders.size();i++){
+//                    if (orders.get(i).orderStatus == 2);
+//                    active_order = orders.get(i);
+//                    String driver_name = active_order.getDriver();
+//                    DB.getDriver(driver_name, new Consumer<Driver>() {
+//                        @Override
+//                        public void accept(Driver driver) {
+//                            onLoaded(v,driver);
+//                        }
+//                    });
+//                    break;
+//                }
+//
+//            }
+//        });
+        DB.getOrderById(id, new Consumer<Order>() {
             @Override
-            public void accept(List<Order> orders) {
-                Order active_order;
-                for (int i=0; i < orders.size();i++){
-                    if (orders.get(i).orderStatus == 2);
-                    active_order = orders.get(i);
-                    String driver_name = active_order.getDriver();
-                    DB.getDriver(driver_name, new Consumer<Driver>() {
-                        @Override
-                        public void accept(Driver driver) {
-                            onLoaded(v,driver);
-                        }
-                    });
-                    break;
-                }
-
+            public void accept(Order order) {
+                order1 = order;
+                String driver_name = order1.getDriver();
+                DB.getDriver(driver_name, new Consumer<Driver>() {
+                    @Override
+                    public void accept(Driver driver) {
+                        onLoaded(v,driver);
+                    }
+                });
             }
         });
+
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override

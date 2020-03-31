@@ -23,6 +23,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.MetadataChanges;
+import androidx.core.util.Consumer;
+
+import java.util.List;
 
 /**
  * Once there is a drive to accept the request, the information about that drive will be displayed
@@ -44,13 +54,16 @@ TaskLoadedCallback{
 
     String pickUp,dest;
     Float fare,address1Lat,address1Lng,address2Lat,address2Lng;
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    Order order1;
+
 
     private SupportMapFragment mapFragment;
     private RiderConfirmDriverDialog confirmDriverDialog;
     private ImageButton close;
     private TextView pickupText,destText,next;
     private Polyline currentPolyline;
-    private String rider_name;
+    private String rider_name,id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +78,7 @@ TaskLoadedCallback{
         pickUp = extras.getString("RiderPickUp");
         dest = extras.getString("RiderDest");
         fare = extras.getFloat("EstimateFare");
+        id = extras.getString("orderID");
         address1Lat = extras.getFloat("startAddressLatitude");
         address1Lng = extras.getFloat("startAddressLongitude");
         address2Lat = extras.getFloat("destinationAddressLatitude");
@@ -76,6 +90,32 @@ TaskLoadedCallback{
 
         mapFragment.getMapAsync(this);
 
+        DB.getOrderById(id, new Consumer<Order>() {
+            @Override
+            public void accept(Order order) {
+                order1 = order;
+            }
+        });
+
+        FirebaseFirestore fs = FirebaseFirestore.getInstance();
+        DocumentReference docRef = fs.collection("Orders").document(id);
+        docRef.addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                // ...这里写监测到order变化之后要做的事儿 就是要跳转啥的
+//                Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
+                if (order1.getOrderStatus()==2) {
+                    Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
+
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("orderID", id);
+//                    RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
+//                    confirmDriverDialog.setArguments(bundle);
+//                    confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
+                }
+            }
+        });
 
         pickupText = findViewById(R.id.Location1_makeRequest);
         pickupText.setText(pickUp);
@@ -92,7 +132,6 @@ TaskLoadedCallback{
             }
         });
 
-
         /**
         when order status is changed to 2 (driver accepted trip request)
          **/
@@ -100,11 +139,13 @@ TaskLoadedCallback{
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("rider_name",rider_name);
-                RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
-                confirmDriverDialog.setArguments(bundle);
-                confirmDriverDialog.show(getSupportFragmentManager(),"confirmDriverFragment");
+                order1.setOrderStatus(2);
+                order1.setDriver("Yifei");
+//                Bundle bundle = new Bundle();
+//                bundle.putString("rider_name",rider_name);
+//                RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
+//                confirmDriverDialog.setArguments(bundle);
+//                confirmDriverDialog.show(getSupportFragmentManager(),"confirmDriverFragment");
             }
         });
     }

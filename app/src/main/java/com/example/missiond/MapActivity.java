@@ -94,7 +94,7 @@ public class MapActivity extends FragmentActivity implements
     private RiderAddMoneyFragment addMoneyFrag;
     private float addAmount;
     private TextView addAmountShow;
-    private String rider_name;
+    private String rider_name,id;
 
     MarkerOptions userMarkerOptions = new MarkerOptions();
     MarkerOptions userMarkerOptions2 = new MarkerOptions();
@@ -348,10 +348,7 @@ public class MapActivity extends FragmentActivity implements
         extras.putFloat("startAddressLongitude", (float) Marker1.getPosition().longitude);
         extras.putFloat("destinationAddressLatitude", (float) Marker2.getPosition().latitude);
         extras.putFloat("destinationAddressLongitude", (float) Marker2.getPosition().longitude);
-        Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);
 
-        i.putExtras(extras);
-        i.putExtra("rider_name",rider_name);
         Location loc1 = new Location("");
         Location loc2 = new Location("");
         loc1.setLatitude(Marker1.getPosition().latitude);
@@ -366,6 +363,13 @@ public class MapActivity extends FragmentActivity implements
         DataBaseHelper DB = DataBaseHelper.getInstance();
         Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, startCoordinate, endCoordinate, rider_name);
         DB.addOrder(order);
+        id = order.getId();
+        extras.putString("orderID",id);
+
+        Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);
+
+        i.putExtras(extras);
+        i.putExtra("rider_name",rider_name);
 
         startActivity(i);
 
