@@ -49,12 +49,8 @@ TaskLoadedCallback{
     private RiderConfirmDriverDialog confirmDriverDialog;
     private ImageButton close;
     private TextView pickupText,destText,next;
-<<<<<<< HEAD
     private Polyline currentPolyline;
-
-=======
     private String rider_name;
->>>>>>> fix_looking_for_driver
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

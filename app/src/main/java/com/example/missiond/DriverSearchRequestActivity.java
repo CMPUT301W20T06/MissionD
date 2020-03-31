@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
     Location loc1 = new Location("");
     Location loc2 = new Location("");
+    List<Order> current_orders = new ArrayList<>();
 
 
     @Override
@@ -65,22 +67,19 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
         Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
 
-        List<Order> orders = DB.getAllOrders();
-        List<Order> current_orders = new ArrayList<>();
-
-        Toast.makeText(this,String.valueOf(orders.size()),Toast.LENGTH_SHORT).show();
-
-        for (int i = 0; i< orders.size(); i++) {
-            Order order = orders.get(i);
-            if (order != null) {
-                if (order.getOrderStatus() != null) {
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i = 0; i< orders.size(); i++) {
+                    Order order = orders.get(i);
                     int status = order.getOrderStatus();
                     if (status == 1) {
-                        current_orders.add(order);
+                            current_orders.add(order);
                     }
                 }
             }
-        }
+        });
+
 
 
         tripDataList = new ArrayList<>();
