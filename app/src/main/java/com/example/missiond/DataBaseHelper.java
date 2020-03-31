@@ -277,6 +277,7 @@ public class DataBaseHelper {
                         }
                     }
                 });
+        list.clear();
     }
 
     /**
@@ -302,7 +303,7 @@ public class DataBaseHelper {
                         }
                     }
                 });
-
+        list_driver.clear();
     }
 
     /**
@@ -329,5 +330,6 @@ public class DataBaseHelper {
                     }
                 });
         consumer.accept(list);
+        list.clear();
     }
 }
