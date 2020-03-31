@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
 public class UserProfileActivity extends AppCompatActivity {
-    private Button close,confirm;
+    private Button close,confirm,order;
+
     private DataBaseHelper db;
     private TextView nameBig;
     private EditText mName,mPhone,mEmail;
@@ -21,6 +22,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private String type;
     private Rider rider;
     private Driver driver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.editEmail_profile);
         close = findViewById(R.id.profileBack);
         confirm = findViewById(R.id.confirm_profile_edit);
+        order = findViewById(R.id.orderHistory);
 
         nameBig.setText(name);
         mName.setText(name);
@@ -102,6 +105,14 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UserProfileActivity.this, RiderOrderActivity.class);
+                startActivity(i);
             }
         });
 

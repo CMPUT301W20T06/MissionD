@@ -45,6 +45,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
     Location loc1 = new Location("");
     Location loc2 = new Location("");
+
     List<Order> current_orders = new ArrayList<>();
 
 

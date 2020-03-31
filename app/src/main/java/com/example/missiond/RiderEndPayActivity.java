@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
+import android.content.Intent;
 
 import java.util.List;
 
@@ -45,6 +46,15 @@ public class RiderEndPayActivity extends AppCompatActivity {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle extras = new Bundle();
+                //extras.putString("name",driver_name);
+                //extras.putString("pickUp",pickUp);
+                //extras.putString("dest",dest);
+
+                Intent i = new Intent(RiderEndPayActivity.this, RiderRateActivity.class);
+                i.putExtras(extras);
+                startActivity(i);
+
                 finish();
             }
         });

@@ -1,12 +1,17 @@
 package com.example.missiond;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +38,11 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
     private TextView destination;
     private TextView rider_name;
     private TextView rider_phone;
+    private TextView rider_email;
+
+    private Button phone_call;
+
+    private Button email_rider;
 
     private SupportMapFragment newMapFragment;
 
@@ -66,7 +76,10 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
         start_location = findViewById(R.id.start_location);
         destination = findViewById(R.id.Destination_text);
         //rider_name = findViewById(R.id.rider_name);
-        //rider_phone = findViewById(R.id.rider_phone);
+        rider_phone = findViewById(R.id.rider_phone);
+        phone_call = findViewById(R.id.call);
+        email_rider = findViewById(R.id.email);
+        rider_email = findViewById(R.id.rider_email);
 
         start_location.setText(Location);
         destination.setText(Destination);
@@ -84,6 +97,46 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
                 startActivity(intent);
             }
         });
+
+
+        phone_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = "tel:" + rider_phone.getText();
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse(s));
+                /**
+                 * https://stackoverflow.com/questions/40125931/how-to-ask-permission-to-make-phone-call-from-android-from-android-version-marsh
+                 * @author
+                 *  Fabian Tamp
+                 */
+                if (ContextCompat.checkSelfPermission(DriverPickeupRiderActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(DriverPickeupRiderActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
+                }
+                else
+                {
+                    startActivity(callIntent);
+                }
+
+            }
+        });
+
+
+        email_rider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * https://stackoverflow.com/questions/28588255/no-application-can-perform-this-action-when-send-email
+                 * @author
+                 * yubaraj poudel
+                 */
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{String.valueOf(rider_email.getText())});
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            }
+        });
+
 
         newMapFragment= (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

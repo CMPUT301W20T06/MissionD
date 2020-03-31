@@ -38,6 +38,7 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     private RiderConfirmDriverListener listener;
     private String rider_name;
     private String phone;
+    private String emailAddr;
 
     public interface RiderConfirmDriverListener{
         void onConfirmClick();
@@ -73,24 +74,6 @@ public class RiderConfirmDriverDialog extends DialogFragment {
 
             }
         });
-
-
-        return v;
-    }
-
-    private void onLoaded(View v ,Driver driver){
-
-        final TextView rating = v.findViewById(R.id.driver_rating);
-
-        float driver_rating = driver.getRating();
-        rating.setText(String.valueOf(driver_rating));
-        phone = driver.getPhoneNumber();
-
-        String driver_name = driver.getUserName();
-
-        TextView name = v.findViewById(R.id.driver_name);
-        name.setText(driver_name);
-
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +94,23 @@ public class RiderConfirmDriverDialog extends DialogFragment {
             }
         });
 
+
+        email = v.findViewById(R.id.email);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * https://stackoverflow.com/questions/28588255/no-application-can-perform-this-action-when-send-email
+                 * @author
+                 * yubaraj poudel
+                 */
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAddr});
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            }
+        });
+
         cancel = v.findViewById(R.id.cancel_river_confirm);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +127,26 @@ public class RiderConfirmDriverDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
+
+
+        return v;
+    }
+
+    public void onLoaded(View v ,Driver driver){
+
+        final TextView rating = v.findViewById(R.id.driver_rating);
+
+        float driver_rating = driver.getRating();
+        rating.setText(String.valueOf(driver_rating));
+        phone = driver.getPhoneNumber();
+        Toast.makeText(getActivity(),phone,Toast.LENGTH_LONG).show();
+        emailAddr = driver.getEmailAddress();
+
+        String driver_name = driver.getUserName();
+
+        TextView name = v.findViewById(R.id.driver_name);
+        name.setText(driver_name);
+
     }
 
     @Override

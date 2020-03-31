@@ -17,6 +17,8 @@
         <activity android:name=".rider_login"></activity>
         <activity android:name=".Register" />
         <activity android:name=".ScanQRcode" />
+        <activity android:name=".RiderRateActivity" />
+        <activity android:name=".RiderOrderActivity" />
         <activity android:name=".RiderEndPayActivity" />
         <activity android:name=".RiderOnTripActivity" />
         <activity android:name=".RiderWaitForPickUp" />

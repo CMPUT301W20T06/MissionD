@@ -94,6 +94,8 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DriverActivity.this, UserProfileActivity.class);
+                intent.putExtra("user_name",driver_name);
+                intent.putExtra("user_type","driver");
                 startActivity(intent);
             }
         });
