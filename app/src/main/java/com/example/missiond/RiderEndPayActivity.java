@@ -23,12 +23,19 @@ import java.util.List;
  */
 public class RiderEndPayActivity extends AppCompatActivity {
     private Button finish;
-    private TextView driverName;
+    private TextView driverName,location1,location2;
+    private String pickUp,dest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_end_pay);
+
+        /**
+         * orderID = getExtras("orderID");
+         * find order by order id
+         * get driver name from order
+         */
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
         driverName = findViewById(R.id.driverName);
@@ -41,6 +48,15 @@ public class RiderEndPayActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        pickUp = extras.getString("pickUp");
+        dest = extras.getString("dest");
+
+        location1 = findViewById(R.id.Location1);
+        location2 = findViewById(R.id.Location2);
+        location1.setText(pickUp);
+        location2.setText(dest);
 
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +66,9 @@ public class RiderEndPayActivity extends AppCompatActivity {
                 //extras.putString("name",driver_name);
                 //extras.putString("pickUp",pickUp);
                 //extras.putString("dest",dest);
-
+                /**
+                 * pass orderID to next activity
+                 */
                 Intent i = new Intent(RiderEndPayActivity.this, RiderRateActivity.class);
                 i.putExtras(extras);
                 startActivity(i);

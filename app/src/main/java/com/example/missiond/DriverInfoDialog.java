@@ -30,18 +30,23 @@ public class DriverInfoDialog extends DialogFragment {
 
     private Button close,call,email;
     private String phone = null;
+    private String emailAddr = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.driver_info_dialog,container,false);
 
-        /*
-        All info should be loaded from database
-        set driver name, plate number, rating
-         */
         final TextView name = v.findViewById(R.id.driver_name);
         final TextView rating = v.findViewById(R.id.driver_rating);
+        /**
+         * read orderID that passed from the activity
+         * find order by orderID
+         * get driver name from order
+         * find driver by driver name
+         * read driver's info
+         */
+
         DataBaseHelper DB = DataBaseHelper.getInstance();
         DB.getDriver("Yifei", new Consumer<Driver>() {
             @Override
@@ -51,10 +56,9 @@ public class DriverInfoDialog extends DialogFragment {
                 name.setText(driver_name);
                 rating.setText(String.valueOf(driver_rating));
                 phone = driver.getPhoneNumber();
+                emailAddr = driver.getEmailAddress();
             }
         });
-
-
 
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +83,22 @@ public class DriverInfoDialog extends DialogFragment {
                     startActivity(callIntent);
                 }
 
+            }
+        });
+
+        email = v.findViewById(R.id.email);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * https://stackoverflow.com/questions/28588255/no-application-can-perform-this-action-when-send-email
+                 * @author
+                 * yubaraj poudel
+                 */
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAddr});
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
             }
         });
 

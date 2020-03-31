@@ -34,6 +34,7 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
     private ImageButton back;
     private Button confirm;
     private TextView driverName,pickUpText,destText;
+    private String pickUp, dest;
     private SupportMapFragment mapFragment;
     private GoogleMap newMap;
     LatLng LatLng1,LatLng2;
@@ -49,6 +50,14 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_on_trip);
 
+        /**
+         * orderID = getExtras("orderID");
+         * find order by order id
+         * get driver name from order
+         * pass driver name to DriverinfoDialog
+         * DriverinfoDialog uses user name to fine driver and read driver's info
+         */
+
         DataBaseHelper DB = DataBaseHelper.getInstance();
         driverName = findViewById(R.id.driverName);
         DB.getDriver("Yifei", new Consumer<Driver>() {
@@ -62,8 +71,8 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        final String pickUp = extras.getString("pickUp");
-        final String dest = extras.getString("dest");
+        pickUp = extras.getString("pickUp");
+        dest = extras.getString("dest");
 
         address1Lat = extras.getFloat("startAddressLatitude");
         address1Lng = extras.getFloat("startAddressLongitude");
@@ -104,6 +113,10 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * order.setOrderStatus(5)  //request is over(history)
+                 * pass orderID to next activity
+                 */
                 RiderConfirmPayDialog riderConfirmPayDialog = new RiderConfirmPayDialog();
                 riderConfirmPayDialog.show(getSupportFragmentManager(),"confirmAndPay");
             }
@@ -125,6 +138,10 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
     @Override
     public void onArriveConfirmClick() {
         Intent i = new Intent(RiderOnTripActivity.this, RiderEndPayActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("pickUp",pickUp);
+        extras.putString("dest",dest);
+        i.putExtras(extras);
         startActivity(i);
         finish();
     }

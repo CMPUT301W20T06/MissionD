@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
     private SupportMapFragment riderMapFragment;
     private String pickupLoc, DestLoc;
     private Button profile;
+    private ImageView profileImg;
 
     private GoogleMap riderMap;
     final int LOCATION_REQUEST_CODE = 1;
@@ -76,6 +79,17 @@ public class RiderActivity extends AppCompatActivity implements initFragment.ini
         profile = findViewById(R.id.profile_rider);
         profile.setText(rider_name);
         profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(RiderActivity.this, UserProfileActivity.class);
+                i.putExtra("user_name",rider_name);
+                i.putExtra("user_type","rider");
+                startActivity(i);
+            }
+        });
+
+        profileImg = findViewById(R.id.image_profile);
+        profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RiderActivity.this, UserProfileActivity.class);

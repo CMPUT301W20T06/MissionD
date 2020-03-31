@@ -51,6 +51,14 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_wait_for_pick_up);
 
+        /**
+         * orderID = getExtras("orderID");
+         * find order by order id
+         * get driver name from order
+         * pass driver name to DriverinfoDialog
+         * DriverinfoDialog uses user name to fine driver and read driver's info
+         */
+
         DataBaseHelper DB = DataBaseHelper.getInstance();
 
         driverName = findViewById(R.id.driverName);
@@ -103,6 +111,10 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * order.setOrderStatus(4)  //pick up but not finish
+                 * pass orderID to next activity
+                 */
 
                 Bundle extras = new Bundle();
                 extras.putString("pickUp",pickUp);

@@ -135,7 +135,6 @@ public class MapActivity extends FragmentActivity implements
             mapFragment.getMapAsync(this);
         }
 
-//        addAmountShow = findViewById(R.id.RiderAddedAmount_request);
 
         request = findViewById(R.id.requestRide_request);
         request.setOnClickListener(new View.OnClickListener() {
@@ -161,9 +160,6 @@ public class MapActivity extends FragmentActivity implements
      */
     public void backButton(){
         finish();
-//        Intent intent = new Intent(MapActivity.this, MainActivity.class);
-//        startActivity(intent);
-//        intent.putExtra("address",address);
     }
 
     public void onClick(View v){
@@ -323,7 +319,7 @@ public class MapActivity extends FragmentActivity implements
 //        showMoney.setText(String.valueOf(money));
             Toast.makeText(this, String.valueOf(money), Toast.LENGTH_SHORT).show();
             Bundle bundle = new Bundle();
-            bundle.putString("moneyAmount", String.valueOf(money));
+            bundle.putString("moneyAmount", String.format("%.2f", money));
             addMoneyFrag = new RiderAddMoneyFragment();
             addMoneyFrag.setArguments(bundle);
             addMoneyFrag.show(getSupportFragmentManager(), "addMoneyFragment");
@@ -370,7 +366,6 @@ public class MapActivity extends FragmentActivity implements
         DataBaseHelper DB = DataBaseHelper.getInstance();
         Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, startCoordinate, endCoordinate, rider_name);
         DB.addOrder(order);
-
 
         startActivity(i);
 

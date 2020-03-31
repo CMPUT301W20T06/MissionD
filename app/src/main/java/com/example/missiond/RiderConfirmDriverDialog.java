@@ -60,7 +60,7 @@ public class RiderConfirmDriverDialog extends DialogFragment {
             public void accept(List<Order> orders) {
                 Order active_order;
                 for (int i=0; i < orders.size();i++){
-                    if (orders.get(i).orderStatus == 1);
+                    if (orders.get(i).orderStatus == 2);
                     active_order = orders.get(i);
                     String driver_name = active_order.getDriver();
                     DB.getDriver(driver_name, new Consumer<Driver>() {
@@ -79,6 +79,7 @@ public class RiderConfirmDriverDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (phone == null){
+                    Toast.makeText(getActivity(),"phone==null",Toast.LENGTH_LONG).show();
                     return;
                 }
                 String s = "tel:" + phone;
@@ -99,6 +100,10 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (emailAddr == null){
+                    Toast.makeText(getActivity(),"email==null",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 /**
                  * https://stackoverflow.com/questions/28588255/no-application-can-perform-this-action-when-send-email
                  * @author
@@ -128,7 +133,6 @@ public class RiderConfirmDriverDialog extends DialogFragment {
             }
         });
 
-
         return v;
     }
 
@@ -139,7 +143,6 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         float driver_rating = driver.getRating();
         rating.setText(String.valueOf(driver_rating));
         phone = driver.getPhoneNumber();
-        Toast.makeText(getActivity(),phone,Toast.LENGTH_LONG).show();
         emailAddr = driver.getEmailAddress();
 
         String driver_name = driver.getUserName();

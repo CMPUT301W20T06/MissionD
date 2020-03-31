@@ -93,12 +93,9 @@ TaskLoadedCallback{
         });
 
 
-        /*
-        when there is a driver accepting the request
-        while true:
-            if request.getDriver != null:
-                break and show fragment;
-         */
+        /**
+        when order status is changed to 2 (driver accepted trip request)
+         **/
         next = findViewById(R.id.next_makeRequest);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +159,12 @@ TaskLoadedCallback{
      */
     @Override
     public void onConfirmClick() {
+        /**
+         * get order id
+         * find order by order id
+         * order.setOrderStatus(3)  //driver and rider accept(have not picked up yet)
+         * pass order id to next activity
+         */
         Bundle extras = new Bundle();
         extras.putString("pickUp",pickUp);
         extras.putString("dest",dest);
@@ -177,10 +180,6 @@ TaskLoadedCallback{
         startActivity(i);
 
         finish();
-        /*
-        change request status
-         */
-//        Toast.makeText(this,"test",Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -188,6 +187,11 @@ TaskLoadedCallback{
      */
     @Override
     public void onCancelConfirmClick() {
+        /**
+         * get order id
+         * find order by order id
+         * order.setOrderStatus(0)  //cancel
+         */
         finish();
     }
 

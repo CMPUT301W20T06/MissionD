@@ -19,6 +19,14 @@ public class RiderRateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_rate);
 
+        /**
+         * orderID = getExtras("orderID");
+         * find order by order id
+         * get driver name from order
+         * get pick up, dest from order
+         * find driver by driver name
+         */
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         pickUp = "pick up test";
