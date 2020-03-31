@@ -335,7 +335,6 @@ public class MapActivity extends FragmentActivity implements
         Coordinate endCoordinate = new Coordinate(userAddress2.getLongitude(), userAddress2.getLatitude());
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        Rider rider = DB.getRider(rider_name);
         Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, startCoordinate, endCoordinate, rider_name);
         DB.addOrder(order);
 

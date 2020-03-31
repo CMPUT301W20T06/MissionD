@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Consumer;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.fragment.app.DialogFragment;
 
@@ -36,6 +37,7 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     private Button email,call,cancel,confirm;
     private RiderConfirmDriverListener listener;
     private String rider_name;
+    private String phone;
 
     public interface RiderConfirmDriverListener{
         void onConfirmClick();
@@ -44,36 +46,58 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.rider_confirm_driver_dialog,container,false);
+        final View v = inflater.inflate(R.layout.rider_confirm_driver_dialog,container,false);
 
         /*
         set driver's TextView: rating, plate num, name
         get driver's button: phone, email
          */
-        Order active_order = null;
-        DataBaseHelper DB = DataBaseHelper.getInstance();
+        final DataBaseHelper DB = DataBaseHelper.getInstance();
         rider_name = getArguments().getString(rider_name);
-        List<Order> orders = DB.GetUserOrders(rider_name);
-        for (int i=0; i < orders.size();i++){
-            if (orders.get(i).orderStatus == 1);
-                active_order = orders.get(i);
-                break;
-        }
+        DB.GetUserOrders(rider_name, new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                Order active_order;
+                for (int i=0; i < orders.size();i++){
+                    if (orders.get(i).orderStatus == 1);
+                    active_order = orders.get(i);
+                    String driver_name = active_order.getDriver();
+                    DB.getDriver(driver_name, new Consumer<Driver>() {
+                        @Override
+                        public void accept(Driver driver) {
+                            onLoaded(v,driver);
+                        }
+                    });
+                    break;
+                }
 
-        String driver_name = active_order.getDriver();
-        final Driver driver = DB.getDriver(driver_name);
+            }
+        });
 
-        final float driver_rating = driver.getRating();
-        TextView name = v.findViewById(R.id.driver_name);
-        TextView rating = v.findViewById(R.id.driver_rating);
-        name.setText(driver_name);
+
+        return v;
+    }
+
+    private void onLoaded(View v ,Driver driver){
+
+        final TextView rating = v.findViewById(R.id.driver_rating);
+
+        float driver_rating = driver.getRating();
         rating.setText(String.valueOf(driver_rating));
+        phone = driver.getPhoneNumber();
+
+        String driver_name = driver.getUserName();
+
+        TextView name = v.findViewById(R.id.driver_name);
+        name.setText(driver_name);
 
         call = v.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = driver.getPhoneNumber(); // phone = driver.getPhone
+                if (phone == null){
+                    return;
+                }
                 String s = "tel:" + phone;
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(s));
@@ -103,8 +127,6 @@ public class RiderConfirmDriverDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
-        return v;
     }
 
     @Override

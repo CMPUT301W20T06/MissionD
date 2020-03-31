@@ -31,27 +31,7 @@ public class UserProfileActivity extends AppCompatActivity {
         db = DataBaseHelper.getInstance();
 
         Log.d("Profile",type);
-        if (type == "rider"){
-            try {
-                db.getRider(name).wait();
-                rider = db.getRider(name);
-                phone = rider.getPhoneNumber();
-                email = rider.getEmailAddress();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//            Log.d("Profile",phone);
-        } else {
-            try {
-                db.getDriver(name).wait();
-                driver = db.getDriver(name);
-                phone = driver.getPhoneNumber();
-                email = driver.getEmailAddress();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
-        }
 
         nameBig = findViewById(R.id.user_name);
         mName = findViewById(R.id.editName_profile);
@@ -62,9 +42,32 @@ public class UserProfileActivity extends AppCompatActivity {
 
         nameBig.setText(name);
         mName.setText(name);
-        mPhone.setText(phone);
-        mEmail.setText(email);
 
+        if (type.equals("rider")) {
+            Log.d("profile","Get Rider");
+            db.getRider(name, new Consumer<Rider>() {
+                @Override
+                public void accept(Rider tempRider) {
+                    rider = tempRider;
+                    phone = rider.getPhoneNumber();
+                    email = rider.getEmailAddress();
+                    mPhone.setText(phone);
+                    mEmail.setText(email);
+                }
+            });
+        } else {
+            Log.d("profile","Get Driver");
+            db.getDriver(name, new Consumer<Driver>() {
+                @Override
+                public void accept(Driver tempDriver) {
+                    driver = tempDriver;
+                    phone = driver.getPhoneNumber();
+                    email = driver.getEmailAddress();
+                    mPhone.setText(phone);
+                    mEmail.setText(email);
+                }
+            });
+        }
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,15 +76,24 @@ public class UserProfileActivity extends AppCompatActivity {
                 newPhone = mPhone.getText().toString();
                 newEmail = mEmail.getText().toString();
 
-                if (type == "rider"){
-                    rider.setEmailAddress(newPhone);
-                    rider.setPhoneNumber(newEmail);
+                if (type.equals("rider")){
+                    if (rider == null){
+                        Toast.makeText(UserProfileActivity.this,"Rider is null",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    rider.setEmailAddress(newEmail);
+                    rider.setPhoneNumber(newPhone);
                     db.UpdateRiderData(rider);
                 } else {
-                    driver.setEmailAddress(newPhone);
-                    driver.setPhoneNumber(newEmail);
+                    if (driver == null){
+                        Toast.makeText(UserProfileActivity.this,"Driver is null",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    driver.setEmailAddress(newEmail);
+                    driver.setPhoneNumber(newPhone);
                     db.UpdateDriverData(driver);
                 }
+                Toast.makeText(UserProfileActivity.this,"Your info is updated",Toast.LENGTH_SHORT).show();
 
             }
         });

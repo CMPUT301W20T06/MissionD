@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,8 +43,16 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         setContentView(R.layout.activity_rider_wait_for_pick_up);
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        final Driver driver = DB.getDriver("Yifei");
-        String driver_name = driver.getUserName();
+
+        driverName = findViewById(R.id.driverName);
+        DB.getDriver("Yifei", new Consumer<Driver>() {
+            @Override
+            public void accept(Driver driver) {
+                String driver_name = driver.getUserName();
+                driverName.setText(driver_name);
+            }
+        });
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -72,8 +81,7 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
             }
         });
 
-        driverName = findViewById(R.id.driverName);
-        driverName.setText(driver_name);
+
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
