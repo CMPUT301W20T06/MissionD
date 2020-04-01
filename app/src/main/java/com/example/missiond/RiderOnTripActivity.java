@@ -113,10 +113,6 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * order.setOrderStatus(5)  //request is over(history)
-                 * pass orderID to next activity
-                 */
                 RiderConfirmPayDialog riderConfirmPayDialog = new RiderConfirmPayDialog();
                 riderConfirmPayDialog.show(getSupportFragmentManager(),"confirmAndPay");
             }
@@ -137,6 +133,10 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
      */
     @Override
     public void onArriveConfirmClick() {
+        /**
+         * order.setOrderStatus(5)  //request is over(history)
+         * pass orderID to next activity
+         */
         Intent i = new Intent(RiderOnTripActivity.this, RiderEndPayActivity.class);
         Bundle extras = new Bundle();
         extras.putString("pickUp",pickUp);

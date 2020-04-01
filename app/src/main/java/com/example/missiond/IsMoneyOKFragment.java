@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +25,10 @@ public class IsMoneyOKFragment extends DialogFragment {
     private Button confirm_button;
     public String Location;
     public String Destination;
-    private float startLat,startLng,endLat,endLng;
+    private String Rider;
+    private TextView Money;
+
+    private float startLat,startLng,endLat,endLng,Cost;
 
     @NonNull
     @Override
@@ -39,10 +43,15 @@ public class IsMoneyOKFragment extends DialogFragment {
             startLng = bundle.getFloat("startLocationLng");
             endLat =bundle.getFloat("endLocationLat");
             endLng = bundle.getFloat("endLocationLng");
+            Rider = bundle.getString("rider");
+            Cost = bundle.getFloat("cost");
+
         }
 
         close_button = v.findViewById(R.id.close_button);
         confirm_button = v.findViewById(R.id.ConfirmMoney_button);
+        Money = v.findViewById(R.id.money);
+        Money.setText(String.valueOf((int)Cost));
 
 
         /**
@@ -73,6 +82,7 @@ public class IsMoneyOKFragment extends DialogFragment {
                 bundle.putFloat("startLocationLng",startLng);
                 bundle.putFloat("endLocationLat",endLat);
                 bundle.putFloat("endLocationLng",endLng);
+                bundle.putString("rider",Rider);
                 DriverWaitRiderConfrimFragment fragment = new DriverWaitRiderConfrimFragment();
                 fragment.setArguments(bundle);
                 fragment.show(getFragmentManager(),"Waiting");

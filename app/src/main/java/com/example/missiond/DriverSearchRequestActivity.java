@@ -3,6 +3,7 @@ package com.example.missiond;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
     Float pickupLat;
     Float pickupLng;
 
+
     String pickup_Name;
 
     Location loc1 = new Location("");
@@ -54,6 +57,23 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_search_request_activity);
 
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                current_orders.clear();
+                for (int i = 0; i< orders.size(); i++) {
+                    Order order = orders.get(i);
+                    int status = order.getOrderStatus();
+                    if (status == 1) {
+                        current_orders.add(order);
+                    }
+                }
+                onLoaded();
+            }
+        });
+    }
+
+    private void onLoaded(){
         button_back = findViewById(R.id.DriverDestBack);
         tripList = findViewById(R.id.trip_list);
         pickup_location = findViewById(R.id.pickupLocation);
@@ -65,22 +85,8 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         pickupLng = getIntent().getExtras().getFloat("pickupLng");
         loc1.setLatitude(pickupLat);
         loc1.setLongitude(pickupLng);
-        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
-
-        DB.getAllOrders(new Consumer<List<Order>>() {
-            @Override
-            public void accept(List<Order> orders) {
-                for (int i = 0; i< orders.size(); i++) {
-                    Order order = orders.get(i);
-                    int status = order.getOrderStatus();
-                    if (status == 1) {
-                            current_orders.add(order);
-                    }
-                }
-            }
-        });
-
+//        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
 
 
         tripDataList = new ArrayList<>();
@@ -122,6 +128,8 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
                 intent.putExtra("startLocationLng",(float)order.getStartLoc().getLongitude());
                 intent.putExtra("endLocationLat",(float)order.getEndLoc().getLatitude());
                 intent.putExtra("endLocationLng",(float)order.getEndLoc().getLongitude());
+                intent.putExtra("rider",order.getRider());
+                intent.putExtra("cost",order.getCost());
 
                 startActivity(intent);
                 //DriverSearchRequestActivity.this.finish();
@@ -140,9 +148,6 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
     }
 
 }

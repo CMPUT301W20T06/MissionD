@@ -11,6 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Register extends AppCompatActivity {
 
 
@@ -49,7 +52,14 @@ public class Register extends AppCompatActivity {
                 if (str_user_name.length() == 0 || str_user_email.length() == 0 || str_phone.length() == 0){
                     Toast.makeText(Register.this,"Please complete missing blanks",Toast.LENGTH_SHORT).show();
                     return;
-                } else {
+                }
+
+                // check if email input is valid
+                if (!validInput(str_user_email)){
+                    Toast.makeText(Register.this, "Wrong email format!", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
                     final boolean isRider = type_confirm == "Rider";
 
                     DB.userExist(str_user_name, isRider, new Consumer<Boolean>() {
@@ -78,5 +88,12 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean validInput(String string){
+        String datePattern = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$";
+        Pattern pattern = Pattern.compile(datePattern);
+        Matcher matcher = pattern.matcher(string);
+        return matcher.matches();
     }
 }

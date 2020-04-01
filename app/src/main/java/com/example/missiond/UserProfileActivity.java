@@ -112,7 +112,8 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(UserProfileActivity.this, RiderOrderActivity.class);
-                i.putExtra("user_name",name);
+                i.putExtra("user_name", name);
+                i.putExtra("user_type", type);
                 startActivity(i);
             }
         });
