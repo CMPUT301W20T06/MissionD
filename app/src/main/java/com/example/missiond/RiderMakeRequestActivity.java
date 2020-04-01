@@ -119,7 +119,7 @@ TaskLoadedCallback{
 //        });
 
         /**
-        when order status is changed to 2 (driver accepted trip request)
+        testing
          **/
         next = findViewById(R.id.next_makeRequest);
         next.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +127,7 @@ TaskLoadedCallback{
             public void onClick(View v) {
                 order1.setOrderStatus(2);
                 order1.setDriver("Yifei");
-//                driverAccept=true;
+                DB.updateOrder(order1);
                 Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
             }
         });
@@ -142,6 +142,11 @@ TaskLoadedCallback{
         public void run() {
             if (driverAccept){
                 handler.removeCallbacks(runnable);
+                Bundle bundle = new Bundle();
+                bundle.putString("orderID", id);
+                RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
+                confirmDriverDialog.setArguments(bundle);
+                confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
             }
             else{
                 getOrder();
