@@ -78,15 +78,12 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         tripList = findViewById(R.id.trip_list);
         pickup_location = findViewById(R.id.pickupLocation);
 
-        //拿地址的name
         pickup_Name = getIntent().getExtras().getString("pickup_location");
         pickup_location.setText(pickup_Name);
         pickupLat = getIntent().getExtras().getFloat("pickupLat");
         pickupLng = getIntent().getExtras().getFloat("pickupLng");
         loc1.setLatitude(pickupLat);
         loc1.setLongitude(pickupLng);
-//        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this,String.valueOf((float)pickupLng),Toast.LENGTH_SHORT).show();
 
 
         tripDataList = new ArrayList<>();

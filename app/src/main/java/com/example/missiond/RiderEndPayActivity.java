@@ -92,25 +92,27 @@ public class RiderEndPayActivity extends AppCompatActivity {
 //            String message = text.getText().toString();
         DataBaseHelper DB = DataBaseHelper.getInstance();
 //        Rider rider = DB.getRider("Isaac");
-        DB.GetUserOrders("Isaac", new Consumer<List<Order>>() {
+
+        DB.getAllOrders(new Consumer<List<Order>>() {
             @Override
+
             public void accept(List<Order> orders) {
-                Float cost;
-                String stringcost;
-                stringcost = "No current active orders";
-                for (int i=0; i<orders.size();i++ ){
-                    if (orders.get(i).getOrderStatus() ==1) {
-                        cost = orders.get(i).getCost();
-                        stringcost = String.valueOf(cost);}
+                String stringcost = "no current active orders";
+                Order order1;
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(id)) {
+                        order1 = order;
+                        stringcost = String.valueOf(order1.getCost());
+                    }
                 }
-
-
                 String InputDate = stringcost;
                 ImageView mImageView = findViewById(R.id.iv);
                 Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(InputDate, 500, 500);
                 mImageView.setImageBitmap(mBitmap);
             }
         });
+
 
 //        submit.setText("AWESOME!");
     }
