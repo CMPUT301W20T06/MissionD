@@ -3,6 +3,7 @@ package com.example.missiond;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -57,6 +58,8 @@ TaskLoadedCallback{
     Float fare,address1Lat,address1Lng,address2Lat,address2Lng;
     final DataBaseHelper DB = DataBaseHelper.getInstance();
     Order order1;
+    private Boolean driverAccept = false;
+    private Handler handler = new Handler();
 
 
     private SupportMapFragment mapFragment;
@@ -91,49 +94,6 @@ TaskLoadedCallback{
 
         mapFragment.getMapAsync(this);
 
-//        DB.getOrderById(id, new Consumer<Order>() {
-//            @Override
-//            public void accept(Order order) {
-//                order1 = order;
-//            }
-//        });
-
-        FirebaseFirestore fs = FirebaseFirestore.getInstance();
-        DocumentReference docRef = fs.collection("Orders").document(id);
-        docRef.addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                // ...这里写监测到order变化之后要做的事儿 就是要跳转啥的
-//                Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
-
-                DB.getAllOrders(new Consumer<List<Order>>() {
-                    @Override
-                    public void accept(List<Order> orders) {
-                        for (int i=0;i <orders.size();i++) {
-                            Order order = orders.get(i);
-                            Log.d("##########", String.valueOf(i));
-                            if (order.getId().equals(id)) {
-                                Log.d("XXXXXXXXXXXXXX", "geted");
-                                order1 = order;
-                            }
-                        }
-                        onLoaded();
-                    }
-                });
-
-//                if (order1.getOrderStatus()==2) {
-//                    Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
-//
-////                    Bundle bundle = new Bundle();
-////                    bundle.putString("orderID", id);
-////                    RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
-////                    confirmDriverDialog.setArguments(bundle);
-////                    confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
-//                }
-            }
-        });
-
         pickupText = findViewById(R.id.Location1_makeRequest);
         pickupText.setText(pickUp);
 
@@ -149,6 +109,15 @@ TaskLoadedCallback{
             }
         });
 
+        startRepeating();
+//        DB.getOrderById(id, new Consumer<Order>() {
+//            @Override
+//            public void accept(Order order) {
+//                order1 = order;
+//                onLoaded();
+//            }
+//        });
+
         /**
         when order status is changed to 2 (driver accepted trip request)
          **/
@@ -158,20 +127,50 @@ TaskLoadedCallback{
             public void onClick(View v) {
                 order1.setOrderStatus(2);
                 order1.setDriver("Yifei");
-//                Bundle bundle = new Bundle();
-//                bundle.putString("rider_name",rider_name);
-//                RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
-//                confirmDriverDialog.setArguments(bundle);
-//                confirmDriverDialog.show(getSupportFragmentManager(),"confirmDriverFragment");
+//                driverAccept=true;
+                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void startRepeating(){
+        runnable.run();
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (driverAccept){
+                handler.removeCallbacks(runnable);
+            }
+            else{
+                getOrder();
+                handler.postDelayed(this, 2000);
+            }
+        }
+    };
+
+    private void getOrder(){
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(id)) {
+                        order1 = order;
+                    }
+                }
+                onLoaded();
             }
         });
     }
 
     public void onLoaded(){
         if (order1.getOrderStatus()==2) {
-            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
+            driverAccept=true;
+            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(RiderMakeRequestActivity.this,order1.getId(),Toast.LENGTH_LONG).show();
+        Toast.makeText(RiderMakeRequestActivity.this,order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
