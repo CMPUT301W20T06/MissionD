@@ -20,13 +20,13 @@
         android:orientation="horizontal"
         android:background="#262626">
 
-        <ImageButton
-            android:id="@+id/Back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/back"/>
+<!--        <ImageButton-->
+<!--            android:id="@+id/Back"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@drawable/back"/>-->
 
         <TextView
             android:layout_width="match_parent"

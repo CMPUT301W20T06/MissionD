@@ -31,7 +31,7 @@ import java.util.List;
  *  Mar.12 2020
  */
 
-public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, RiderConfirmPayDialog.RiderConfirmPayDialogListener,
+public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmPayDialog.RiderConfirmPayDialogListener,
         OnMapReadyCallback,TaskLoadedCallback {
     private DataBaseHelper DB = DataBaseHelper.getInstance();
     private Order order1;
@@ -102,16 +102,6 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         destText = findViewById(R.id.Location2);
         destText.setText(dest);
 
-        back = findViewById(R.id.Back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RiderConfirmCancelDialog riderConfirmCancelDialog = new RiderConfirmCancelDialog();
-                riderConfirmCancelDialog.show(getSupportFragmentManager(),"cancelConfirmDialog");
-            }
-        });
-
-
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,14 +126,6 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
             }
         });
 
-    }
-
-    /**
-     * Cancel request and go back to the rider activity
-     */
-    @Override
-    public void onCancelConfirmClick() {
-        finish();
     }
 
     /**

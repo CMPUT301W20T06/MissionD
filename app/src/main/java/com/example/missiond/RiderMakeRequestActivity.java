@@ -128,7 +128,7 @@ TaskLoadedCallback{
                 order1.setOrderStatus(2);
                 order1.setDriver("Yifei");
                 DB.updateOrder(order1);
-                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
+//                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -175,9 +175,9 @@ TaskLoadedCallback{
     public void onLoaded(){
         if (order1.getOrderStatus()==2) {
             driverAccept=true;
-            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(RiderMakeRequestActivity.this,order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(RiderMakeRequestActivity.this,order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
