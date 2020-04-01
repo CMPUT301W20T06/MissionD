@@ -37,8 +37,6 @@ public class DataBaseHelper {
     private static final String TAG = "DataBaseHelper";
     private Driver tempDriver;
     private Rider tempRider;
-    private List<Order> list = new ArrayList<>();
-    private List<Driver> list_driver = new ArrayList<>();
     private boolean isEmpty;
     private Order tempOrder;
 
@@ -266,18 +264,18 @@ public class DataBaseHelper {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<Order> orders = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                list.add(document.toObject(Order.class));
+                                orders.add(document.toObject(Order.class));
                             }
-                            consumer.accept(list);
+                            consumer.accept(orders);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-        list.clear();
     }
 
     /**
@@ -293,17 +291,17 @@ public class DataBaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            ArrayList<Driver> drivers = new ArrayList<>();
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                list_driver.add(document.toObject(Driver.class));
+                                drivers.add(document.toObject(Driver.class));
                             }
-                            consumer.accept(list_driver);
+                            consumer.accept(drivers);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-        list_driver.clear();
     }
 
     /**
@@ -318,18 +316,18 @@ public class DataBaseHelper {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<Order> orders = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                list.add(document.toObject(Order.class));
-                                Log.d(TAG, String.valueOf(list.size()));
+                                orders.add(document.toObject(Order.class));
                             }
+                            Log.d(TAG,"the size of list is "+ String.valueOf(orders.size()));
+                            consumer.accept(orders);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-        consumer.accept(list);
-        list.clear();
     }
 }
