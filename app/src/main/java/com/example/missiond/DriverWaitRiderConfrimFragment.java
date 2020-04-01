@@ -162,8 +162,8 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         @Override
         public void run() {
             if (riderCancel){
-                handler1.removeCallbacks(runnable1);
                 handler2.removeCallbacks(runnable2);
+                handler1.removeCallbacks(runnable1);
                 getDialog().dismiss();
                 new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
             }
@@ -206,7 +206,6 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public void onLoaded1(){
         if (order1.getOrderStatus()==3) {
             riderAccept=true;
-
             Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
         }
 //        if (order1.getOrderStatus()==0) {
@@ -215,6 +214,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
 
         Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
+
 
     public void onLoaded2(){
         if (order1.getOrderStatus()==0) {
