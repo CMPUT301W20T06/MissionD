@@ -80,7 +80,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         tesing_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order1.setOrderStatus(0);
+                order1.setOrderStatus(1);
                 DB.updateOrder(order1);
 //                getDialog().dismiss();
 //                Bundle bundle = new Bundle();
@@ -198,7 +198,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
                         order1 = order;
                     }
                 }
-                onLoaded2();
+                onLoaded1();
             }
         });
     }
@@ -208,16 +208,16 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             riderAccept=true;
             Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
         }
-//        if (order1.getOrderStatus()==0) {
-////            riderCancel=true;
-////        }
+        if (order1.getOrderStatus()==0) {
+            riderCancel=true;
+        }
 
         Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
 
     public void onLoaded2(){
-        if (order1.getOrderStatus()==0) {
+        if (order1.getOrderStatus()==1) {
             riderCancel=true;
         }
 
