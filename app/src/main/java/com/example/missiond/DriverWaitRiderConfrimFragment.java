@@ -206,13 +206,13 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public void onLoaded1(){
         if (order1.getOrderStatus()==3) {
             riderAccept=true;
-            Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
         }
         if (order1.getOrderStatus()==0) {
             riderCancel=true;
         }
 
-        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
 
@@ -221,7 +221,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             riderCancel=true;
         }
 
-        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 }
 
