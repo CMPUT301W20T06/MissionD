@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Consumer;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +23,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.List;
 
 /**
  * Display a map with driver current location
@@ -55,8 +58,13 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
     private Polyline currentPolyline;
     private GoogleMap PickupMap;
 
+    private DataBaseHelper db;
+    private Rider rider;
+    private String phone,email;
+
     String Location;
     String Destination;
+    String Rider;
 
     private float startLat,startLng,endLat,endLng;
 
@@ -71,11 +79,12 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
         startLng = getIntent().getExtras().getFloat("startLocationLng");
         endLat = getIntent().getExtras().getFloat("endLocationLat");
         endLng = getIntent().getExtras().getFloat("endLocationLng");
+        Rider = getIntent().getExtras().getString("rider");
 
         pick_up_button = findViewById(R.id.pickup_button);
         start_location = findViewById(R.id.start_location);
         destination = findViewById(R.id.Destination_text);
-        //rider_name = findViewById(R.id.rider_name);
+        rider_name = findViewById(R.id.rider_name);
         rider_phone = findViewById(R.id.rider_phone);
         phone_call = findViewById(R.id.call);
         email_rider = findViewById(R.id.email);
@@ -83,6 +92,21 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
 
         start_location.setText(Location);
         destination.setText(Destination);
+        rider_name.setText(Rider);
+
+        db = DataBaseHelper.getInstance();
+        db.getRider(Rider, new Consumer<Rider>() {
+            @Override
+            public void accept(Rider tempRider) {
+                rider = tempRider;
+                phone = rider.getPhoneNumber();
+                email = rider.getEmailAddress();
+                rider_phone.setText(phone);
+                rider_email.setText(email);
+
+            }
+        });
+
 
         pick_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +118,7 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
                 intent.putExtra("startLocationLng",startLng);
                 intent.putExtra("endLocationLat",endLat);
                 intent.putExtra("endLocationLng",endLng);
+                intent.putExtra("rider",Rider);
                 startActivity(intent);
             }
         });
@@ -145,6 +170,7 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
 
 
     }
+
 
     @Override
     public void onTaskDone(Object... values) {

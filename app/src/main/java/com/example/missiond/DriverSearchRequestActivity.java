@@ -41,6 +41,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
     Float pickupLat;
     Float pickupLng;
 
+
     String pickup_Name;
 
     Location loc1 = new Location("");
@@ -126,6 +127,8 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
                 intent.putExtra("startLocationLng",(float)order.getStartLoc().getLongitude());
                 intent.putExtra("endLocationLat",(float)order.getEndLoc().getLatitude());
                 intent.putExtra("endLocationLng",(float)order.getEndLoc().getLongitude());
+                intent.putExtra("rider",order.getRider());
+                intent.putExtra("cost",order.getCost());
 
                 startActivity(intent);
                 //DriverSearchRequestActivity.this.finish();
