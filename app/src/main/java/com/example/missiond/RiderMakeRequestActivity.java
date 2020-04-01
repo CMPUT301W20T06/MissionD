@@ -3,6 +3,7 @@ package com.example.missiond;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -90,12 +91,12 @@ TaskLoadedCallback{
 
         mapFragment.getMapAsync(this);
 
-        DB.getOrderById(id, new Consumer<Order>() {
-            @Override
-            public void accept(Order order) {
-                order1 = order;
-            }
-        });
+//        DB.getOrderById(id, new Consumer<Order>() {
+//            @Override
+//            public void accept(Order order) {
+//                order1 = order;
+//            }
+//        });
 
         FirebaseFirestore fs = FirebaseFirestore.getInstance();
         DocumentReference docRef = fs.collection("Orders").document(id);
@@ -105,15 +106,31 @@ TaskLoadedCallback{
                                 @Nullable FirebaseFirestoreException e) {
                 // ...这里写监测到order变化之后要做的事儿 就是要跳转啥的
 //                Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
-                if (order1.getOrderStatus()==2) {
-                    Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
 
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("orderID", id);
-//                    RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
-//                    confirmDriverDialog.setArguments(bundle);
-//                    confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
-                }
+                DB.getAllOrders(new Consumer<List<Order>>() {
+                    @Override
+                    public void accept(List<Order> orders) {
+                        for (int i=0;i <orders.size();i++) {
+                            Order order = orders.get(i);
+                            Log.d("##########", String.valueOf(i));
+                            if (order.getId().equals(id)) {
+                                Log.d("XXXXXXXXXXXXXX", "geted");
+                                order1 = order;
+                            }
+                        }
+                        onLoaded();
+                    }
+                });
+
+//                if (order1.getOrderStatus()==2) {
+//                    Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
+//
+////                    Bundle bundle = new Bundle();
+////                    bundle.putString("orderID", id);
+////                    RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
+////                    confirmDriverDialog.setArguments(bundle);
+////                    confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
+//                }
             }
         });
 
@@ -149,6 +166,14 @@ TaskLoadedCallback{
             }
         });
     }
+
+    public void onLoaded(){
+        if (order1.getOrderStatus()==2) {
+            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(RiderMakeRequestActivity.this,order1.getId(),Toast.LENGTH_LONG).show();
+    }
+
     @Override
    public void onMapReady(GoogleMap googleMap) {
         newMap = googleMap;
