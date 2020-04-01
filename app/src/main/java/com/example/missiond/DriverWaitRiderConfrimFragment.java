@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.DialogFragment;
 
 
@@ -29,6 +30,10 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public String Destination;
     private String Rider;
     private float startLat,startLng,endLat,endLng;
+    private String Order_id, driver_name;
+
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    Order order1;
 
     @NonNull
     @Override
@@ -44,11 +49,21 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             endLat =bundle.getFloat("endLocationLat");
             endLng = bundle.getFloat("endLocationLng");
             Rider = bundle.getString("rider");
+            Order_id = bundle.getString("order_id");
+            driver_name = bundle.getString("user_name");
         }
 
         //////////////////////////////////////////////////////////////////
         tesing_button = v.findViewById(R.id.just_for_testing);
         testing_cancel = v.findViewById(R.id.cancel_for_testing);
+
+        DB.getOrderById(Order_id, new Consumer<Order>() {
+            @Override
+            public void accept(Order order) {
+                order1 = order;
+                onLoaded(order1);
+            }
+        });
 
         tesing_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,5 +93,9 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         });
 
         return v;
+    }
+    public void onLoaded(Order order){
+        order.setDriver(driver_name);
+        DB.updateOrder(order);
     }
 }

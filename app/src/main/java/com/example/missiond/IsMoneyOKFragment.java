@@ -28,6 +28,8 @@ public class IsMoneyOKFragment extends DialogFragment {
     private String Rider;
     private TextView Money;
 
+    private String Order_id, driver_name;
+
     private float startLat,startLng,endLat,endLng,Cost;
 
     @NonNull
@@ -45,13 +47,15 @@ public class IsMoneyOKFragment extends DialogFragment {
             endLng = bundle.getFloat("endLocationLng");
             Rider = bundle.getString("rider");
             Cost = bundle.getFloat("cost");
+            Order_id = bundle.getString("order_id");
+            driver_name = bundle.getString("user_name");
 
         }
 
         close_button = v.findViewById(R.id.close_button);
         confirm_button = v.findViewById(R.id.ConfirmMoney_button);
         Money = v.findViewById(R.id.money);
-        Money.setText(String.valueOf((int)Cost));
+        Money.setText(String.valueOf(Cost));
 
 
         /**
@@ -83,6 +87,9 @@ public class IsMoneyOKFragment extends DialogFragment {
                 bundle.putFloat("endLocationLat",endLat);
                 bundle.putFloat("endLocationLng",endLng);
                 bundle.putString("rider",Rider);
+                bundle.putString("order_id",Order_id);
+                bundle.putString("user_name",driver_name);
+
                 DriverWaitRiderConfrimFragment fragment = new DriverWaitRiderConfrimFragment();
                 fragment.setArguments(bundle);
                 fragment.show(getFragmentManager(),"Waiting");

@@ -45,6 +45,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
 
     String pickup_Name;
+    private String driver_name;
 
     Location loc1 = new Location("");
     Location loc2 = new Location("");
@@ -83,6 +84,7 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         pickup_location.setText(pickup_Name);
         pickupLat = getIntent().getExtras().getFloat("pickupLat");
         pickupLng = getIntent().getExtras().getFloat("pickupLng");
+        driver_name= getIntent().getExtras().getString("user_name");
         loc1.setLatitude(pickupLat);
         loc1.setLongitude(pickupLng);
 //        Toast.makeText(this,String.valueOf((float)pickupLat),Toast.LENGTH_SHORT).show();
@@ -130,6 +132,8 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
                 intent.putExtra("endLocationLng",(float)order.getEndLoc().getLongitude());
                 intent.putExtra("rider",order.getRider());
                 intent.putExtra("cost",order.getCost());
+                intent.putExtra("order_id", order.getId());
+                intent.putExtra("user_name",driver_name);
 
                 startActivity(intent);
                 //DriverSearchRequestActivity.this.finish();

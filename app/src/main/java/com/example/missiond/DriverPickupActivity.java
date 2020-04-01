@@ -39,6 +39,8 @@ public class DriverPickupActivity extends AppCompatActivity implements OnMapRead
 
     private SupportMapFragment mapFragment;
 
+    private String driver_name;
+
     private EditText pickUpLocation;
 
     MarkerOptions userMarkerOptions = new MarkerOptions();
@@ -75,6 +77,8 @@ public class DriverPickupActivity extends AppCompatActivity implements OnMapRead
         //这个是那个输入地址但那个输入框 也不知道周总要不要用到
         pickUpLocation = findViewById(R.id.pickup_Location);
 
+        driver_name= getIntent().getExtras().getString("user_name");
+
         /**
          * Go back to the previous page
          */
@@ -98,6 +102,7 @@ public class DriverPickupActivity extends AppCompatActivity implements OnMapRead
                 intent.putExtra("pickup_location",pickupName);
                 intent.putExtra("pickupLat",(float)Marker1.getPosition().latitude);
                 intent.putExtra("pickupLng",(float)Marker1.getPosition().longitude);
+                intent.putExtra("user_name",driver_name);
                 startActivity(intent);
 
             }
