@@ -35,10 +35,7 @@ public class DataBaseHelper {
     private static DataBaseHelper instance = null;
     private final FirebaseFirestore db;
     private static final String TAG = "DataBaseHelper";
-    private Driver tempDriver;
-    private Rider tempRider;
     private boolean isEmpty;
-    private Order tempOrder;
 
     /**
      * This is the constructor method that fulfills singleton class design
@@ -163,7 +160,7 @@ public class DataBaseHelper {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tempRider = documentSnapshot.toObject(Rider.class);
+                Rider tempRider = documentSnapshot.toObject(Rider.class);
                 consumer.accept(tempRider);
             }
         });
@@ -179,7 +176,7 @@ public class DataBaseHelper {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tempDriver = documentSnapshot.toObject(Driver.class);
+                Driver tempDriver = documentSnapshot.toObject(Driver.class);
                 consumer.accept(tempDriver);
             }
         });
@@ -245,7 +242,7 @@ public class DataBaseHelper {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tempOrder = documentSnapshot.toObject(Order.class);
+                Order tempOrder = documentSnapshot.toObject(Order.class);
                 consumer.accept(tempOrder);
             }
         });
