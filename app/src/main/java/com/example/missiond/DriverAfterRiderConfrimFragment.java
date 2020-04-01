@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +20,7 @@ import androidx.fragment.app.DialogFragment;
  *  Mar.26 2020
  */
 public class DriverAfterRiderConfrimFragment extends DialogFragment {
-    private Button tesing_button;
+    private ImageButton tesing_button;
 
     public String Location;
     public String Destination;
@@ -43,7 +44,7 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
             Rider = bundle.getString("rider");
         }
 
-        tesing_button = v.findViewById(R.id.just_for_testing);
+        tesing_button = v.findViewById(R.id.image);
 
         tesing_button.setOnClickListener(new View.OnClickListener() {
             @Override

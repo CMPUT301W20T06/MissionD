@@ -38,7 +38,8 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     private Boolean riderAccept = false;;
     private Boolean riderCancel = false;
 
-    private Handler handler = new Handler();
+    private Handler handler1 = new Handler();
+    private Handler handler2 = new Handler();
 
     final DataBaseHelper DB = DataBaseHelper.getInstance();
     Order order1;
@@ -48,7 +49,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.wait_rider_confirm_fragment, container, false);
         startRepeating1();
-        //startRepeating2();
+        startRepeating2();
 
 
         Bundle bundle = getArguments();
@@ -121,15 +122,16 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         runnable1.run();
 
     }
-//    public void startRepeating2(){
-//        runnable2.run();
-//    }
+    public void startRepeating2(){
+        runnable2.run();
+    }
 
     private Runnable runnable1 = new Runnable() {
         @Override
         public void run() {
             if (riderAccept){
-                handler.removeCallbacks(runnable1);
+                handler1.removeCallbacks(runnable1);
+                handler2.removeCallbacks(runnable2);
                 getDialog().dismiss();
                 Bundle bundle = new Bundle();
                 bundle.putString("trip_location",Location);
@@ -144,32 +146,33 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
                 fragment.setArguments(bundle);
                 fragment.show(getFragmentManager(),"test1");
             }
-            if (riderCancel){
-                handler.removeCallbacks(runnable1);
-                getDialog().dismiss();
-                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
-            }
+//            if (riderCancel){
+//                handler.removeCallbacks(runnable1);
+//                getDialog().dismiss();
+//                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+//            }
             else{
                 getOrder1();
-                handler.postDelayed(this, 2000);
+                handler1.postDelayed(this, 2000);
             }
         }
     };
 
-//    private Runnable runnable2 = new Runnable() {
-//        @Override
-//        public void run() {
-//            if (riderCancel){
-//                handler.removeCallbacks(runnable2);
-//                getDialog().dismiss();
-//                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
-//            }
-//            else{
-//                getOrder2();
-//                handler.postDelayed(this, 2000);
-//            }
-//        }
-//    };
+    private Runnable runnable2 = new Runnable() {
+        @Override
+        public void run() {
+            if (riderCancel){
+                handler1.removeCallbacks(runnable1);
+                handler2.removeCallbacks(runnable2);
+                getDialog().dismiss();
+                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+            }
+            else{
+                getOrder2();
+                handler2.postDelayed(this, 2000);
+            }
+        }
+    };
 
     private void getOrder1(){
         DB.getAllOrders(new Consumer<List<Order>>() {
@@ -185,20 +188,20 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             }
         });
     }
-//    private void getOrder2(){
-//        DB.getAllOrders(new Consumer<List<Order>>() {
-//            @Override
-//            public void accept(List<Order> orders) {
-//                for (int i=0;i <orders.size();i++) {
-//                    Order order = orders.get(i);
-//                    if (order.getId().equals(Order_id)) {
-//                        order1 = order;
-//                    }
-//                }
-//                onLoaded2();
-//            }
-//        });
-//    }
+    private void getOrder2(){
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(Order_id)) {
+                        order1 = order;
+                    }
+                }
+                onLoaded2();
+            }
+        });
+    }
 
     public void onLoaded1(){
         if (order1.getOrderStatus()==3) {
@@ -206,9 +209,9 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
 
             Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
         }
-        if (order1.getOrderStatus()==0) {
-            riderCancel=true;
-        }
+//        if (order1.getOrderStatus()==0) {
+////            riderCancel=true;
+////        }
 
         Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }

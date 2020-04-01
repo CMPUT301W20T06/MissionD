@@ -7,7 +7,7 @@
     android:layout_height="250dp">
 
 
-    <ImageView
+    <ImageButton
         android:id="@+id/image"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -33,15 +33,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image"
         app:layout_constraintStart_toStartOf="parent"/>
-    <Button
-        android:id="@+id/just_for_testing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:text="go for test right now"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
