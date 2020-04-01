@@ -31,7 +31,6 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
     private TextView start_location;
     private TextView destination;
     private TextView rider_name;
-    private TextView rider_phone;
 
     private SupportMapFragment newMapFragment;
 
@@ -46,6 +45,7 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
 
     private Polyline currentPolyline;
     private GoogleMap completeMap;
+    String Rider;
 
 
     private float startLat,startLng,endLat,endLng;
@@ -62,12 +62,14 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
         startLng = getIntent().getExtras().getFloat("startLocationLng");
         endLat = getIntent().getExtras().getFloat("endLocationLat");
         endLng = getIntent().getExtras().getFloat("endLocationLng");
+        Rider = getIntent().getExtras().getString("rider");
 
 
         start_location = findViewById(R.id.start_location);
         destination = findViewById(R.id.Destination_text);
-        //rider_name = findViewById(R.id.rider_name);
-        //rider_phone = findViewById(R.id.rider_phone);
+        rider_name = findViewById(R.id.rider_name);
+        rider_name.setText(Rider);
+
 
         start_location.setText(Location);
         destination.setText(Destination);

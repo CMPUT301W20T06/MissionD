@@ -37,6 +37,7 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
     private Button button_confirm;
     private TextView LocationName;
     private TextView DestinationName;
+    private TextView FairMoney;
 
     private GoogleMap makeOfferMap;
     private LatLng LatLng1;
@@ -47,6 +48,7 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
 
     private String Location;
     private String Destination;
+    private String Rider;
 
     private Address userAddress1;
     private Address userAddress2;
@@ -57,6 +59,7 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
     private float startLng;
     private float endLat;
     private float endLng;
+    private float Cost;
 
     private Polyline currentPolyline;
 
@@ -72,14 +75,18 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
         startLng = getIntent().getExtras().getFloat("startLocationLng");
         endLat = getIntent().getExtras().getFloat("endLocationLat");
         endLng = getIntent().getExtras().getFloat("endLocationLng");
+        Rider = getIntent().getExtras().getString("rider");
+        Cost = getIntent().getExtras().getFloat("cost");
 
         LocationName = findViewById(R.id.start_location);
         DestinationName = findViewById(R.id.Destination_text);
         button_back = findViewById(R.id.DriverBack);
         button_confirm = findViewById(R.id.MoneyConfirm);
+        FairMoney = findViewById(R.id.DriverEstimateFareConfirm);
 
         LocationName.setText(Location);
         DestinationName.setText(Destination);
+        FairMoney.setText(String.valueOf((int)Cost));
 
         /**
          * when click on the back button
@@ -107,6 +114,8 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
                 bundle.putFloat("startLocationLng",startLng);
                 bundle.putFloat("endLocationLat",endLat);
                 bundle.putFloat("endLocationLng",endLng);
+                bundle.putString("rider",Rider);
+                bundle.putFloat("cost",Cost);
 
                 fragment.setArguments(bundle);
                 fragment.show(getSupportFragmentManager(),"Confirm");

@@ -23,6 +23,7 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
 
     public String Location;
     public String Destination;
+    private String Rider;
 
     private float startLat,startLng,endLat,endLng;
 
@@ -39,6 +40,7 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
             startLng = bundle.getFloat("startLocationLng");
             endLat =bundle.getFloat("endLocationLat");
             endLng = bundle.getFloat("endLocationLng");
+            Rider = bundle.getString("rider");
         }
 
         tesing_button = v.findViewById(R.id.just_for_testing);
@@ -54,6 +56,8 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
                 intent.putExtra("startLocationLng",startLng);
                 intent.putExtra("endLocationLat",endLat);
                 intent.putExtra("endLocationLng",endLng);
+                intent.putExtra("rider",Rider);
+
                 startActivity(intent);
             }
         });
