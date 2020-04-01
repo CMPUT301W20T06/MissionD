@@ -26,7 +26,7 @@ public class RiderOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_order);
         Intent i = getIntent();
-        name = i.getStringExtra("name");
+        name = i.getStringExtra("user_name");
         orderList = findViewById(R.id.order_list);
 
         back = findViewById(R.id.Back);
