@@ -37,11 +37,11 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     private Button email,call,cancel,confirm;
     private RiderConfirmDriverListener listener;
     private String rider_name;
-    private String phone,emailAddr,id;
+    private String phone,emailAddr,id,driver_name;
     Order order1;
 
     public interface RiderConfirmDriverListener{
-        void onConfirmClick();
+        void onConfirmClick(String type);
     }
 
     @Nullable
@@ -55,36 +55,12 @@ public class RiderConfirmDriverDialog extends DialogFragment {
          */
         final DataBaseHelper DB = DataBaseHelper.getInstance();
         id = getArguments().getString("orderID");
-//        DB.GetUserOrders(rider_name, new Consumer<List<Order>>() {
-//            @Override
-//            public void accept(List<Order> orders) {
-//                Order active_order;
-//                for (int i=0; i < orders.size();i++){
-//                    if (orders.get(i).orderStatus == 2);
-//                    active_order = orders.get(i);
-//                    String driver_name = active_order.getDriver();
-//                    DB.getDriver(driver_name, new Consumer<Driver>() {
-//                        @Override
-//                        public void accept(Driver driver) {
-//                            onLoaded(v,driver);
-//                        }
-//                    });
-//                    break;
-//                }
-//
-//            }
-//        });
-        DB.getOrderById(id, new Consumer<Order>() {
+        driver_name = getArguments().getString("driver");
+
+        DB.getDriver(driver_name, new Consumer<Driver>() {
             @Override
-            public void accept(Order order) {
-                order1 = order;
-                String driver_name = order1.getDriver();
-                DB.getDriver(driver_name, new Consumer<Driver>() {
-                    @Override
-                    public void accept(Driver driver) {
-                        onLoaded(v,driver);
-                    }
-                });
+            public void accept(Driver driver) {
+                onLoaded(v,driver);
             }
         });
 
@@ -134,6 +110,7 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.onConfirmClick("cancel");
                 getDialog().dismiss();
             }
         });
@@ -142,7 +119,7 @@ public class RiderConfirmDriverDialog extends DialogFragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onConfirmClick();
+                listener.onConfirmClick("confirm");
                 getDialog().dismiss();
             }
         });

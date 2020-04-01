@@ -24,7 +24,7 @@ import java.util.List;
 public class RiderEndPayActivity extends AppCompatActivity {
     private Button finish;
     private TextView driverName,location1,location2;
-    private String pickUp,dest;
+    private String pickUp,dest,id,driver_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +38,16 @@ public class RiderEndPayActivity extends AppCompatActivity {
          */
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        driverName = findViewById(R.id.driverName);
-
-        DB.getDriver("Yifei", new Consumer<Driver>() {
-            @Override
-            public void accept(Driver driver) {
-            String driver_name = driver.getUserName();
-                driverName.setText(driver_name);
-            }
-        });
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         pickUp = extras.getString("pickUp");
         dest = extras.getString("dest");
+        id = extras.getString("orderID");
+        driver_name = extras.getString("driver");
+
+        driverName = findViewById(R.id.driverName);
+        driverName.setText(driver_name);
 
         location1 = findViewById(R.id.Location1);
         location2 = findViewById(R.id.Location2);
@@ -70,6 +66,10 @@ public class RiderEndPayActivity extends AppCompatActivity {
                  * pass orderID to next activity
                  */
                 Intent i = new Intent(RiderEndPayActivity.this, RiderRateActivity.class);
+                extras.putString("orderID",id);
+                extras.putString("driver",driver_name);
+                extras.putString("pickUp",pickUp);
+                extras.putString("dest",dest);
                 i.putExtras(extras);
                 startActivity(i);
 

@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.List;
+
 /**
  * Displays a map, driver's information, and pick up location and destination
  * Rider can call driver
@@ -31,6 +33,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
  */
 public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, OnMapReadyCallback
 ,TaskLoadedCallback{
+    private Order order1;
+    private String id,driver_name;
     private ImageButton back;
     private Button confirm;
     private TextView driverName,pickUpText,destText;
@@ -59,10 +63,22 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
          * DriverinfoDialog uses user name to fine driver and read driver's info
          */
 
-        DataBaseHelper DB = DataBaseHelper.getInstance();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        final String pickUp = extras.getString("pickUp");
+        final String dest = extras.getString("dest");
+        id = extras.getString("orderID");
+        driver_name = extras.getString("driver");
+
+        address1Lat = extras.getFloat("startAddressLatitude");
+        address1Lng = extras.getFloat("startAddressLongitude");
+        address2Lat = extras.getFloat("destinationAddressLatitude");
+        address2Lng = extras.getFloat("destinationAddressLongitude");
+
+        final DataBaseHelper DB = DataBaseHelper.getInstance();
 
         driverName = findViewById(R.id.driverName);
-        DB.getDriver("Yifei", new Consumer<Driver>() {
+        DB.getDriver(driver_name, new Consumer<Driver>() {
             @Override
             public void accept(Driver driver) {
                 String driver_name = driver.getUserName();
@@ -70,15 +86,17 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
             }
         });
 
-
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        final String pickUp = extras.getString("pickUp");
-        final String dest = extras.getString("dest");
-        address1Lat = extras.getFloat("startAddressLatitude");
-        address1Lng = extras.getFloat("startAddressLongitude");
-        address2Lat = extras.getFloat("destinationAddressLatitude");
-        address2Lng = extras.getFloat("destinationAddressLongitude");
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(id)) {
+                        order1 = order;
+                    }
+                }
+            }
+        });
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -102,7 +120,10 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("driver",driver_name);
                 DriverInfoDialog driverInfoDialog = new DriverInfoDialog();
+                driverInfoDialog.setArguments(bundle);
                 driverInfoDialog.show(getSupportFragmentManager(),"addMoneyFragment");
             }
         });
@@ -115,10 +136,14 @@ public class RiderWaitForPickUp extends AppCompatActivity implements RiderConfir
                  * order.setOrderStatus(4)  //pick up but not finish
                  * pass orderID to next activity
                  */
+                order1.setOrderStatus(4);
+                DB.updateOrder(order1);
 
                 Bundle extras = new Bundle();
                 extras.putString("pickUp",pickUp);
                 extras.putString("dest",dest);
+                extras.putString("orderID",id);
+                extras.putString("driver",driver_name);
 
                 extras.putFloat("startAddressLatitude", (float) address1Lat);
                 extras.putFloat("startAddressLongitude", (float) address1Lng);

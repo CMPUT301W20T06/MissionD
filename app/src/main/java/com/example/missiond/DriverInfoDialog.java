@@ -31,6 +31,7 @@ public class DriverInfoDialog extends DialogFragment {
     private Button close,call,email;
     private String phone = null;
     private String emailAddr = null;
+    private String driver_name;
 
     @Nullable
     @Override
@@ -46,9 +47,10 @@ public class DriverInfoDialog extends DialogFragment {
          * find driver by driver name
          * read driver's info
          */
+        driver_name = getArguments().getString("driver");
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
-        DB.getDriver("Yifei", new Consumer<Driver>() {
+        DB.getDriver(driver_name, new Consumer<Driver>() {
             @Override
             public void accept(Driver driver) {
                 String driver_name = driver.getUserName();

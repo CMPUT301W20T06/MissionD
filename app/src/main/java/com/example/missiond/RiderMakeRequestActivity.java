@@ -67,7 +67,7 @@ TaskLoadedCallback{
     private ImageButton close;
     private TextView pickupText,destText,next;
     private Polyline currentPolyline;
-    private String rider_name,id;
+    private String rider_name,id,driver_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,9 +141,11 @@ TaskLoadedCallback{
         @Override
         public void run() {
             if (driverAccept){
+                driver_name = order1.getDriver();
                 handler.removeCallbacks(runnable);
                 Bundle bundle = new Bundle();
                 bundle.putString("orderID", id);
+                bundle.putString("driver",driver_name);
                 RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
                 confirmDriverDialog.setArguments(bundle);
                 confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
@@ -224,32 +226,45 @@ TaskLoadedCallback{
 
     }
 
+
     /**
      * If rider confirm driver, rider waits for driver to pick up
      */
     @Override
-    public void onConfirmClick() {
+    public void onConfirmClick(String type) {
         /**
          * get order id
          * find order by order id
          * order.setOrderStatus(3)  //driver and rider accept(have not picked up yet)
          * pass order id to next activity
          */
-        Bundle extras = new Bundle();
-        extras.putString("pickUp",pickUp);
-        extras.putString("dest",dest);
+        if (type=="confirm") {
+            order1.setOrderStatus(3);
+            DB.updateOrder(order1);
+            Bundle extras = new Bundle();
+            extras.putString("pickUp", pickUp);
+            extras.putString("dest", dest);
+            extras.putString("orderID", id);
+            extras.putString("driver", driver_name);
 
-        extras.putFloat("startAddressLatitude", (float) address1Lat);
-        extras.putFloat("startAddressLongitude", (float) address1Lng);
-        extras.putFloat("destinationAddressLatitude", (float) address2Lat);
-        extras.putFloat("destinationAddressLongitude", (float) address2Lng);
-        Intent i = new Intent(RiderMakeRequestActivity.this, RiderWaitForPickUp.class);
+            extras.putFloat("startAddressLatitude", (float) address1Lat);
+            extras.putFloat("startAddressLongitude", (float) address1Lng);
+            extras.putFloat("destinationAddressLatitude", (float) address2Lat);
+            extras.putFloat("destinationAddressLongitude", (float) address2Lng);
+            Intent i = new Intent(RiderMakeRequestActivity.this, RiderWaitForPickUp.class);
 
-        i.putExtras(extras);
+            i.putExtras(extras);
 
-        startActivity(i);
+            startActivity(i);
 
-        finish();
+            finish();
+        }
+        else if (type=="cancel"){
+            driverAccept=false;
+            order1.setOrderStatus(1);
+            DB.updateOrder(order1);
+            startRepeating();
+        }
     }
 
     /**
@@ -262,6 +277,8 @@ TaskLoadedCallback{
          * find order by order id
          * order.setOrderStatus(0)  //cancel
          */
+        order1.setOrderStatus(0);
+        DB.updateOrder(order1);
         finish();
     }
 
