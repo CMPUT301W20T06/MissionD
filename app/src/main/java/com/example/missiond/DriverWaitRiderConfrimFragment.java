@@ -26,8 +26,8 @@ import java.util.List;
 public class DriverWaitRiderConfrimFragment extends DialogFragment {
 
     /////////////////////////////////////
-    private Button tesing_button;
-    private Button testing_cancel;
+//    private Button tesing_button;
+//    private Button testing_cancel;
     //////////////////////////////////////
 
     public String Location;
@@ -66,8 +66,8 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         }
 
         //////////////////////////////////////////////////////////////////
-        tesing_button = v.findViewById(R.id.just_for_testing);
-        testing_cancel = v.findViewById(R.id.cancel_for_testing);
+//        tesing_button = v.findViewById(R.id.just_for_testing);
+//        testing_cancel = v.findViewById(R.id.cancel_for_testing);
 
         DB.getOrderById(Order_id, new Consumer<Order>() {
             @Override
@@ -77,36 +77,36 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             }
         });
 
-        tesing_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                order1.setOrderStatus(1);
-                DB.updateOrder(order1);
-//                getDialog().dismiss();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("trip_location",Location);
-//                bundle.putString("trip_destination",Destination);
-//                bundle.putFloat("startLocationLat",startLat);
-//                bundle.putFloat("startLocationLng",startLng);
-//                bundle.putFloat("endLocationLat",endLat);
-//                bundle.putFloat("endLocationLng",endLng);
-//                bundle.putString("rider",Rider);
-//
-//                DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
-//                fragment.setArguments(bundle);
-//                fragment.show(getFragmentManager(),"test1");
-            }
-        });
+//        tesing_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                order1.setOrderStatus(1);
+//                DB.updateOrder(order1);
+////                getDialog().dismiss();
+////                Bundle bundle = new Bundle();
+////                bundle.putString("trip_location",Location);
+////                bundle.putString("trip_destination",Destination);
+////                bundle.putFloat("startLocationLat",startLat);
+////                bundle.putFloat("startLocationLng",startLng);
+////                bundle.putFloat("endLocationLat",endLat);
+////                bundle.putFloat("endLocationLng",endLng);
+////                bundle.putString("rider",Rider);
+////
+////                DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
+////                fragment.setArguments(bundle);
+////                fragment.show(getFragmentManager(),"test1");
+//            }
+//        });
 
-        testing_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                order1.setOrderStatus(3);
-                DB.updateOrder(order1);
-//                getDialog().dismiss();
-//                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
-            }
-        });
+//        testing_cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                order1.setOrderStatus(3);
+//                DB.updateOrder(order1);
+////                getDialog().dismiss();
+////                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+//            }
+//        });
 
         return v;
     }
