@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.DialogFragment;
+
+import java.util.List;
 
 /**
  * Ask driver to confirm the money that will be paid on that trip
@@ -31,6 +35,9 @@ public class IsMoneyOKFragment extends DialogFragment {
     private String Order_id, driver_name;
 
     private float startLat,startLng,endLat,endLng,Cost;
+
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    Order order1;
 
     @NonNull
     @Override
@@ -97,6 +104,6 @@ public class IsMoneyOKFragment extends DialogFragment {
         });
 
         return v;
-
         }
+
 }

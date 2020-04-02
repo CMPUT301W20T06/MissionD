@@ -35,22 +35,19 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     private String Rider;
     private float startLat,startLng,endLat,endLng;
     private String Order_id, driver_name;
-    private Boolean riderAccept = false;;
+    private Boolean stop = false;;
     private Boolean riderCancel = false;
+    private Boolean driverConfirm = false;
 
-    private Handler handler1 = new Handler();
-    private Handler handler2 = new Handler();
+    private Handler handler = new Handler();
 
     final DataBaseHelper DB = DataBaseHelper.getInstance();
-    Order order1;
+    private Order order1;
 
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.wait_rider_confirm_fragment, container, false);
-        startRepeating1();
-        startRepeating2();
-
 
         Bundle bundle = getArguments();
         if (bundle!=null){
@@ -65,116 +62,86 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             driver_name = bundle.getString("user_name");
         }
 
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(Order_id)) {
+                        order1=order;
+                        order1.setDriver(driver_name);
+                        order1.setOrderStatus(2);
+                        DB.updateOrder(order1);
+                        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+
         //////////////////////////////////////////////////////////////////
         tesing_button = v.findViewById(R.id.just_for_testing);
         testing_cancel = v.findViewById(R.id.cancel_for_testing);
 
-        DB.getOrderById(Order_id, new Consumer<Order>() {
-            @Override
-            public void accept(Order order) {
-                order1 = order;
-                onLoaded(order1);
-            }
-        });
-
         tesing_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order1.setOrderStatus(1);
-                DB.updateOrder(order1);
-//                getDialog().dismiss();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("trip_location",Location);
-//                bundle.putString("trip_destination",Destination);
-//                bundle.putFloat("startLocationLat",startLat);
-//                bundle.putFloat("startLocationLng",startLng);
-//                bundle.putFloat("endLocationLat",endLat);
-//                bundle.putFloat("endLocationLng",endLng);
-//                bundle.putString("rider",Rider);
-//
-//                DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
-//                fragment.setArguments(bundle);
-//                fragment.show(getFragmentManager(),"test1");
+//                order1.setOrderStatus(1);
+//                DB.updateOrder(order1);
             }
         });
 
         testing_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order1.setOrderStatus(3);
-                DB.updateOrder(order1);
-//                getDialog().dismiss();
-//                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+//                order1.setOrderStatus(3);
+//                DB.updateOrder(order1);
             }
         });
+
+        startRepeating();
 
         return v;
     }
 
 
-    public void onLoaded(Order order){
-        order.setDriver(driver_name);
-        order.setOrderStatus(2);
-        DB.updateOrder(order);
+    public void startRepeating(){
+        runnable.run();
     }
 
-    public void startRepeating1(){
-        runnable1.run();
-
-    }
-    public void startRepeating2(){
-        runnable2.run();
-    }
-
-    private Runnable runnable1 = new Runnable() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (riderAccept){
-                handler1.removeCallbacks(runnable1);
-                handler2.removeCallbacks(runnable2);
-                getDialog().dismiss();
-                Bundle bundle = new Bundle();
-                bundle.putString("trip_location",Location);
-                bundle.putString("trip_destination",Destination);
-                bundle.putFloat("startLocationLat",startLat);
-                bundle.putFloat("startLocationLng",startLng);
-                bundle.putFloat("endLocationLat",endLat);
-                bundle.putFloat("endLocationLng",endLng);
-                bundle.putString("rider",Rider);
+            if (stop){
+                if (riderCancel){
+                    getDialog().dismiss();
+                    new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+                } else {
+                    handler.removeCallbacks(runnable);
+                    getDialog().dismiss();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("trip_location", Location);
+                    bundle.putString("trip_destination", Destination);
+                    bundle.putFloat("startLocationLat", startLat);
+                    bundle.putFloat("startLocationLng", startLng);
+                    bundle.putFloat("endLocationLat", endLat);
+                    bundle.putFloat("endLocationLng", endLng);
+                    bundle.putString("order_id",Order_id);
+                    bundle.putString("rider", Rider);
 
-                DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
-                fragment.setArguments(bundle);
-                fragment.show(getFragmentManager(),"test1");
-            }
-//            if (riderCancel){
-//                handler.removeCallbacks(runnable1);
-//                getDialog().dismiss();
-//                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
-//            }
-            else{
-                getOrder1();
-                handler1.postDelayed(this, 2000);
+                    DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
+                    fragment.setArguments(bundle);
+                    fragment.show(getFragmentManager(), "test1");
+                }
+            } else {
+                getOrder();
+                handler.postDelayed(this, 2000);
             }
         }
     };
 
-    private Runnable runnable2 = new Runnable() {
-        @Override
-        public void run() {
-            if (riderCancel){
-                handler2.removeCallbacks(runnable2);
-                handler1.removeCallbacks(runnable1);
-                getDialog().dismiss();
-                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
-            }
-            else{
-                getOrder2();
-                handler2.postDelayed(this, 2000);
-            }
-        }
-    };
 
-    private void getOrder1(){
+    private void getOrder(){
         DB.getAllOrders(new Consumer<List<Order>>() {
             @Override
             public void accept(List<Order> orders) {
@@ -184,44 +151,29 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
                         order1 = order;
                     }
                 }
-                onLoaded1();
-            }
-        });
-    }
-    private void getOrder2(){
-        DB.getAllOrders(new Consumer<List<Order>>() {
-            @Override
-            public void accept(List<Order> orders) {
-                for (int i=0;i <orders.size();i++) {
-                    Order order = orders.get(i);
-                    if (order.getId().equals(Order_id)) {
-                        order1 = order;
-                    }
-                }
-                onLoaded1();
+                onLoaded();
             }
         });
     }
 
-    public void onLoaded1(){
+    public void onLoaded(){
         if (order1.getOrderStatus()==3) {
-            riderAccept=true;
+            stop=true;
             Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
         }
-        if (order1.getOrderStatus()==0) {
-            riderCancel=true;
+        if (order1.getOrderStatus()==2){
+            driverConfirm=true;
+        }
+        else if (driverConfirm){
+            if (order1.getOrderStatus()==1) {
+                stop = true;
+                riderCancel = true;
+                Toast.makeText(getActivity(), "cancel" + order1.getOrderStatus().toString(), Toast.LENGTH_SHORT).show();
+            }
         }
 
         Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
-
-    public void onLoaded2(){
-        if (order1.getOrderStatus()==1) {
-            riderCancel=true;
-        }
-
-        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
-    }
 }
 
