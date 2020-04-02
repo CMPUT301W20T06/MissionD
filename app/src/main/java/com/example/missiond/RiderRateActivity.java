@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 public class RiderRateActivity extends AppCompatActivity {
     private String pickUp,dest,driver_name;
     private TextView location1,location2,driverName;
     private Button like,dislike;
+    private Driver driver1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +31,20 @@ public class RiderRateActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        pickUp = "pick up test";
-        dest = "dest test";
-        driver_name = "driver name test";
+        pickUp = extras.getString("pickUp");
+        dest = extras.getString("dest");
+        driver_name = extras.getString("driver");
 
         //pickUp = extras.getString("pickUp");
         //dest = extras.getString("dest");
         //driver_name = extras.getString("name");
-//        DataBaseHelper DB = DataBaseHelper.getInstance();
-//        final Driver driver = DB.getDriver(driver_name);
+        DataBaseHelper DB = DataBaseHelper.getInstance();
+        DB.getDriver(driver_name, new Consumer<Driver>() {
+            @Override
+            public void accept(Driver driver) {
+                driver1 = driver;
+            }
+        });
 
         driverName = findViewById(R.id.driverName);
         location1 = findViewById(R.id.Location1);
@@ -52,7 +59,7 @@ public class RiderRateActivity extends AppCompatActivity {
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                driver.increaseThumbUp();
+                driver1.increaseThumbUp();
                 finish();
             }
         });
@@ -60,7 +67,7 @@ public class RiderRateActivity extends AppCompatActivity {
         dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                driver.increaseThumbDown();
+                driver1.increaseThumbDown();
                 finish();
             }
         });

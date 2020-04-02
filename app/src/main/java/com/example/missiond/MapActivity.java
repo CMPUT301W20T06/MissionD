@@ -364,7 +364,6 @@ public class MapActivity extends FragmentActivity implements
         Order order = new Order(startAddress,destinationAddress,distance,addAmount,1,rider_name,null, startCoordinate, endCoordinate, rider_name);
 
         id = DB.addOrder(order);
-        Toast.makeText(this,id,Toast.LENGTH_LONG).show();
         extras.putString("orderID",id);
 
         Intent i = new Intent(MapActivity.this, RiderMakeRequestActivity.class);

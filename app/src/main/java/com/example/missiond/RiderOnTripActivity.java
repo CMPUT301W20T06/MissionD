@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.List;
+
 /**
  * Displays a map, driver's information, and pick up location and destination
  * Rider can click "ARRIVE" to end the trip and pay
@@ -29,8 +31,11 @@ import com.google.android.gms.maps.model.PolylineOptions;
  *  Mar.12 2020
  */
 
-public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmCancelDialog.RiderConfirmCancelDialogListener, RiderConfirmPayDialog.RiderConfirmPayDialogListener,
+public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmPayDialog.RiderConfirmPayDialogListener,
         OnMapReadyCallback,TaskLoadedCallback {
+    private DataBaseHelper DB = DataBaseHelper.getInstance();
+    private Order order1;
+    private String id,driver_name;
     private ImageButton back;
     private Button confirm;
     private TextView driverName,pickUpText,destText;
@@ -58,26 +63,32 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
          * DriverinfoDialog uses user name to fine driver and read driver's info
          */
 
-        DataBaseHelper DB = DataBaseHelper.getInstance();
         driverName = findViewById(R.id.driverName);
-        DB.getDriver("Yifei", new Consumer<Driver>() {
-            @Override
-            public void accept(Driver driver) {
-                String driver_name = driver.getUserName();
-                driverName.setText(driver_name);
-            }
-        });
-
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         pickUp = extras.getString("pickUp");
         dest = extras.getString("dest");
+        id = extras.getString("orderID");
+        driver_name = extras.getString("driver");
+        driverName.setText(driver_name);
 
         address1Lat = extras.getFloat("startAddressLatitude");
         address1Lng = extras.getFloat("startAddressLongitude");
         address2Lat = extras.getFloat("destinationAddressLatitude");
         address2Lng = extras.getFloat("destinationAddressLongitude");
+
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(id)) {
+                        order1 = order;
+                    }
+                }
+            }
+        });
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -91,20 +102,13 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         destText = findViewById(R.id.Location2);
         destText.setText(dest);
 
-        back = findViewById(R.id.Back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RiderConfirmCancelDialog riderConfirmCancelDialog = new RiderConfirmCancelDialog();
-                riderConfirmCancelDialog.show(getSupportFragmentManager(),"cancelConfirmDialog");
-            }
-        });
-
-
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("driver",driver_name);
                 DriverInfoDialog driverInfoDialog = new DriverInfoDialog();
+                driverInfoDialog.setArguments(bundle);
                 driverInfoDialog.show(getSupportFragmentManager(),"addMoneyFragment");
             }
         });
@@ -113,6 +117,10 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * order.setOrderStatus(5)  //request is over(history)
+                 * pass orderID to next activity
+                 */
                 RiderConfirmPayDialog riderConfirmPayDialog = new RiderConfirmPayDialog();
                 riderConfirmPayDialog.show(getSupportFragmentManager(),"confirmAndPay");
             }
@@ -121,26 +129,18 @@ public class RiderOnTripActivity extends AppCompatActivity implements RiderConfi
     }
 
     /**
-     * Cancel request and go back to the rider activity
-     */
-    @Override
-    public void onCancelConfirmClick() {
-        finish();
-    }
-
-    /**
      * Finish request and go to the pay activity
      */
     @Override
     public void onArriveConfirmClick() {
-        /**
-         * order.setOrderStatus(5)  //request is over(history)
-         * pass orderID to next activity
-         */
+        order1.setOrderStatus(5);
+        DB.updateOrder(order1);
         Intent i = new Intent(RiderOnTripActivity.this, RiderEndPayActivity.class);
         Bundle extras = new Bundle();
         extras.putString("pickUp",pickUp);
         extras.putString("dest",dest);
+        extras.putString("orderID",id);
+        extras.putString("driver",driver_name);
         i.putExtras(extras);
         startActivity(i);
         finish();

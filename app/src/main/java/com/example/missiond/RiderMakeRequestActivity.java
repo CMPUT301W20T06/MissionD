@@ -3,6 +3,7 @@ package com.example.missiond;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -57,6 +58,8 @@ TaskLoadedCallback{
     Float fare,address1Lat,address1Lng,address2Lat,address2Lng;
     final DataBaseHelper DB = DataBaseHelper.getInstance();
     Order order1;
+    private Boolean driverAccept = false;
+    private Handler handler = new Handler();
 
 
     private SupportMapFragment mapFragment;
@@ -64,7 +67,7 @@ TaskLoadedCallback{
     private ImageButton close;
     private TextView pickupText,destText,next;
     private Polyline currentPolyline;
-    private String rider_name,id;
+    private String rider_name,id,driver_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,49 +94,6 @@ TaskLoadedCallback{
 
         mapFragment.getMapAsync(this);
 
-//        DB.getOrderById(id, new Consumer<Order>() {
-//            @Override
-//            public void accept(Order order) {
-//                order1 = order;
-//            }
-//        });
-
-        FirebaseFirestore fs = FirebaseFirestore.getInstance();
-        DocumentReference docRef = fs.collection("Orders").document(id);
-        docRef.addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                // ...这里写监测到order变化之后要做的事儿 就是要跳转啥的
-//                Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
-
-                DB.getAllOrders(new Consumer<List<Order>>() {
-                    @Override
-                    public void accept(List<Order> orders) {
-                        for (int i=0;i <orders.size();i++) {
-                            Order order = orders.get(i);
-                            Log.d("##########", String.valueOf(i));
-                            if (order.getId().equals(id)) {
-                                Log.d("XXXXXXXXXXXXXX", "geted");
-                                order1 = order;
-                            }
-                        }
-                        onLoaded();
-                    }
-                });
-
-//                if (order1.getOrderStatus()==2) {
-//                    Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
-//
-////                    Bundle bundle = new Bundle();
-////                    bundle.putString("orderID", id);
-////                    RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
-////                    confirmDriverDialog.setArguments(bundle);
-////                    confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
-//                }
-            }
-        });
-
         pickupText = findViewById(R.id.Location1_makeRequest);
         pickupText.setText(pickUp);
 
@@ -149,8 +109,17 @@ TaskLoadedCallback{
             }
         });
 
+        startRepeating();
+//        DB.getOrderById(id, new Consumer<Order>() {
+//            @Override
+//            public void accept(Order order) {
+//                order1 = order;
+//                onLoaded();
+//            }
+//        });
+
         /**
-        when order status is changed to 2 (driver accepted trip request)
+        testing
          **/
         next = findViewById(R.id.next_makeRequest);
         next.setOnClickListener(new View.OnClickListener() {
@@ -158,20 +127,57 @@ TaskLoadedCallback{
             public void onClick(View v) {
                 order1.setOrderStatus(2);
                 order1.setDriver("Yifei");
-//                Bundle bundle = new Bundle();
-//                bundle.putString("rider_name",rider_name);
-//                RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
-//                confirmDriverDialog.setArguments(bundle);
-//                confirmDriverDialog.show(getSupportFragmentManager(),"confirmDriverFragment");
+                DB.updateOrder(order1);
+//                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void startRepeating(){
+        runnable.run();
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (driverAccept){
+                driver_name = order1.getDriver();
+                handler.removeCallbacks(runnable);
+                Bundle bundle = new Bundle();
+                bundle.putString("orderID", id);
+                bundle.putString("driver",driver_name);
+                RiderConfirmDriverDialog confirmDriverDialog = new RiderConfirmDriverDialog();
+                confirmDriverDialog.setArguments(bundle);
+                confirmDriverDialog.show(getSupportFragmentManager(), "confirmDriverFragment");
+            }
+            else{
+                getOrder();
+                handler.postDelayed(this, 2000);
+            }
+        }
+    };
+
+    private void getOrder(){
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(id)) {
+                        order1 = order;
+                    }
+                }
+                onLoaded();
             }
         });
     }
 
     public void onLoaded(){
         if (order1.getOrderStatus()==2) {
-            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_LONG).show();
+            driverAccept=true;
+//            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(RiderMakeRequestActivity.this,order1.getId(),Toast.LENGTH_LONG).show();
+//        Toast.makeText(RiderMakeRequestActivity.this,order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -220,32 +226,45 @@ TaskLoadedCallback{
 
     }
 
+
     /**
      * If rider confirm driver, rider waits for driver to pick up
      */
     @Override
-    public void onConfirmClick() {
+    public void onConfirmClick(String type) {
         /**
          * get order id
          * find order by order id
          * order.setOrderStatus(3)  //driver and rider accept(have not picked up yet)
          * pass order id to next activity
          */
-        Bundle extras = new Bundle();
-        extras.putString("pickUp",pickUp);
-        extras.putString("dest",dest);
+        if (type=="confirm") {
+            order1.setOrderStatus(3);
+            DB.updateOrder(order1);
+            Bundle extras = new Bundle();
+            extras.putString("pickUp", pickUp);
+            extras.putString("dest", dest);
+            extras.putString("orderID", id);
+            extras.putString("driver", driver_name);
 
-        extras.putFloat("startAddressLatitude", (float) address1Lat);
-        extras.putFloat("startAddressLongitude", (float) address1Lng);
-        extras.putFloat("destinationAddressLatitude", (float) address2Lat);
-        extras.putFloat("destinationAddressLongitude", (float) address2Lng);
-        Intent i = new Intent(RiderMakeRequestActivity.this, RiderWaitForPickUp.class);
+            extras.putFloat("startAddressLatitude", (float) address1Lat);
+            extras.putFloat("startAddressLongitude", (float) address1Lng);
+            extras.putFloat("destinationAddressLatitude", (float) address2Lat);
+            extras.putFloat("destinationAddressLongitude", (float) address2Lng);
+            Intent i = new Intent(RiderMakeRequestActivity.this, RiderWaitForPickUp.class);
 
-        i.putExtras(extras);
+            i.putExtras(extras);
 
-        startActivity(i);
+            startActivity(i);
 
-        finish();
+            finish();
+        }
+        else if (type=="cancel"){
+            driverAccept=false;
+            order1.setOrderStatus(1);
+            DB.updateOrder(order1);
+            startRepeating();
+        }
     }
 
     /**
@@ -258,6 +277,8 @@ TaskLoadedCallback{
          * find order by order id
          * order.setOrderStatus(0)  //cancel
          */
+        order1.setOrderStatus(0);
+        DB.updateOrder(order1);
         finish();
     }
 
