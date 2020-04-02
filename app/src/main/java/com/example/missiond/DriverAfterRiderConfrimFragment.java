@@ -25,6 +25,7 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
     public String Location;
     public String Destination;
     private String Rider;
+    private String Order_id;
 
     private float startLat,startLng,endLat,endLng;
 
@@ -41,6 +42,7 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
             startLng = bundle.getFloat("startLocationLng");
             endLat =bundle.getFloat("endLocationLat");
             endLng = bundle.getFloat("endLocationLng");
+            Order_id = bundle.getString("order_id");
             Rider = bundle.getString("rider");
         }
 
