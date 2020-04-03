@@ -91,7 +91,7 @@
         android:id="@+id/subLayoutRiderConfirmTrip3"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#80B8B8B8"
+        android:background="#75E0FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

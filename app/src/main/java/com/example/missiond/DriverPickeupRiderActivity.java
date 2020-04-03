@@ -65,6 +65,7 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
     String Location;
     String Destination;
     String Rider;
+    private String Order_id;
 
     private float startLat,startLng,endLat,endLng;
 
@@ -80,6 +81,7 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
         endLat = getIntent().getExtras().getFloat("endLocationLat");
         endLng = getIntent().getExtras().getFloat("endLocationLng");
         Rider = getIntent().getExtras().getString("rider");
+        Order_id = getIntent().getExtras().getString("order_id");
 
         pick_up_button = findViewById(R.id.pickup_button);
         start_location = findViewById(R.id.start_location);
@@ -119,6 +121,7 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
                 intent.putExtra("endLocationLat",endLat);
                 intent.putExtra("endLocationLng",endLng);
                 intent.putExtra("rider",Rider);
+                intent.putExtra("order_id",Order_id);
                 startActivity(intent);
             }
         });

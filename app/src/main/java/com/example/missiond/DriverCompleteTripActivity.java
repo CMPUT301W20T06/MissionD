@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +18,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.List;
 
 /**
  * Display a map with driver current location
@@ -46,15 +49,19 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
     private Polyline currentPolyline;
     private GoogleMap completeMap;
     String Rider;
-
+    private String Order_id;
 
     private float startLat,startLng,endLat,endLng;
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    private Order order1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_complete_trip);
+
+
 
         Location = getIntent().getExtras().getString("location");
         Destination = getIntent().getExtras().getString("destination");
@@ -63,6 +70,7 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
         endLat = getIntent().getExtras().getFloat("endLocationLat");
         endLng = getIntent().getExtras().getFloat("endLocationLng");
         Rider = getIntent().getExtras().getString("rider");
+        Order_id = getIntent().getExtras().getString("order_id");
 
 
         start_location = findViewById(R.id.start_location);
@@ -76,6 +84,21 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
 
         completet_button = findViewById(R.id.complete_button);
 
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(Order_id)) {
+                        order1=order;
+                        order1.setOrderStatus(4);
+                        DB.updateOrder(order1);
+                        //Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         /**
          * press the complete button
          * will go to the ScanQRcode activity
@@ -84,6 +107,8 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DriverCompleteTripActivity.this, ScanQRcode.class);
+                intent.putExtra("rider",Rider);
+                intent.putExtra("order_id",Order_id);
                 startActivity(intent);
 
             }

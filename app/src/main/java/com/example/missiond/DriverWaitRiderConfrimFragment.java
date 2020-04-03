@@ -77,7 +77,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
                         order1.setDriver(driver_name);
                         order1.setOrderStatus(2);
                         DB.updateOrder(order1);
-                        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
                     }
                 }
             }

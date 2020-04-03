@@ -60,6 +60,7 @@ public class DriverAfterRiderConfrimFragment extends DialogFragment {
                 intent.putExtra("endLocationLat",endLat);
                 intent.putExtra("endLocationLng",endLng);
                 intent.putExtra("rider",Rider);
+                intent.putExtra("order_id",Order_id);
 
                 startActivity(intent);
             }
