@@ -86,11 +86,10 @@
             android:layout_marginLeft="10dp"
             android:text="Name"/>
 
-        <EditText
+        <TextView
             android:id="@+id/editName_profile"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Alex"/>
+            android:layout_height="60dp" />
 
     </LinearLayout>
 
@@ -111,7 +110,6 @@
         <EditText
             android:id="@+id/editPhone_profile"
             android:layout_width="match_parent"
-            android:text="780-123-4567"
             android:inputType="number"
             android:layout_height="60dp"/>
 
@@ -133,7 +131,6 @@
 
         <EditText
             android:id="@+id/editEmail_profile"
-            android:text="1234567@gmail.com"
             android:layout_width="match_parent"
             android:layout_height="60dp"/>
 

@@ -36,6 +36,7 @@
         android:layout_width="102dp"
         android:layout_height="60dp"
         android:text="sign up"
+        android:background="#686460"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -21,14 +21,9 @@ import java.util.List;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.26 2020
+ *  Mar.30 2020
  */
 public class DriverWaitRiderConfrimFragment extends DialogFragment {
-
-    /////////////////////////////////////
-    private Button tesing_button;
-    private Button testing_cancel;
-    //////////////////////////////////////
 
     public String Location;
     public String Destination;
@@ -75,27 +70,6 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
                         Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
-        });
-
-
-        //////////////////////////////////////////////////////////////////
-        tesing_button = v.findViewById(R.id.just_for_testing);
-        testing_cancel = v.findViewById(R.id.cancel_for_testing);
-
-        tesing_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                order1.setOrderStatus(1);
-//                DB.updateOrder(order1);
-            }
-        });
-
-        testing_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                order1.setOrderStatus(3);
-//                DB.updateOrder(order1);
             }
         });
 
@@ -159,7 +133,7 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public void onLoaded(){
         if (order1.getOrderStatus()==3) {
             stop=true;
-            Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
         }
         if (order1.getOrderStatus()==2){
             driverConfirm=true;
@@ -168,11 +142,11 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             if (order1.getOrderStatus()==1) {
                 stop = true;
                 riderCancel = true;
-                Toast.makeText(getActivity(), "cancel" + order1.getOrderStatus().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "cancel" + order1.getOrderStatus().toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
-        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
 }
