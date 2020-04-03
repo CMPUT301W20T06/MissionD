@@ -16,8 +16,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button close,confirm,order;
 
     private DataBaseHelper db;
-    private TextView nameBig;
-    private EditText mName,mPhone,mEmail;
+    private TextView mName,nameBig;
+    private EditText mPhone,mEmail;
     private String name,phone,email,newName,newPhone,newEmail;
     private String type;
     private Rider rider;

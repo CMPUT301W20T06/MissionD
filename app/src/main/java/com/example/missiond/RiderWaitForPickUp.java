@@ -92,7 +92,6 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
         destText.setText(dest);
 
 
-
         driverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
