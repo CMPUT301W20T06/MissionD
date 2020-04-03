@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:background="#80B8B8B8"
     android:layout_height="wrap_content">
 
@@ -14,7 +14,6 @@
         android:layout_marginTop="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/wode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
@@ -25,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Waiting for Rider Confirm"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textColor="@android:color/white"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="40dp"

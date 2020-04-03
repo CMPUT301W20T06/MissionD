@@ -1,11 +1,14 @@
 package com.example.missiond;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +28,8 @@ import java.util.List;
  */
 public class DriverWaitRiderConfrimFragment extends DialogFragment {
 
+    AnimationDrawable loadingAnimation;
+
     public String Location;
     public String Destination;
     private String Rider;
@@ -43,6 +48,11 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.wait_rider_confirm_fragment, container, false);
+
+        ImageView imageView = v.findViewById(R.id.image);
+        imageView.setBackgroundResource(R.drawable.loading_animation);
+        loadingAnimation = (AnimationDrawable) imageView.getBackground();
+
 
         Bundle bundle = getArguments();
         if (bundle!=null){
@@ -75,8 +85,13 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
 
         startRepeating();
 
+        loadingAnimation.start();
+
         return v;
     }
+
+
+
 
 
     public void startRepeating(){

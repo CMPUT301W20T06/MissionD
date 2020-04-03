@@ -87,17 +87,7 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-//        DB.getAllOrders(new Consumer<List<Order>>() {
-//            @Override
-//            public void accept(List<Order> orders) {
-//                for (int i=0;i <orders.size();i++) {
-//                    Order order = orders.get(i);
-//                    if (order.getId().equals(id)) {
-//                        order1 = order;
-//                    }
-//                }
-//            }
-//        });
+
         startRepeating();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -109,14 +99,7 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
         destText = findViewById(R.id.Location2);
         destText.setText(dest);
 
-//        back = findViewById(R.id.Back);
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                RiderConfirmCancelDialog riderConfirmCancelDialog = new RiderConfirmCancelDialog();
-//                riderConfirmCancelDialog.show(getSupportFragmentManager(),"cancelConfirmDialog");
-//            }
-//        });
+
 
 
         driverName.setOnClickListener(new View.OnClickListener() {

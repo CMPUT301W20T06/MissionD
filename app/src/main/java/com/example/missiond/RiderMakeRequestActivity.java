@@ -1,12 +1,14 @@
 package com.example.missiond;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class RiderMakeRequestActivity extends AppCompatActivity implements OnMap
         com.google.android.gms.location.LocationListener, RiderConfirmDriverDialog.RiderConfirmDriverListener, RiderConfirmCancelDialog.RiderConfirmCancelDialogListener,
 TaskLoadedCallback{
 
+    AnimationDrawable loadingAnimation;
+
     private GoogleMap newMap;
     LatLng LatLng1,LatLng2;
     MarkerOptions MarkerOptions1 = new MarkerOptions();
@@ -73,6 +77,9 @@ TaskLoadedCallback{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_make_request);
+        ImageView imageView = (ImageView)findViewById(R.id.image);
+        imageView.setBackgroundResource(R.drawable.loading_animation);
+        loadingAnimation = (AnimationDrawable) imageView.getBackground();
 
 
         Intent i = getIntent();
@@ -131,6 +138,12 @@ TaskLoadedCallback{
 //                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        loadingAnimation.start();
     }
 
     public void startRepeating(){
