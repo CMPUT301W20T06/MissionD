@@ -50,7 +50,6 @@ import java.util.List;
 public class RiderMakeRequestActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener, RiderConfirmDriverDialog.RiderConfirmDriverListener, RiderConfirmCancelDialog.RiderConfirmCancelDialogListener,
 TaskLoadedCallback{
-
     AnimationDrawable loadingAnimation;
 
     private GoogleMap newMap;
@@ -80,7 +79,6 @@ TaskLoadedCallback{
         ImageView imageView = (ImageView)findViewById(R.id.image);
         imageView.setBackgroundResource(R.drawable.loading_animation);
         loadingAnimation = (AnimationDrawable) imageView.getBackground();
-
 
         Intent i = getIntent();
         rider_name = i.getStringExtra("rider_name");

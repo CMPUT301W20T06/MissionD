@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     android:background="@drawable/rectangle">
 
-    <Button
-        android:id="@+id/close"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@drawable/close"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+    <LinearLayout
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:background="#50000000">
+
+        <Button
+            android:id="@+id/close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/close"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:textSize="30dp"
+            android:text="Complete Trip"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+<<<<<<< HEAD
         android:drawable="@drawable/loader14_00000"
         android:duration="300"/>
     <item
@@ -257,6 +258,18 @@
         android:duration="40"/>
     <item
         android:drawable="@drawable/loader14_00092"
+=======
+        android:drawable="@drawable/loading1_1"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/loading2_1"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/loading3_1"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/loading4_1"
+>>>>>>> Weiyi
         android:duration="300"/>
 
 </animation-list>
