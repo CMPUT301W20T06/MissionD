@@ -38,7 +38,7 @@ public class RiderRateActivity extends AppCompatActivity {
         //pickUp = extras.getString("pickUp");
         //dest = extras.getString("dest");
         //driver_name = extras.getString("name");
-        DataBaseHelper DB = DataBaseHelper.getInstance();
+        final DataBaseHelper DB = DataBaseHelper.getInstance();
         DB.getDriver(driver_name, new Consumer<Driver>() {
             @Override
             public void accept(Driver driver) {
@@ -60,6 +60,7 @@ public class RiderRateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 driver1.increaseThumbUp();
+                DB.UpdateDriverData(driver1);
                 finish();
             }
         });
@@ -68,6 +69,7 @@ public class RiderRateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 driver1.increaseThumbDown();
+                DB.UpdateDriverData(driver1);
                 finish();
             }
         });
