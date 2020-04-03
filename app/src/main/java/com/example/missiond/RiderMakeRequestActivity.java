@@ -3,7 +3,6 @@ package com.example.missiond;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -78,6 +77,8 @@ TaskLoadedCallback{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_make_request);
         ImageView imageView = (ImageView)findViewById(R.id.image);
+        imageView.setBackgroundResource(R.drawable.loading_animation);
+        loadingAnimation = (AnimationDrawable) imageView.getBackground();
 
         Intent i = getIntent();
         rider_name = i.getStringExtra("rider_name");
@@ -135,6 +136,12 @@ TaskLoadedCallback{
 //                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        loadingAnimation.start();
     }
 
     public void startRepeating(){

@@ -44,7 +44,7 @@
         android:layout_width="380dp"
         android:layout_height="140dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rectangle2"
+        android:background="@drawable/rectangle"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/subBar_makeRequest">
 
@@ -122,14 +122,15 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
         <TextView
             android:id="@+id/next_makeRequest"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:gravity="center"
+            android:layout_marginTop="20dp"
             android:text="Looking for driver"
             android:textColor="@android:color/white"
             android:textSize="22dp" />
