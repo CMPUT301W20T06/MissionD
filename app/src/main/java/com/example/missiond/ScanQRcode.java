@@ -7,9 +7,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.List;
 
 /**
  * Display a map with driver current location
@@ -24,12 +27,31 @@ public class ScanQRcode extends AppCompatActivity {
 
     private Button scan;
 
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    private Order order1;
+    private String Order_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_get_paid);
 
         scan = findViewById(R.id.scan_button);
+        Order_id = getIntent().getExtras().getString("order_id");
+
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(Order_id)) {
+                        order1=order;
+                        order1.setOrderStatus(5);
+                        DB.updateOrder(order1);
+                        //Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         /**
          * press the scan button

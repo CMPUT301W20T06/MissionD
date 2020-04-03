@@ -19,7 +19,7 @@
         android:id="@+id/subLayoutDriverConfirmTrip"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="#262626"
+        android:background="#607D8B"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -119,7 +119,7 @@
         android:id="@+id/subLayoutRiderConfirmTrip3"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#FFFFFF"
+        android:background="#75E0FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

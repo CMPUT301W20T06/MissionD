@@ -13,7 +13,7 @@
         android:layout_height="80dp"
         android:textSize="30dp"
         android:text="See Trip Requests"
-        android:background="#80FFFFFF"
+        android:background="#75E0FFFF"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

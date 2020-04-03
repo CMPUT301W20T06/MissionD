@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
-        android:background="#262626">
+        android:background="#607D8B">
 
         <ImageButton
             android:id="@+id/riderBack_makeRequest"
@@ -117,7 +117,7 @@
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:background="@drawable/rectangle_background"
+        android:background="@drawable/rectangle_light"
         android:gravity="center_horizontal|center_vertical">
 
         <ImageView

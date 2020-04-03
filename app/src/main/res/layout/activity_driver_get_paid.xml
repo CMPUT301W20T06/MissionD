@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#262626"
+    android:background="#90607D8B"
     tools:context=".ScanQRcode">
 
     <ImageView
@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Scan"
+        android:background="@drawable/rectangle_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

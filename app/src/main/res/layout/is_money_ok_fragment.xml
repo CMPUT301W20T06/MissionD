@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#26262626"
+    android:background="@drawable/rectangle_light"
     android:layout_height="250dp">
 
     <Button
@@ -26,6 +26,7 @@
         android:layout_marginRight="10dp"
         android:text="Is CA$"
         android:textSize="25dp"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/close_button"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +39,7 @@
         android:layout_marginTop="70dp"
         android:text="..."
         android:textSize="25dp"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/money_msg"
         app:layout_constraintTop_toBottomOf="@+id/close_button"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +53,7 @@
         android:layout_marginRight="10dp"
         android:text="OK?"
         android:textSize="25dp"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/money"
         app:layout_constraintTop_toBottomOf="@+id/close_button"
         app:layout_constraintTop_toTopOf="parent" />

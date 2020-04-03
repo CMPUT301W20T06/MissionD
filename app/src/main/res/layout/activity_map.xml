@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
-        android:background="#262626">
+        android:background="#607D8B">
 
         <ImageButton
             android:id="@+id/riderLocBack"
@@ -181,7 +181,7 @@
         android:id="@+id/requestRide_request"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#262626"
+        android:background="@drawable/rectangle_background"
         android:text="Request Ride"
         android:textColor="@android:color/white"
         android:textSize="20dp"
