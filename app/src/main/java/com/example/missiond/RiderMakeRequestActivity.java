@@ -44,7 +44,7 @@ import java.util.List;
  * @author
  *  Xinrong Zhou, Weiyi Wu
  * @version
- *  Mar.12 2020
+ *  April.02 2020
  */
 
 public class RiderMakeRequestActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
@@ -115,35 +115,31 @@ TaskLoadedCallback{
         });
 
         startRepeating();
-//        DB.getOrderById(id, new Consumer<Order>() {
+
+//        for testing
+//        next = findViewById(R.id.next_makeRequest);
+//        next.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void accept(Order order) {
-//                order1 = order;
-//                onLoaded();
+//            public void onClick(View v) {
+//                order1.setOrderStatus(2);
+//                order1.setDriver("Yifei");
+//                DB.updateOrder(order1);
 //            }
 //        });
-
-        /**
-        testing
-         **/
-        next = findViewById(R.id.next_makeRequest);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                order1.setOrderStatus(2);
-                order1.setDriver("Yifei");
-                DB.updateOrder(order1);
-//                Toast.makeText(RiderMakeRequestActivity.this,"test",Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
+    /**
+     * https://www.youtube.com/watch?v=scZYIAZrMWk
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
         super.onWindowFocusChanged(hasFocus);
         loadingAnimation.start();
     }
 
+    /**
+     * https://www.youtube.com/watch?v=3pgGVBmSVq0
+     */
     public void startRepeating(){
         runnable.run();
     }
@@ -186,9 +182,7 @@ TaskLoadedCallback{
     public void onLoaded(){
         if (order1.getOrderStatus()==2) {
             driverAccept=true;
-//            Toast.makeText(RiderMakeRequestActivity.this,"status changed 2",Toast.LENGTH_SHORT).show();
         }
-//        Toast.makeText(RiderMakeRequestActivity.this,order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

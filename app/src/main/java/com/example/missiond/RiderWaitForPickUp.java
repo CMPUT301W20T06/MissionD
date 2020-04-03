@@ -26,11 +26,12 @@ import java.util.List;
 
 /**
  * Displays a map, driver's information, and pick up location and destination
- * Rider can call driver
+ * Rider can call or email driver
+ * Can automatically check order data
  * @author
  *  Weiyi Wu, Xinrong Zhou
  * @version
- *  Mar.12 2020
+ *  April.01 2020
  */
 public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyCallback,TaskLoadedCallback{
     private boolean isPickUp = false;
@@ -58,14 +59,6 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_wait_for_pick_up);
 
-        /**
-         * orderID = getExtras("orderID");
-         * find order by order id
-         * get driver name from order
-         * pass driver name to DriverinfoDialog
-         * DriverinfoDialog uses user name to fine driver and read driver's info
-         */
-
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         pickUp = extras.getString("pickUp");
@@ -87,17 +80,6 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-//        DB.getAllOrders(new Consumer<List<Order>>() {
-//            @Override
-//            public void accept(List<Order> orders) {
-//                for (int i=0;i <orders.size();i++) {
-//                    Order order = orders.get(i);
-//                    if (order.getId().equals(id)) {
-//                        order1 = order;
-//                    }
-//                }
-//            }
-//        });
         startRepeating();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -109,14 +91,6 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
         destText = findViewById(R.id.Location2);
         destText.setText(dest);
 
-//        back = findViewById(R.id.Back);
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                RiderConfirmCancelDialog riderConfirmCancelDialog = new RiderConfirmCancelDialog();
-//                riderConfirmCancelDialog.show(getSupportFragmentManager(),"cancelConfirmDialog");
-//            }
-//        });
 
 
         driverName.setOnClickListener(new View.OnClickListener() {
@@ -153,8 +127,6 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
         @Override
         public void run() {
             if (isPickUp){
-//                order1.setOrderStatus(4);
-//                DB.updateOrder(order1);
 
                 Bundle extras = new Bundle();
                 extras.putString("pickUp",pickUp);
@@ -199,18 +171,9 @@ public class RiderWaitForPickUp extends AppCompatActivity implements OnMapReadyC
     public void onLoaded(){
         if (order1.getOrderStatus()==4) {
             isPickUp=true;
-//            Toast.makeText(RiderWaitForPickUp.this,"status changed 4",Toast.LENGTH_SHORT).show();
         }
-//        Toast.makeText(RiderWaitForPickUp.this,order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
     }
 
-//    /**
-//     * Cancel request and go back to the rider activity
-//     */
-//    @Override
-//    public void onCancelConfirmClick() {
-//        finish();
-//    }
 
     /**
      * Show pick up location and destination on the map

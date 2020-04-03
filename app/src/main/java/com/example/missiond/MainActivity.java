@@ -8,11 +8,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * User can register or sign in
+ * @author
+ *  Issac Zhang, Weiyi Wu
+ * @version
+ *  April.02 2020
+ */
+
 public class MainActivity extends AppCompatActivity {
-//    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
-//    private initFragment initF;
-//    private mapFragment mapF;
-//    private String pickupLoc,DestLoc,tempLoc;
     private Button button_rider;
     private Button button_driver;
     private TextView button_register;
@@ -49,30 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        initF = new initFragment();
-//        mapF = new mapFragment();
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.initFrag, initF)
-//                .commit();
     }
 
-
-//    @Override
-//    public void onRiderStartTripClick() {
-//        Intent intent = new Intent(MainActivity.this, MapActivity.class);
-//        startActivity(intent);
-//
-//    }
-
-//
-//    public String getPickupLoc(){
-//        return pickupLoc;
-//    }
-//
-//    public String getDestLoc(){
-//        return DestLoc;
-//    }
 
 }

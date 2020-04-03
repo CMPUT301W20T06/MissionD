@@ -38,6 +38,8 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     private RiderConfirmDriverListener listener;
     private String rider_name;
     private String phone,emailAddr,id,driver_name;
+    private float driver_rating;
+    private TextView rating,name;
     Order order1;
 
     public interface RiderConfirmDriverListener{
@@ -49,10 +51,6 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.rider_confirm_driver_dialog,container,false);
 
-        /*
-        set driver's TextView: rating, plate num, name
-        get driver's button: phone, email
-         */
         final DataBaseHelper DB = DataBaseHelper.getInstance();
         id = getArguments().getString("orderID");
         driver_name = getArguments().getString("driver");
@@ -128,19 +126,15 @@ public class RiderConfirmDriverDialog extends DialogFragment {
     }
 
     public void onLoaded(View v ,Driver driver){
-
-        final TextView rating = v.findViewById(R.id.driver_rating);
-
-        float driver_rating = driver.getRating();
-        rating.setText(String.valueOf(driver_rating));
+        driver_rating = driver.getRating();
         phone = driver.getPhoneNumber();
         emailAddr = driver.getEmailAddress();
+        driver_name = driver.getUserName();
 
-        String driver_name = driver.getUserName();
-
-        TextView name = v.findViewById(R.id.driver_name);
+        rating = v.findViewById(R.id.driver_rating);
+        rating.setText(String.valueOf(driver_rating));
+        name = v.findViewById(R.id.driver_name);
         name.setText(driver_name);
-
     }
 
     @Override

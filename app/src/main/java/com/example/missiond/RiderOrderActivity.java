@@ -14,6 +14,14 @@ import androidx.core.util.Consumer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Show user's order history
+ * @author
+ *  Weiyi Wu
+ * @version
+ *  March.26 2020
+ */
+
 public class RiderOrderActivity extends AppCompatActivity {
     final DataBaseHelper DB = DataBaseHelper.getInstance();
     private ImageButton back;

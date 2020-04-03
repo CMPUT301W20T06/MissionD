@@ -28,7 +28,7 @@ import java.util.List;
  * @author
  *  Weiyi Wu
  * @version
- *  Mar.12 2020
+ *  Mar.26 2020
  */
 
 public class RiderOnTripActivity extends AppCompatActivity implements RiderConfirmPayDialog.RiderConfirmPayDialogListener,

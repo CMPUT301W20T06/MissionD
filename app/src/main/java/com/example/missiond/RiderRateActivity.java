@@ -10,6 +10,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
+/**
+ * Rider can rate driver
+ * @author
+ *  Weiyi Wu
+ * @version
+ *  Mar.28 2020
+ */
+
 public class RiderRateActivity extends AppCompatActivity {
     private String pickUp,dest,driver_name;
     private TextView location1,location2,driverName;
@@ -21,13 +29,6 @@ public class RiderRateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_rate);
 
-        /**
-         * orderID = getExtras("orderID");
-         * find order by order id
-         * get driver name from order
-         * get pick up, dest from order
-         * find driver by driver name
-         */
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -35,9 +36,6 @@ public class RiderRateActivity extends AppCompatActivity {
         dest = extras.getString("dest");
         driver_name = extras.getString("driver");
 
-        //pickUp = extras.getString("pickUp");
-        //dest = extras.getString("dest");
-        //driver_name = extras.getString("name");
         final DataBaseHelper DB = DataBaseHelper.getInstance();
         DB.getDriver(driver_name, new Consumer<Driver>() {
             @Override

@@ -13,6 +13,14 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+/**
+ * Rider can sign in
+ * @author
+ *  Issac Zhang, Weiyi Wu
+ * @version
+ *  April.02 2020
+ */
+
 public class rider_login extends AppCompatActivity {
 
     @Override
