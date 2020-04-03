@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.DialogFragment;
+
+import java.util.List;
 
 /**
  * Ask driver to confirm the money that will be paid on that trip
@@ -28,7 +32,12 @@ public class IsMoneyOKFragment extends DialogFragment {
     private String Rider;
     private TextView Money;
 
+    private String Order_id, driver_name;
+
     private float startLat,startLng,endLat,endLng,Cost;
+
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    Order order1;
 
     @NonNull
     @Override
@@ -45,13 +54,15 @@ public class IsMoneyOKFragment extends DialogFragment {
             endLng = bundle.getFloat("endLocationLng");
             Rider = bundle.getString("rider");
             Cost = bundle.getFloat("cost");
+            Order_id = bundle.getString("order_id");
+            driver_name = bundle.getString("user_name");
 
         }
 
         close_button = v.findViewById(R.id.close_button);
         confirm_button = v.findViewById(R.id.ConfirmMoney_button);
         Money = v.findViewById(R.id.money);
-        Money.setText(String.valueOf((int)Cost));
+        Money.setText(String.valueOf(Cost));
 
 
         /**
@@ -83,6 +94,9 @@ public class IsMoneyOKFragment extends DialogFragment {
                 bundle.putFloat("endLocationLat",endLat);
                 bundle.putFloat("endLocationLng",endLng);
                 bundle.putString("rider",Rider);
+                bundle.putString("order_id",Order_id);
+                bundle.putString("user_name",driver_name);
+
                 DriverWaitRiderConfrimFragment fragment = new DriverWaitRiderConfrimFragment();
                 fragment.setArguments(bundle);
                 fragment.show(getFragmentManager(),"Waiting");
@@ -90,6 +104,6 @@ public class IsMoneyOKFragment extends DialogFragment {
         });
 
         return v;
-
         }
+
 }

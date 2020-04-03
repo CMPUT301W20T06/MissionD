@@ -63,6 +63,9 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
 
     private Polyline currentPolyline;
 
+    private String Order_id;
+    private String driver_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,8 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
         endLng = getIntent().getExtras().getFloat("endLocationLng");
         Rider = getIntent().getExtras().getString("rider");
         Cost = getIntent().getExtras().getFloat("cost");
+        Order_id= getIntent().getExtras().getString("order_id");
+        driver_name= getIntent().getExtras().getString("user_name");
 
         LocationName = findViewById(R.id.start_location);
         DestinationName = findViewById(R.id.Destination_text);
@@ -86,7 +91,7 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
 
         LocationName.setText(Location);
         DestinationName.setText(Destination);
-        FairMoney.setText(String.valueOf((int)Cost));
+        FairMoney.setText(String.valueOf(Cost));
 
         /**
          * when click on the back button
@@ -116,6 +121,8 @@ public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapR
                 bundle.putFloat("endLocationLng",endLng);
                 bundle.putString("rider",Rider);
                 bundle.putFloat("cost",Cost);
+                bundle.putString("order_id",Order_id);
+                bundle.putString("user_name",driver_name);
 
                 fragment.setArguments(bundle);
                 fragment.show(getSupportFragmentManager(),"Confirm");

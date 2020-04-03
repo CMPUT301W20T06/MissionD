@@ -1,14 +1,19 @@
 package com.example.missiond;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.DialogFragment;
+
+import java.util.List;
 
 
 /**
@@ -29,6 +34,15 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public String Destination;
     private String Rider;
     private float startLat,startLng,endLat,endLng;
+    private String Order_id, driver_name;
+    private Boolean stop = false;;
+    private Boolean riderCancel = false;
+    private Boolean driverConfirm = false;
+
+    private Handler handler = new Handler();
+
+    final DataBaseHelper DB = DataBaseHelper.getInstance();
+    private Order order1;
 
     @NonNull
     @Override
@@ -44,7 +58,26 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             endLat =bundle.getFloat("endLocationLat");
             endLng = bundle.getFloat("endLocationLng");
             Rider = bundle.getString("rider");
+            Order_id = bundle.getString("order_id");
+            driver_name = bundle.getString("user_name");
         }
+
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(Order_id)) {
+                        order1=order;
+                        order1.setDriver(driver_name);
+                        order1.setOrderStatus(2);
+                        DB.updateOrder(order1);
+                        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
 
         //////////////////////////////////////////////////////////////////
         tesing_button = v.findViewById(R.id.just_for_testing);
@@ -53,30 +86,94 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         tesing_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDialog().dismiss();
-                Bundle bundle = new Bundle();
-                bundle.putString("trip_location",Location);
-                bundle.putString("trip_destination",Destination);
-                bundle.putFloat("startLocationLat",startLat);
-                bundle.putFloat("startLocationLng",startLng);
-                bundle.putFloat("endLocationLat",endLat);
-                bundle.putFloat("endLocationLng",endLng);
-                bundle.putString("rider",Rider);
-
-                DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
-                fragment.setArguments(bundle);
-                fragment.show(getFragmentManager(),"test1");
+//                order1.setOrderStatus(1);
+//                DB.updateOrder(order1);
             }
         });
 
         testing_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDialog().dismiss();
-                new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+//                order1.setOrderStatus(3);
+//                DB.updateOrder(order1);
             }
         });
 
+        startRepeating();
+
         return v;
     }
+
+
+    public void startRepeating(){
+        runnable.run();
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (stop){
+                if (riderCancel){
+                    getDialog().dismiss();
+                    new DriverAfterRiderCancelFragment().show(getFragmentManager(),"test2");
+                } else {
+                    handler.removeCallbacks(runnable);
+                    getDialog().dismiss();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("trip_location", Location);
+                    bundle.putString("trip_destination", Destination);
+                    bundle.putFloat("startLocationLat", startLat);
+                    bundle.putFloat("startLocationLng", startLng);
+                    bundle.putFloat("endLocationLat", endLat);
+                    bundle.putFloat("endLocationLng", endLng);
+                    bundle.putString("order_id",Order_id);
+                    bundle.putString("rider", Rider);
+
+                    DriverAfterRiderConfrimFragment fragment = new DriverAfterRiderConfrimFragment();
+                    fragment.setArguments(bundle);
+                    fragment.show(getFragmentManager(), "test1");
+                }
+            } else {
+                getOrder();
+                handler.postDelayed(this, 2000);
+            }
+        }
+    };
+
+
+    private void getOrder(){
+        DB.getAllOrders(new Consumer<List<Order>>() {
+            @Override
+            public void accept(List<Order> orders) {
+                for (int i=0;i <orders.size();i++) {
+                    Order order = orders.get(i);
+                    if (order.getId().equals(Order_id)) {
+                        order1 = order;
+                    }
+                }
+                onLoaded();
+            }
+        });
+    }
+
+    public void onLoaded(){
+        if (order1.getOrderStatus()==3) {
+            stop=true;
+            Toast.makeText(getActivity(),"status changed 3",Toast.LENGTH_SHORT).show();
+        }
+        if (order1.getOrderStatus()==2){
+            driverConfirm=true;
+        }
+        else if (driverConfirm){
+            if (order1.getOrderStatus()==1) {
+                stop = true;
+                riderCancel = true;
+                Toast.makeText(getActivity(), "cancel" + order1.getOrderStatus().toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        Toast.makeText(getActivity(),order1.getOrderStatus().toString(),Toast.LENGTH_SHORT).show();
+    }
+
 }
+
