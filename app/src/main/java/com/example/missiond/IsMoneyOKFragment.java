@@ -20,7 +20,7 @@ import java.util.List;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.12 2020
+ *  Mar.30 2020
  */
 
 public class IsMoneyOKFragment extends DialogFragment {

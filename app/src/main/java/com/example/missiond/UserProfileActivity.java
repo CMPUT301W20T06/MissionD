@@ -12,6 +12,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
+/**
+ * This class will have the user profile
+ * @author
+ *  Weiyi Wu, Weiting Chi, Isaac Zhang
+ */
+
 public class UserProfileActivity extends AppCompatActivity {
     private Button close,confirm,order;
 

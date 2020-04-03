@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * User can register or sign in
  * @author
- *  Issac Zhang, Weiyi Wu
+ *  Isaac Zhang, Weiyi Wu
  * @version
  *  April.02 2020
  */

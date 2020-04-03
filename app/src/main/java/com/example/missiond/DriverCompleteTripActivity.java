@@ -25,9 +25,9 @@ import java.util.List;
  * Display a map with driver current location
  * Driver can start to see trip requests by pressing see trip button
  * @author
- *  Weiting Chi
+ *  Weiting Chi, Xinrong Zhou
  * @version
- *  Mar.26 2020
+ *  Mar.30 2020
  */
 public class DriverCompleteTripActivity extends AppCompatActivity implements OnMapReadyCallback, TaskLoadedCallback {
     private Button completet_button;
@@ -84,6 +84,12 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
 
         completet_button = findViewById(R.id.complete_button);
 
+
+        /**
+         * Use the database helper to get the order
+         * and set the order status
+         * update status
+         */
         DB.getAllOrders(new Consumer<List<Order>>() {
             @Override
             public void accept(List<Order> orders) {
@@ -132,6 +138,10 @@ public class DriverCompleteTripActivity extends AppCompatActivity implements OnM
 
     }
 
+    /**
+     * This method will set the driver current location on the map
+     *  @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         completeMap = googleMap;

@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This activity will help the map to draw a route
+ * @Reference
+ *  //https://github.com/Vysh01/android-maps-directions
+ */
 
 public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
     TaskLoadedCallback taskCallback;
@@ -49,7 +54,10 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
         return routes;
     }
 
-    // Executes in UI thread, after the parsing process
+    /** Executes in UI thread, after the parsing process
+     *
+     * @param result
+     */
     @Override
     protected void onPostExecute(List<List<HashMap<String, String>>> result) {
         ArrayList<LatLng> points;
@@ -80,7 +88,9 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             Log.d("mylog", "onPostExecute lineoptions decoded");
         }
 
-        // Drawing polyline in the Google Map for the i-th route
+        /**
+         * Drawing polyline in the Google Map for the i-th route
+         */
         if (lineOptions != null) {
             //mMap.addPolyline(lineOptions);
             taskCallback.onTaskDone(lineOptions);

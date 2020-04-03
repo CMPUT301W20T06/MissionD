@@ -1,5 +1,11 @@
 package com.example.missiond;
 
+
+/**
+ * This is Order history class that stores Order information
+ * @author
+ *  Yifei Ma
+ */
 public class OrderHistory {
     private String pickUp, dest, driver, fare;
 

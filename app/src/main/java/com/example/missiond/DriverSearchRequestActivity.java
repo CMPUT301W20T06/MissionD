@@ -58,6 +58,10 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_search_request_activity);
 
+
+        /**
+         * use the database helper to get the current order
+         */
         DB.getAllOrders(new Consumer<List<Order>>() {
             @Override
             public void accept(List<Order> orders) {

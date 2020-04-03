@@ -13,6 +13,14 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+/**
+ * Rider can sign in
+ * @author
+ *  Issac Zhang, Weiting Chi
+ * @version
+ *  April.02 2020
+ */
+
 public class driver_login extends AppCompatActivity {
 
     @Override
@@ -34,7 +42,9 @@ public class driver_login extends AppCompatActivity {
                 str_phone = phone.getText().toString();
                 str_user_email = user_email.getText().toString();
                 str_user_name = user_name.getText().toString();
-                //avoid user input whitespace after their names
+                /**
+                 * avoid user input whitespace after their names
+                 */
                 String[] NameArray = str_user_name.split(" ");
                 final String Name = NameArray[0];
                 if (Name.length()==0) return;

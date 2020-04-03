@@ -5,6 +5,8 @@ import android.location.Location;
 
 /**
  * This is Order class that stores Order information
+ * @author
+ *  Yifei Ma
  */
 public class Order {
     private String startLocation;

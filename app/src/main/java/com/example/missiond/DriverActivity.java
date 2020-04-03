@@ -91,6 +91,11 @@ public class DriverActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         });
 
+        /**
+         * When pressing the profile button
+         * it will go to the User profile activity
+         */
+
         profile_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

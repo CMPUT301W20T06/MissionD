@@ -587,6 +587,17 @@ public class MapActivity extends FragmentActivity implements
         }
 
     }
+
+    /**
+     * Draw the route of the map between two loations
+     * @param origin
+     * @param dest
+     * @param directionMode
+     * @return
+     *  url
+     * @reference
+     *  //https://github.com/Vysh01/android-maps-directions
+     */
     private String getUrl (LatLng origin, LatLng dest, String directionMode) {
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;

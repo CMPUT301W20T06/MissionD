@@ -49,9 +49,6 @@ public class DriverPickupActivity extends AppCompatActivity implements OnMapRead
 
     GoogleMap mMap;
 
-    //我先给周总弄出来了 貌似你需要用到
-    //但具体怎么拿到string和address我不太知道
-    //辛苦了
     String pickupName;
     Address pickupAddress;
 
@@ -63,7 +60,6 @@ public class DriverPickupActivity extends AppCompatActivity implements OnMapRead
         setContentView(R.layout.activity_driver_pickup);
 
         back_button = findViewById(R.id.driverLocBack);
-        //这个是后面那个绿色对勾按钮 不知道周总要不要用
         confrim_buton = findViewById(R.id.search_address1);
         confrim_buton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +70,6 @@ public class DriverPickupActivity extends AppCompatActivity implements OnMapRead
         });
         search_button = findViewById(R.id.searchOrder);
 
-        //这个是那个输入地址但那个输入框 也不知道周总要不要用到
         pickUpLocation = findViewById(R.id.pickup_Location);
 
         driver_name= getIntent().getExtras().getString("user_name");

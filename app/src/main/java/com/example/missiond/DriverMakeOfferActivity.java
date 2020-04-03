@@ -30,7 +30,7 @@ import java.util.List;
  * @author
  *  Weiting Chi, XinRong Zhou
  * @version
- *  Mar.12 2020
+ *  Mar.30 2020
  */
 public class DriverMakeOfferActivity extends AppCompatActivity implements OnMapReadyCallback,TaskLoadedCallback {
     private ImageButton button_back;

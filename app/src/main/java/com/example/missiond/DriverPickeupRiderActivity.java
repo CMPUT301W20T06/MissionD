@@ -30,9 +30,9 @@ import java.util.List;
  * Display a map with driver current location
  * Driver can start to see trip requests by pressing see trip button
  * @author
- *  Weiting Chi
+ *  Weiting Chi, Xinrong Zhou
  * @version
- *  Mar.26 2020
+ *  Mar.30 2020
  */
 public class DriverPickeupRiderActivity extends AppCompatActivity implements OnMapReadyCallback,TaskLoadedCallback{
 
@@ -96,6 +96,10 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
         destination.setText(Destination);
         rider_name.setText(Rider);
 
+        /**
+         * use database helper to get the rider
+         * and the phone number, email of the rider
+         */
         db = DataBaseHelper.getInstance();
         db.getRider(Rider, new Consumer<Rider>() {
             @Override
@@ -109,7 +113,10 @@ public class DriverPickeupRiderActivity extends AppCompatActivity implements OnM
             }
         });
 
-
+        /**
+         * when press the pick up button
+         * it will go the DriverCompleteTripActivity
+         */
         pick_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

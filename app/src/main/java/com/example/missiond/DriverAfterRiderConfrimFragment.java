@@ -17,7 +17,7 @@ import androidx.fragment.app.DialogFragment;
  * @author
  *  Weiting Chi
  * @version
- *  Mar.26 2020
+ *  Apr.1st 2020
  */
 public class DriverAfterRiderConfrimFragment extends DialogFragment {
     private ImageButton tesing_button;

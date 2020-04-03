@@ -49,6 +49,9 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.wait_rider_confirm_fragment, container, false);
 
+        /**
+         * add a loading Animation
+         */
         ImageView imageView = v.findViewById(R.id.image);
         imageView.setBackgroundResource(R.drawable.loading_animation);
         loadingAnimation = (AnimationDrawable) imageView.getBackground();
@@ -67,6 +70,11 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             driver_name = bundle.getString("user_name");
         }
 
+        /**
+         * use the database helper to get the current order
+         * assign driver to the order
+         * set status to 2
+         */
         DB.getAllOrders(new Consumer<List<Order>>() {
             @Override
             public void accept(List<Order> orders) {
@@ -97,6 +105,10 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
     public void startRepeating(){
         runnable.run();
     }
+
+    /**
+     * set up the handle to check order status every second
+     */
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -129,6 +141,9 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
         }
     };
 
+    /**
+     * use database to get the order
+     */
 
     private void getOrder(){
         DB.getAllOrders(new Consumer<List<Order>>() {
@@ -144,6 +159,12 @@ public class DriverWaitRiderConfrimFragment extends DialogFragment {
             }
         });
     }
+
+    /**
+     * set the status to 3 if rider confirm the driver
+     * set the status to 1 if rider cancel the driver
+     */
+
 
     public void onLoaded(){
         if (order1.getOrderStatus()==3) {

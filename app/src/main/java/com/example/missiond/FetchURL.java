@@ -11,6 +11,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * this activity will find the route through internet
+ * @Reference
+ * //https://github.com/Vysh01/android-maps-directions
+ */
 
 public class FetchURL extends AsyncTask<String, Void, String> {
     Context mContext;
