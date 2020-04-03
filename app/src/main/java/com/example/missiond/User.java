@@ -2,6 +2,9 @@ package com.example.missiond;
 
 import android.location.Address;
 
+/**
+ * This class is a super class for driver and rider that stores user date
+ */
 public class User {
     private String userName;
     private String phoneNumber;
@@ -13,6 +16,10 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
     }
+
+    /**
+     * This is a constructor for firebase to convert database data to User class
+     */
     public User(){
 
     }

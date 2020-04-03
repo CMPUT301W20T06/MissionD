@@ -30,6 +30,8 @@ import java.util.concurrent.FutureTask;
 
 /**
  * This is a helper class that make use of firestore to manage data
+ * @author
+ * Yifei Ma
  */
 public class DataBaseHelper {
     private static DataBaseHelper instance = null;
@@ -88,7 +90,7 @@ public class DataBaseHelper {
     }
 
     /**
-     * This update user class to firestore database
+     * This update Driver class to firestore database
      */
     public void UpdateDriverData(Driver driver) {
         String collection = "Driver";
@@ -108,6 +110,9 @@ public class DataBaseHelper {
                 });
     }
 
+    /**
+     * This update Rider class to firestore database
+     */
     public void UpdateRiderData(Rider rider) {
         String collection = "Rider";
         db.collection(collection).document(rider.getUserName())
@@ -231,11 +236,18 @@ public class DataBaseHelper {
         return id;
     }
 
+    /**
+     * This method update order in database
+     */
     public void updateOrder(Order order) {
         String id = order.getId();
         db.collection("Orders").document(id).set(order);
     }
 
+
+    /**
+     * This method get order in database by it's id
+     */
     @Keep
     public void getOrderById(String id, final Consumer<Order> consumer) {
         DocumentReference docRef = db.collection("Orders").document(id);
