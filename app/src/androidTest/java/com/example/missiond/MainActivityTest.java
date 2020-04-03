@@ -44,11 +44,11 @@ public class MainActivityTest {
 
         onView(withId(R.id.login_driver)).perform(click());
 
-        Activity driverActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,5000);
+        Activity driver_login = getInstrumentation().waitForMonitorWithTimeout(monitor,5000);
 
-        assertNotNull(driverActivity);
+        assertNotNull(driver_login);
 
-        driverActivity.finish();
+        driver_login.finish();
 
     }
 
@@ -58,11 +58,11 @@ public class MainActivityTest {
 
         onView(withId(R.id.login_rider)).perform(click());
 
-        Activity riderActivity = getInstrumentation().waitForMonitorWithTimeout(monitor_2,5000);
+        Activity rider_login = getInstrumentation().waitForMonitorWithTimeout(monitor_2,5000);
 
-        assertNotNull(riderActivity);
+        assertNotNull(rider_login);
 
-        riderActivity.finish();
+        rider_login.finish();
 
     }
 

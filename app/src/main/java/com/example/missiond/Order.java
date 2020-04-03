@@ -37,8 +37,15 @@ public class Order {
 
     /**
      * This is a constructor for firebase to convert database data to Order class
+     * @param startLocation
+     * @param endLocation
+     * @param distance
+     * @param cost
+     * @param orderStatus
+     * @param userName
+     * @param name
      */
-    public Order(){
+    public Order(String startLocation, String endLocation, Float distance, Float cost, Integer orderStatus, String userName, String name){
     }
 
     /**

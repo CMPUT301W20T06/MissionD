@@ -38,7 +38,7 @@ public class MakeOfferActivityTest {
 
         Activity searchRequestActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,5000);
 
-        assertNotNull(searchRequestActivity);
+        assertNotNull(searchRequestActivity.findViewById(R.id.DriverBack));
 
         searchRequestActivity.finish();
 

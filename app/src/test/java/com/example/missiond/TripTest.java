@@ -9,12 +9,12 @@ class TripTest {
 
     @Test
     void getLocationName() throws Exception{
-        String input = "CityCenter";
-        String input_2 = "HUB";
+        String input = "Southgate Centre";
+        String input_2 = "Mayfair South";
         String output;
-        String expected = "CityCenter";
+        String expected = "Southgate Centre";
 
-        Trip trip = new Trip(input,input_2);
+        Trip trip = new Trip(input,input_2,10);
         output = trip.getLocationName();
 
         assertEquals(expected,output);
@@ -22,12 +22,12 @@ class TripTest {
 
     @Test
     void getDestination() throws Exception{
-        String input = "CityCenter";
-        String input_2 = "HUB";
+        String input = "Southgate Centre";
+        String input_2 = "Mayfair South";
         String output;
-        String expected = "HUB";
+        String expected = "Mayfair South";
 
-        Trip trip = new Trip(input,input_2);
+        Trip trip = new Trip(input,input_2,10);
         output = trip.getDestination();
 
         assertEquals(expected,output);

@@ -357,7 +357,7 @@ public class MapActivity extends FragmentActivity implements
         loc2.setLongitude(Marker2.getPosition().longitude);
         float distance = loc1.distanceTo(loc2);
 
-        Coordinate startCoordinate = new Coordinate( Marker1.getPosition().longitude, Marker1.getPosition().latitude);
+        Coordinate startCoordinate = new Coordinate(Marker1.getPosition().longitude, Marker1.getPosition().latitude);
         Coordinate endCoordinate = new Coordinate(Marker2.getPosition().longitude, Marker2.getPosition().latitude);
 
         DataBaseHelper DB = DataBaseHelper.getInstance();
