@@ -99,8 +99,8 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
             loc2.setLatitude((float)order.getStartLoc().getLatitude());
             loc2.setLongitude((float)order.getStartLoc().getLongitude());
             Integer distance = (int)(loc1.distanceTo(loc2)/1000);
-            Toast.makeText(this,String.valueOf((float)order.getStartLoc().getLatitude()),Toast.LENGTH_SHORT).show();
-            Toast.makeText(this,String.valueOf((float)order.getStartLoc().getLongitude()),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,String.valueOf((float)order.getStartLoc().getLatitude()),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,String.valueOf((float)order.getStartLoc().getLongitude()),Toast.LENGTH_SHORT).show();
             tripDataList.add((new Trip(order.getStartLocation(), order.getEndLocation(),distance)));
         }
 
