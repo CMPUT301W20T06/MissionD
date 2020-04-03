@@ -2,6 +2,8 @@ package com.example.missiond;
 
 /**
  * This is Driver class that stores Driver information
+ * @author
+ * Yifei Ma
  */
 public class Driver extends User {
     private Boolean availability;

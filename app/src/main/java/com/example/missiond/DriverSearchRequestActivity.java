@@ -23,7 +23,7 @@ import java.util.List;
  * Display a list view of rider's requests to Driver
  * Driver click the list that he/she wants to start.
  * @author
- *  Weiting Chi
+ *  Weiting Chi, Yifei Ma
  * @version
  *  Mar.29 2020
  */
@@ -122,7 +122,6 @@ public class DriverSearchRequestActivity extends AppCompatActivity {
 
                 Order order = newList.get(position);
 
-                // 这里要order object 的话直接 Order order = current_orders.get(position);
 
                 Intent intent = new Intent(DriverSearchRequestActivity.this, DriverMakeOfferActivity.class);
                 intent.putExtra("trip_location",tripedit.getLocationName());
