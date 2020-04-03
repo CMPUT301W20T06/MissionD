@@ -258,18 +258,6 @@
         android:duration="40"/>
     <item
         android:drawable="@drawable/loader14_00092"
-=======
-        android:drawable="@drawable/loading1_1"
-        android:duration="300"/>
-    <item
-        android:drawable="@drawable/loading2_1"
-        android:duration="300"/>
-    <item
-        android:drawable="@drawable/loading3_1"
-        android:duration="300"/>
-    <item
-        android:drawable="@drawable/loading4_1"
->>>>>>> Weiyi
         android:duration="300"/>
 
 </animation-list>
