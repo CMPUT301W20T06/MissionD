@@ -6,6 +6,10 @@
 
 Here are some References that are used in XML file(there are more reference in the javadoc comment in the code)：
 
+https://www.youtube.com/watch?v=scZYIAZrMWk
+
+https://www.youtube.com/watch?v=3pgGVBmSVq0
+
 https://stackoverflow.com/questions/10243557/how-to-apply-slide-animation-between-two-activities-in-android
 author: Shohan Ahmed Sijan
 
@@ -36,6 +40,8 @@ https://www.youtube.com/watch?v=4kk-dYWVNsc
 https://github.com/SimCoderYoutube/UberClone
 
 https://github.com/googlemaps/android-samples
+
+https://github.com/Vysh01/android-maps-directions
 
 
 
