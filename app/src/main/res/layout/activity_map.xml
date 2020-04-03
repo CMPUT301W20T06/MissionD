@@ -181,10 +181,10 @@
         android:id="@+id/requestRide_request"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/rectangle_background"
+        android:background="@drawable/rectangle_light1"
         android:text="Request Ride"
         android:textColor="@android:color/white"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:layout_alignParentBottom="true"/>
 
 

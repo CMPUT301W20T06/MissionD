@@ -125,7 +125,7 @@
         android:layout_alignParentBottom="true"
         android:text="Finish Payment"
         android:textSize="30dp"
-        android:textColor="#262626"
-        android:background="@drawable/rectangle_background"/>
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rectangle_light1"/>
 
 </RelativeLayout>

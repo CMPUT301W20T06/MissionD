@@ -16,7 +16,7 @@
         android:layout_height="80dp"
         android:textSize="30dp"
         android:hint="Where to go?"
-        android:background="#75E0FFFF"
+        android:background="@drawable/rectangle_light1"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

@@ -144,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#99E0FFFF"
+        android:background="@drawable/rectangle_light1"
         android:textSize="30dp"
         android:text="Pick Up Already"/>
 

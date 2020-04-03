@@ -20,7 +20,7 @@
         android:id="@+id/driverSeeTrip"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#75E0FFFF"
+        android:background="@drawable/rectangle_light1"
         android:text="Start a Trip"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
