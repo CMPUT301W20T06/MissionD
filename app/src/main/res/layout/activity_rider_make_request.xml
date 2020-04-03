@@ -44,7 +44,7 @@
         android:layout_width="380dp"
         android:layout_height="140dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rectangle"
+        android:background="@drawable/rectangle2"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/subBar_makeRequest">
 
@@ -112,18 +112,25 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <TextView
-        android:id="@+id/next_makeRequest"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:textSize="30dp"
-        android:textColor="@android:color/white"
         android:background="@drawable/rectangle_background"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Looking for driver"/>
+        android:gravity="center_horizontal|center_vertical">
 
+        <TextView
+            android:id="@+id/next_makeRequest"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:text="Looking for driver"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>
